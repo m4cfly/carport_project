@@ -1,6 +1,6 @@
 package app.controllers;
 
-public class MaterialController {
+public class CarportController {
 
     public static void addRoutes (Javalin app, ConnectionPool connectionPool) {
         app.post("/search", ctx -> search(ctx, connectionPool));
