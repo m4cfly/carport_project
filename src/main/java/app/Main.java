@@ -5,7 +5,7 @@ import app.config.ThymeleafConfig;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import org.postgresql.jdbc2.optional.ConnectionPool;
-import app.persistence.ConnectionPool;
+//import app.persistence.ConnectionPool;
 
 
 public class Main {

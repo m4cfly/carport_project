@@ -6,12 +6,19 @@ public class Users {
 
     String name;
 
+    String password;
+
+    int balance;
+
     String role;
 
 
-    public Users(int userID, String name, String role) {
+
+    public Users(int userID, String name,String password,int balance, String role) {
         this.userID = userID;
         this.name = name;
+        this.password = password;
+        this.balance = balance;
         this.role = role;
     }
 
@@ -21,6 +28,14 @@ public class Users {
 
     public String getName() {
         return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getBalance() {
+        return balance;
     }
 
     public String getRole() {
