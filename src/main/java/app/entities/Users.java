@@ -12,8 +12,6 @@ public class Users {
 
     String role;
 
-
-
     public Users(int userID, String name,String password,int balance, String role) {
         this.userID = userID;
         this.name = name;
@@ -41,4 +39,5 @@ public class Users {
     public String getRole() {
         return role;
     }
+
 }
