@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Cupcake</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div id="page">
+    <header>
+        <a href="index.html" th:href="@{/}">
+            <img src="/images/background.png" width="100%"/>
+        </a>
+    </header>
+    <nav>
+        <div id="left-nav">
+            <a href="cart.html" th:href="@{/}">
+                <img src="/images/cart.png" width="100%"/>
+            </a>
+            <a href="/index.html" th:href="@{/}">Front Page</a>
+            <a href="/index.html" th:href="@{/}">Account</a>
+            <a href="/index.html" th:href="@{/}">Cart</a>
+            <a href="/checkout.html" th:href="@{/}">Checkout</a>
+        </div>
+        <div id="right-nav">
+
+            <div th:if="${session.currentUser != null}">
+                <span> Welcome User: </span>
+                <b>
+                     <span th:text="${session.currentUser.username}"> </span>
+                </b>
+                <a href="/logout" th:href="@{/logout}">Logout</a>
+                <a href="/" th:href="@{/}">
+                    <img src="../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div id="content">
+        <div id="intro-text">
+            <div th:if="${session.currentUser == null}">
+                <form class="generic-form" method="post">
+                    <input type="text" name="username" placeholder="Enter your username"/>
+                    <input type="password" name="password" placeholder="Enter your password"/>
+                    <button class="btn btn-ok" type="submit" formaction="login">Login</button>
+                    <div><p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p></div>
+                </form>
+                <a href="/createuser.html" th:href="@{/createuser}">Create User</a>
+            </div>
+
+            <div th:if="${session.currentUser != null}">
+                <h1>Order Cup Cakes </h1>
+                <span th:text="${session.currentUser.username}"> </span>
+                <span th:text="${session.currentUser.userid}"> </span>
+                <form method="post">
+                    <select id="dropdowns select" name="top">
+                        <option  th:each="top: ${session.topMap.values()}" th:value="${top.topId}"
+                                th:text="${top.name + ' (' + top.price + ') kr.'}">5 kr
+                        </option>
+                    </select>
+                    <select name="bottom">
+                        <option th:each="bottom: ${session.bottomMap.values()}" th:value="${bottom.bottomId}"
+                                th:text="${bottom.name + ' (' + bottom.price + ') kr.'}">5 kr
+                        </option>
+                    </select>
+                    <input type="number" name="quantity" required min="1" max="10"/>
+                    <button type="submit" formaction="addtocart">Add to Cart</button>
+                </form>
+                    <p th:text="${'Number of rows in Cart: ' + session.cart.getCount()}"></p>
+                    <h1>Cart</h1>
+                <form method="post">
+                    <table>
+                        <tr>
+                            <th>Items</th>
+                            <th>Quantity</th>
+                            <th>Top Name</th>
+                            <th>Bottom Name</th>
+                        </tr>
+                        <tr th:each="item, indexStatus: ${session.cart.cartItemList}">
+                            <td th:text="${indexStatus.count}"></td>
+                            <td th:text="${item.quantity} + ' x '"></td>
+                            <td th:text="${item.top.name} + ' Topping, with'"></td>
+                            <td th:text="${item.bottom.name} + ' Bottom '"></td>
+                            <td th:text="${item.getPrice() + 'kr.'}"></td>
+                            <td>
+                                <button type="submit" name="rowindex" formaction="/deletefromcart" th:value="${indexStatus.count}">
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td> Pris in total tax excluded:</td>
+                            <td th:text="${session.cart.getTotalPrice() + ' kr.'}"></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <button type="submit" formaction="/checkout">Checkout</button>
+                </form>
+                <div class="ring">
+                    <i style="--clr:#00ff0a;"></i>
+                    <i style="--clr:#ff0057;"></i>
+                    <i style="--clr:#fffd44;"></i>
+                    <div class="login">
+                        <h2>Login</h2>
+                        <div class="inputBx">
+                            <input type="text" placeholder="Username">
+                        </div>
+                        <div class="inputBx">
+                            <input type="password" placeholder="Password">
+                        </div>
+                        <div class="inputBx">
+                            <input type="submit" value="Sign in">
+                        </div>
+                        <div class="links">
+                            <a href="#">Forget Password</a>
+                            <a href="#">Signup</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
