@@ -1,6 +1,6 @@
 package app.persistence;
 
-import app.entities.User;
+import app.entities.Users;
 import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
@@ -10,8 +10,8 @@ import java.sql.SQLException;
 
 public class UserMapper {
 
-    public static User login(String name, String password, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "SELECT * FROM user WHERE name = ? AND password = ?";
+    public static Users login(String name, String password, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT * FROM users WHERE name = ? AND password = ?";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -26,7 +26,7 @@ public class UserMapper {
                 String role = rs.getString("role");
                 int balance = rs.getInt("balance");
                 // Assuming User class is correctly set up to handle these fields
-                return new User(id, name, password, balance, role);
+                return new Users(id, name, password, balance, role);
             } else {
                 throw new DatabaseException("Login error. Please try again.");
             }
@@ -36,7 +36,7 @@ public class UserMapper {
     }
 
     public static void createUser(String userName, String password, String fullName, int balance, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "INSERT INTO user (name, password, balance) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO users (name, password, balance) VALUES (?, ?, ?)";
 
         try (
                 Connection connection = connectionPool.getConnection();
