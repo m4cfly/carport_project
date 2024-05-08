@@ -1,6 +1,7 @@
 package app.entities;
 
-public class Users {
+
+public class User {
 
     int userID;
 
@@ -12,7 +13,7 @@ public class Users {
 
     String role;
 
-    public Users(int userID, String name,String password,int balance, String role) {
+    public User(int userID, String name,String password,int balance, String role) {
         this.userID = userID;
         this.name = name;
         this.password = password;
