@@ -1,6 +1,7 @@
 package app;
 
 import app.config.SessionConfig;
+
 import app.config.ThymeleafConfig;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
