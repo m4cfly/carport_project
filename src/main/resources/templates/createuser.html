@@ -30,15 +30,23 @@
     </header>
     <div id="content" class="transparent-grey">
         <div id="intro-text">
-            <div th:if="${session.currentUser == null}">
-                <form class="generic-form" method="post">
-                    <input type="text" name="username" placeholder="Enter your username"/>
-                    <input type="password" name="password" placeholder="Enter your password"/>
-                    <button class="btn btn-ok" type="submit" formaction="login">Login</button>
-                    <div><p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p></div>
+            <h1>Create your account:</h1>
+            <p> Fill user informations</p>
+            <div class="centered-form">
+
+                <form method="post">
+                    <input type="text" name="username" placeholder="username for login">
+                    <input type="password" name="password1" placeholder="Enter your password..">
+                    <input type="password" name="password2" placeholder="Repeat password..">
+                    <button type="submit" formaction="/createuser">Create User</button>
                 </form>
-                <a href="/createuser.html" th:href="@{/createuser}">Create User</a>
             </div>
+            <p class="errormessage" th:text="${#ctx.message}"></p>
+            <div th:if="${session.currentUser != null}">
+                <span th:text="${session.currentUser.username}"> </span> |
+                <a href="/logout" th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
         </div>
     </div>
 </div>
