@@ -61,15 +61,12 @@ public class UserMapper
                 throw new DatabaseException("Fejl ved oprettelse af ny bruger");
             }
         }
-        catch (SQLException e)
-        {
-            String msg = "Der er sket en fejl. Prøv igen";
-            // Check SQL state code for duplicate key value
-            if ("23505".equals(e.getSQLState()))
-            {
-                msg = "Brugernavnet findes allerede. Vælg et andet";
+        catch (SQLException e) {
+            String message = "An error occurred. Please try again.";
+            if (e.getMessage().contains("duplicate key value")) {
+                message = "An account with this username already exists. Please use a different username.";
             }
-            throw new DatabaseException(msg, e.getMessage());
+            throw new DatabaseException(message, e.getMessage());
         }
     }
    /* public static Map< String, User> getAllUsers(ConnectionPool connectionPool ) throws DatabaseException

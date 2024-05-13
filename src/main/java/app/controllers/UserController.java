@@ -25,9 +25,11 @@ public class UserController {
 
     private static void createUser(Context ctx, ConnectionPool connectionPool)
     {
-        String username = ctx.pathParam("username");
-        String password1 = ctx.pathParam("password1");
-        String password2 = ctx.pathParam("password2");
+        String username = ctx.formParam("username");
+        String password1 = ctx.formParam("password1");
+        String password2 = ctx.formParam("password2");
+
+
 
         if (password1.equals(password2)){
             try{
