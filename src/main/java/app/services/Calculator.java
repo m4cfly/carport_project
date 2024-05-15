@@ -54,20 +54,74 @@ public class Calculator
 
    // Remme
    private void calcBeams(Order order) throws DatabaseException {
-       int beamLength = calcBeamLength();
-       int beamQuantity = calcBeamLength() % 2 + 2;
+//       int beamLength = calcBeamLength();
+//
+//       if ()
+//
+//       if (600 < length && length <= 780) {
+//           int beamLength = calcBeamLength() / 3
+//       }
+
 
        // Find variant
-       List<MaterialVariant> materialVariants = MaterialMapper.getVariantsByProductIdAndMinLength(0, BEAMS, connectionPool);
+       List<MaterialVariant> materialVariants = MaterialMapper.getVariantsByProductIdAndMinLength(length, BEAMS, connectionPool);
        MaterialVariant materialVariant = materialVariants.get(0);
-       Material_Item materialItem = new Material_Item(0, beamQuantity, "Stolper nedgraves 90 cm. i jord", order, materialVariant);
-       materialItems.add(materialItem);
+
+       boolean found = false;
+
+       while (!materialVariants.isEmpty()) {
+           for (MaterialVariant variant : materialVariants) {
+               if (length % variant.getLength() == 0) {
+                   int quantity = (length % variant.getLength()) * 2;
+                   Material_Item materialItem = new Material_Item(0, quantity, "Rem placeres ovenpå stolper", order, materialVariant);
+                   materialItems.add(materialItem);
+                   found = true;
+                   break;
+               } else if (variant.getLength() > length) {
+                   Material_Item materialItem = new Material_Item(0, 2, "Rem placeres ovenpå stolper, og resten saves af", order, materialVariant);
+                   materialItems.add(materialItem);
+                   found = true;
+                   break;
+               }
+
+           }
+       }
+       if (!found) {
+
+           List<MaterialVariant> allMaterialVariants = MaterialMapper.getVariantsByProductIdAndMinLength(0, BEAMS, connectionPool);
+               int variantSpareWood = length;
+           for (MaterialVariant variant : allMaterialVariants) {
+               if (length % variant.getLength() == 0)  {
+                   Material_Item materialItem = new Material_Item(0, 2, "Rem placeres ovenpå stolper", order, materialVariant);
+                   materialItems.add(materialItem);
+                   found = true;
+                   break;
+
+               } else if (length % variant.getLength() < variantSpareWood) {
+                   variantSpareWood = length % variant.getLength();
+                   break;
+               }
+
+
+           }
+           variantSpareWood
 
 
 
-   }
 
-    private int calcBeamLength() {
+               }
+
+           }
+
+
+
+       
+
+
+
+
+
+    public int calcBeamLength() {
         return length * 2;
 
     }
@@ -79,13 +133,13 @@ public class Calculator
        int quantity = newData.intValue();
 
        // Find variant
-       List<MaterialVariant> materialVariants = MaterialMapper.getVariantsByProductIdAndMinLength(0, BEAMS, connectionPool);
+       List<MaterialVariant> materialVariants = MaterialMapper.getVariantsByProductIdAndMinLength(length, RAFTERS, connectionPool);
        MaterialVariant materialVariant = materialVariants.get(0);
-       Material_Item materialItem = new Material_Item(0, quantity, "Stolper nedgraves 90 cm. i jord", order, materialVariant);
+       Material_Item materialItem = new Material_Item(0, quantity, "Spær placeres ovenpå rem", order, materialVariant);
        materialItems.add(materialItem);
    }
 
-    private double calcRaftQuantity() {
+    public double calcRaftQuantity() {
         return 2 + (length / (4.5 + 55));
     }
 
