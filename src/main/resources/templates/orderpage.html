@@ -2,11 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Carport</title>
+    <title>Order Carport</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
+
 <div id="page">
     <header>
         <a href="index.html" th:href="@{/}">
@@ -16,10 +17,10 @@
             <div th:if="${session.currentUser != null}">
                 <span> Welcome User: </span>
                 <b>
-                     <span th:text="${session.currentUser.username}"> </span>
+                    <span th:text="${session.currentUser.username}"> </span>
                 </b>
                 <a href="/logout" th:href="@{/logout}">Logout</a>
-                <a href="/index.html" th:href="@{/}">
+                <a href="/" th:href="@{/}">
                     <img src="../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
                 </a>
             </div>
@@ -27,11 +28,33 @@
     </header>
     <div id="content" class="transparent-grey">
         <div id="intro-text">
+            <h1>Welcome! Order Carport</h1>
+            <h1>Fog carport</h1>
+
+            <h2>Skræddersyet carport</h2>
+
+            <form method="post">
+                <select name="width">
+                    <option value="480">480 cm</option>
+                    <option value="540">540 cm</option>
+                    <option value="600">600 cm</option>
+                </select>
+
+                <select name="length">
+                    <option value="520">520 cm</option>
+                    <option value="600">600 cm</option>
+                    <option value="660">660 cm</option>
+                    <option value="720">720 cm</option>
+                    <option value="780">780 cm</option>
+                </select>
+                <button type="submit" formaction="confirmation">Vis skitse</button>
+            </form>
+
             <div th:if="${session.currentUser == null}">
                 <form class="generic-form" method="post">
                     <input type="text" name="username" placeholder="Enter your username"/>
                     <input type="password" name="password" placeholder="Enter your password"/>
-                    <button class="btn btn-ok" type="submit" formaction="login">Login</button>
+                    <button class="btn btn-ok" type="submit" formaction="confirmation">Login</button>
                     <div><p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p></div>
                 </form>
                 <a href="/createuser.html" th:href="@{/createuser}">Create User</a>

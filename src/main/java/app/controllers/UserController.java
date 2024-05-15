@@ -61,7 +61,7 @@ public class UserController {
 
           //  List<Order> orderList = OrderMapper.getAllOrdersPerUser(user.getUserId(), connectionPool);
             //ctx.attribute("orderList", orderList);
-            ctx.render("index.html");
+            ctx.render("orderpage.html");
         }
         catch (DatabaseException e)
         {
