@@ -8,13 +8,13 @@ public class Material {
 
     int price;
 
-    int unitID;
+    String unit;
 
     public Material(int materialID, String name, int price, int unitID) {
         this.materialID = materialID;
         this.name = name;
         this.price = price;
-        this.unitID = unitID;
+        this.unit = unit;
     }
 
     public int getMaterialID() {
@@ -29,7 +29,7 @@ public class Material {
         return price;
     }
 
-    public int getUnitID() {
-        return unitID;
+    public String getUnit() {
+        return unit;
     }
 }

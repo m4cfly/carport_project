@@ -12,7 +12,7 @@ public class Order {
 
     int statusID;
 
-    int userID;
+    User user;
 
     public Order(int orderID, int length, int width, int totalPrice, int statusID, int userID) {
         this.orderID = orderID;
@@ -20,7 +20,7 @@ public class Order {
         this.width = width;
         this.totalPrice = totalPrice;
         this.statusID = statusID;
-        this.userID = userID;
+        this.user = user;
     }
 
     public int getOrderID() {
@@ -43,7 +43,7 @@ public class Order {
         return statusID;
     }
 
-    public int getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 }

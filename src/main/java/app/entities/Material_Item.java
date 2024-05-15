@@ -8,16 +8,16 @@ public class Material_Item {
 
     String description;
 
-    int orderID;
+    Order order;
 
-    int materialVariantID;
+    MaterialVariant materialVariant;
 
     public Material_Item(int materialItemId, int quantity, String description, int orderID, int materialVariantID) {
         this.materialItemId = materialItemId;
         this.quantity = quantity;
         this.description = description;
-        this.orderID = orderID;
-        this.materialVariantID = materialVariantID;
+        this.order = order;
+        this.materialVariant = materialVariant;
     }
 
     public int getMaterialItemId() {
@@ -32,11 +32,11 @@ public class Material_Item {
         return description;
     }
 
-    public int getOrderID() {
-        return orderID;
+    public Order getOrder() {
+        return order;
     }
 
-    public int getMaterialVariantID() {
-        return materialVariantID;
+    public MaterialVariant getMaterialVariant() {
+        return materialVariant;
     }
 }
