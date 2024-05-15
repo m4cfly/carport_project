@@ -9,7 +9,7 @@ public class MaterialVariant {
     int length;
 
 
-    public MaterialVariant(int materialVariantID, int materialID, int length) {
+    public MaterialVariant(int materialVariantID, Material material, int length) {
         this.materialVariantID = materialVariantID;
         this.material = material;
         this.length = length;

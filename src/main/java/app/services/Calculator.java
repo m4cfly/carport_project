@@ -43,7 +43,7 @@ public class Calculator
         // Længde på stolper - dvs variant
         List<MaterialVariant> materialVariants = MaterialMapper.getVariantsByProductIdAndMinLength(0, POSTS, connectionPool);
         MaterialVariant materialVariant = materialVariants.get(0);
-        Material_Item materialItem = new Material_Item(0, order, materialVariant, quantity, "Stolper nedgraves 90 cm. i jord");
+        Material_Item materialItem = new Material_Item(0, quantity, "Stolper nedgraves 90 cm. i jord", order, materialVariant);
         materialItems.add(materialItem);
     }
 
@@ -60,7 +60,7 @@ public class Calculator
        // Find variant
        List<MaterialVariant> materialVariants = MaterialMapper.getVariantsByProductIdAndMinLength(0, BEAMS, connectionPool);
        MaterialVariant materialVariant = materialVariants.get(0);
-       Material_Item materialItem = new Material_Item(0, order, materialVariant, beamQuantity, "Stolper nedgraves 90 cm. i jord");
+       Material_Item materialItem = new Material_Item(0, beamQuantity, "Stolper nedgraves 90 cm. i jord", order, materialVariant);
        materialItems.add(materialItem);
 
 
@@ -73,16 +73,15 @@ public class Calculator
     }
 
     // Spær
-   private void calcRafters(Order order)
-   {
+   private void calcRafters(Order order) throws DatabaseException {
        double data = calcRaftQuantity();
        Double newData = Double.valueOf(data);
-       int value = newData.intValue();
+       int quantity = newData.intValue();
 
        // Find variant
        List<MaterialVariant> materialVariants = MaterialMapper.getVariantsByProductIdAndMinLength(0, BEAMS, connectionPool);
        MaterialVariant materialVariant = materialVariants.get(0);
-       Material_Item materialItem = new Material_Item(0, order, materialVariant, value, "Stolper nedgraves 90 cm. i jord");
+       Material_Item materialItem = new Material_Item(0, quantity, "Stolper nedgraves 90 cm. i jord", order, materialVariant);
        materialItems.add(materialItem);
    }
 

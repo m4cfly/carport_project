@@ -10,7 +10,7 @@ public class Material {
 
     String unit;
 
-    public Material(int materialID, String name, int price, int unitID) {
+    public Material(int materialID, String name, int price, String unit) {
         this.materialID = materialID;
         this.name = name;
         this.price = price;

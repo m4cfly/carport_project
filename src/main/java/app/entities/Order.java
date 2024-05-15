@@ -14,7 +14,7 @@ public class Order {
 
     User user;
 
-    public Order(int orderID, int length, int width, int totalPrice, int statusID, int userID) {
+    public Order(int orderID, int length, int width, int totalPrice, int statusID, User user) {
         this.orderID = orderID;
         this.length = length;
         this.width = width;

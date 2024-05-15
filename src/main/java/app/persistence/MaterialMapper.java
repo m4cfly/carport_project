@@ -27,13 +27,13 @@ public class MaterialMapper {
             while (resultSet.next())
             {
                 int materialVariantId = resultSet.getInt("mv_id");
-                int materialId = resultSet.getInt("m_id");
+                int material_Id = resultSet.getInt("m_id");
                 int length = resultSet.getInt("length");
                 String name = resultSet.getString("name");
-                int unitID = resultSet.getInt("unit_id");
+                String unit = resultSet.getString("unit");
                 int price = resultSet.getInt("price");
-                Material material = new Material(materialId, name, price, unitID);
-                MaterialVariant materialVariant = new MaterialVariant(materialVariantId, Material, length);
+                Material material = new Material(material_Id, name, price, unit);
+                MaterialVariant materialVariant = new MaterialVariant(materialVariantId, material, length);
                 materialVariants.add(materialVariant);
             }
         }
