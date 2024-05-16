@@ -10,8 +10,7 @@ import app.persistence.MaterialMapper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Calculator
-{
+public class Calculator {
     private static final int POSTS = 1;
     private static final int RAFTERS = 2;
     private static final int BEAMS = 2;
@@ -21,23 +20,20 @@ public class Calculator
     private int length;
     private ConnectionPool connectionPool;
 
-    public Calculator(int width, int length, ConnectionPool connectionPool)
-    {
+    public Calculator(int width, int length, ConnectionPool connectionPool) {
         this.width = width;
         this.length = length;
         this.connectionPool = connectionPool;
     }
 
-    public void calcCarport(Order order) throws DatabaseException
-    {
+    public void calcCarport(Order order) throws DatabaseException {
         calcPost(order);
         calcBeams(order);
         calcRafters(order);
     }
 
     // Stolper
-    private void calcPost(Order order) throws DatabaseException
-    {
+    private void calcPost(Order order) throws DatabaseException {
         // Antal stolper
         int quantity = calcPostQuantity();
         // Længde på stolper - dvs variant
@@ -47,13 +43,12 @@ public class Calculator
         materialItems.add(materialItem);
     }
 
-    public int calcPostQuantity()
-    {
+    public int calcPostQuantity() {
         return 2 * (2 + (length - 130) / 340);
     }
 
-   // Remme
-   private void calcBeams(Order order) throws DatabaseException {
+    // Remme
+    private void calcBeams(Order order) throws DatabaseException {
 //       int beamLength = calcBeamLength();
 //
 //       if ()
@@ -63,62 +58,70 @@ public class Calculator
 //       }
 
 
-       // Find variant
-       List<MaterialVariant> materialVariants = MaterialMapper.getVariantsByProductIdAndMinLength(length, BEAMS, connectionPool);
-       MaterialVariant materialVariant = materialVariants.get(0);
+        // Find variant
+        List<MaterialVariant> materialVariants = MaterialMapper.getVariantsByProductIdAndMinLength(length, BEAMS, connectionPool);
+        MaterialVariant materialVariant = materialVariants.get(0);
 
-       boolean found = false;
+        boolean found = false;
 
-       while (!materialVariants.isEmpty()) {
-           for (MaterialVariant variant : materialVariants) {
-               if (length % variant.getLength() == 0) {
-                   int quantity = (length % variant.getLength()) * 2;
-                   Material_Item materialItem = new Material_Item(0, quantity, "Rem placeres ovenpå stolper", order, materialVariant);
-                   materialItems.add(materialItem);
-                   found = true;
-                   break;
-               } else if (variant.getLength() > length) {
-                   Material_Item materialItem = new Material_Item(0, 2, "Rem placeres ovenpå stolper, og resten saves af", order, materialVariant);
-                   materialItems.add(materialItem);
-                   found = true;
-                   break;
-               }
+        while (!materialVariants.isEmpty()) {
+            for (MaterialVariant variant : materialVariants) {
+                if (length % variant.getLength() == 0) {
+                    int quantity = (length % variant.getLength()) * 2;
+                    Material_Item materialItem = new Material_Item(0, quantity, "Rem placeres ovenpå stolper", order, materialVariant);
+                    materialItems.add(materialItem);
+                    found = true;
+                    break;
+                } else if (variant.getLength() > length) {
+                    Material_Item materialItem = new Material_Item(0, 2, "Rem placeres ovenpå stolper, og resten saves af", order, materialVariant);
+                    materialItems.add(materialItem);
+                    found = true;
+                    break;
+                }
 
-           }
-       }
-       if (!found) {
+            }
+        }
+        if (!found) {
 
-           List<MaterialVariant> allMaterialVariants = MaterialMapper.getVariantsByProductIdAndMinLength(0, BEAMS, connectionPool);
-               int variantSpareWood = length;
-           for (MaterialVariant variant : allMaterialVariants) {
-               if (length % variant.getLength() == 0)  {
-                   Material_Item materialItem = new Material_Item(0, 2, "Rem placeres ovenpå stolper", order, materialVariant);
-                   materialItems.add(materialItem);
-                   found = true;
-                   break;
+            List<MaterialVariant> allMaterialVariants = MaterialMapper.getVariantsByProductIdAndMinLength(0, BEAMS, connectionPool);
+            int variantSpareWood = length;
+            MaterialVariant chosenVariant = null;
+            for (MaterialVariant variant : allMaterialVariants) {
+                if (length == variant.getLength()) {
+                    int beamQuantity = (length % variant.getLength()) * 2;
+                    Material_Item materialItem = new Material_Item(0, beamQuantity, "Rem placeres ovenpå stolper", order, materialVariant);
+                    materialItems.add(materialItem);
+                    found = true;
+                    break;
+                }
 
-               } else if (length % variant.getLength() < variantSpareWood) {
-                   variantSpareWood = length % variant.getLength();
-                   break;
-               }
+                if (length % variant.getLength() == 0) {
+                    int beamQuantity = (length % variant.getLength()) * 2;
+                    Material_Item materialItem = new Material_Item(0, beamQuantity, "Rem placeres ovenpå stolper", order, materialVariant);
+                    materialItems.add(materialItem);
+                    found = true;
+                    break;
 
-
-           }
-           variantSpareWood
-
-
-
-
-               }
-
-           }
-
-
-
-       
+                } else if (length % variant.getLength() < variantSpareWood) {
+                    variantSpareWood = length % variant.getLength();
+                    chosenVariant = variant;
+                    break;
+                }
 
 
+            }
+            if (variantSpareWood % chosenVariant.getLength() == 0) {
+                int beamQuantity = (length % chosenVariant.getLength()) * 2;
+                Material_Item materialItem = new Material_Item(0, beamQuantity, "Rem placeres ovenpå stolper", order, materialVariant);
+                materialItems.add(materialItem);
+                found = true;
 
+            }
+
+
+        }
+
+    }
 
 
     public int calcBeamLength() {
@@ -127,25 +130,51 @@ public class Calculator
     }
 
     // Spær
-   private void calcRafters(Order order) throws DatabaseException {
-       double data = calcRaftQuantity();
-       Double newData = Double.valueOf(data);
-       int quantity = newData.intValue();
+    private void calcRafters(Order order) throws DatabaseException {
+        double data = calcRaftQuantity();
+        Double newData = Double.valueOf(data);
+        int quantity = newData.intValue();
 
-       // Find variant
-       List<MaterialVariant> materialVariants = MaterialMapper.getVariantsByProductIdAndMinLength(length, RAFTERS, connectionPool);
-       MaterialVariant materialVariant = materialVariants.get(0);
-       Material_Item materialItem = new Material_Item(0, quantity, "Spær placeres ovenpå rem", order, materialVariant);
-       materialItems.add(materialItem);
-   }
+        // Find variant
+        List<MaterialVariant> materialVariants = MaterialMapper.getVariantsByProductIdAndMinLength(width, RAFTERS, connectionPool);
+        MaterialVariant materialVariant = materialVariants.get(0);
+
+
+
+        boolean found = false;
+
+        while (!found) {
+            for (MaterialVariant variant : materialVariants) {
+                if (width == variant.getLength()) {
+                    Material_Item materialItem = new Material_Item(0, quantity, "Spær placeres ovenpå rem", order, materialVariant);
+                    materialItems.add(materialItem);
+                    found = true;
+                    break;
+                } else if (variant.getLength() > width) {
+//                    int finalQuantity = (variant.getLength() / width) * quantity;
+                    Material_Item materialItem = new Material_Item(0, quantity, "Spær placeres ovenpå rem", order, materialVariant);
+                    materialItems.add(materialItem);
+                    found = true;
+                    break;
+
+                }
+
+            }
+        }
+
+
+
+
+
+    }
 
     public double calcRaftQuantity() {
         return 2 + (length / (4.5 + 55));
     }
 
 
-    public List<Material_Item> getMaterialItems()
-    {
+
+    public List<Material_Item> getMaterialItems() {
         return materialItems;
     }
 }
