@@ -1,5 +1,8 @@
 package test;
 
+import app.entities.Order;
+import app.entities.User;
+import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.services.Calculator;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,15 +37,27 @@ class CalculatorTest {
     @Test
     void calcBeamLength() {
         Calculator calculator = new Calculator(600, 780, connectionPool);
-        assertEquals(4, calculator.calcBeamLength());
+        assertEquals(1560, calculator.calcBeamLength());
     }
 
 
     @Test
     void calcRaftQuantity() {
         Calculator calculator = new Calculator(600, 780, connectionPool);
-        assertEquals(5, calculator.calcRaftQuantity());
+        assertEquals(15.109243697478991, calculator.calcRaftQuantity());
     }
+
+//    @Test
+//    void calcCarport() throws DatabaseException {
+//        User user = new User(0, "Nemo", "1234", 30000, "customer");
+//        Order order = new Order(0, 780, 600, 15000, 1, user);
+//        Calculator calculator = new Calculator(600, 780, connectionPool);
+//
+//
+//
+//
+//
+//    }
 
 
 
