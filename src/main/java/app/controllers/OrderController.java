@@ -23,6 +23,8 @@ public class OrderController {
         app.get("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
         app.post("/showbom", ctx -> showBom(ctx, connectionPool));
         app.get("/showorders", ctx -> showOrders(ctx, connectionPool));
+        app.post("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
+        app.get("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
     }
 
     private static void calculateCarport(Context ctx, ConnectionPool connectionPool)
@@ -98,7 +100,7 @@ public class OrderController {
 
             // TODO: Create message to customer and render order / request confirmation
 
-            ctx.render("orderflow/requestconfirmation.html");
+            ctx.render("requestconfirmation.html");
         }
         catch (DatabaseException e)
         {
@@ -115,5 +117,29 @@ public class OrderController {
         ctx.sessionAttribute("length", length);
         ctx.render("showSketch.html");
     }
+
+    private static void payForOrder (Context ctx, ConnectionPool connectionPool) {
+        User user = ctx.sessionAttribute("currentUser");
+        Order userOrder = ctx.sessionAttribute("userOrder");
+        int userId = user.getUserId();
+
+        try {
+            OrderMapper.payForOrder(userOrder, userId, connectionPool);
+
+            if (user.getUserBalance() >= userOrder.getTotalPrice()) {
+                ctx.attribute("message", "Du har betalt for din bestilling. Tak for handlen, vi vender tilbage hurtigst muligt");
+                ctx.render("/confirmation.html");
+            }
+            else {
+                ctx.attribute("message", "Du har ikke penge nok på din konto");
+                ctx.render("/cart.html");
+            }
+
+        } catch (DatabaseException e) {
+            ctx.attribute("message", "Noget gik galt mens betalingen blev udført, pengene er ikke blevet trukket");
+            ctx.render("/cart.html");
+        }
+    }
+
 
 }
