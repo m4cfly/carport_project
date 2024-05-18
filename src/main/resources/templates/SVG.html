@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>SVG Carport</title>
+    </head>
+    <body>
+
+        <h1>Carport med pile og mål</h1>
+
+        <svg width="600" height="850" viewBox="-50 -50 700 900">
+            <!-- Rammen -->
+            <rect x="0" y="0" width="600" height="780" style="stroke:#000000; fill: none" />
+
+            <!-- Spære -->
+            <rect x="0" y="0" width="600" height="10" style="stroke:#000000; fill: #ffffff" />
+            <rect x="0" y="770" width="600" height="10" style="stroke:#000000; fill: #ffffff" />
+
+            <!-- Rem -->
+            <rect x="0" y="150" width="600" height="10" style="stroke:#000000; fill: #ffffff" />
+            <rect x="0" y="620" width="600" height="10" style="stroke:#000000; fill: #ffffff" />
+
+            <!-- Krydset i midten af tegningen -->
+            <line x1="0" y1="150" x2="600" y2="620" style="stroke:#000000; stroke-dasharray: 10 10;" />
+            <line x1="0" y1="620" x2="600" y2="150" style="stroke:#000000; stroke-dasharray: 10 10;" />
+
+            <!-- Stolper -->
+            <rect x="50" y="140" width="10" height="10" style="stroke:#000000; fill: #ffffff" />
+            <rect x="540" y="140" width="10" height="10" style="stroke:#000000; fill: #ffffff" />
+            <rect x="50" y="610" width="10" height="10" style="stroke:#000000; fill: #ffffff" />
+            <rect x="540" y="610" width="10" height="10" style="stroke:#000000; fill: #ffffff" />
+
+            <!-- Pilen i koden.(Den der sidder på enden af X og Y linjerne til at indikere længden)  -->
+            <defs>
+                <marker id="arrow" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#000000" />
+                </marker>
+            </defs>
+
+            <!-- Vandret pil -->
+            <line x1="0" y1="800" x2="600" y2="800" style="stroke:#000000; marker-start:url(#arrow); marker-end:url(#arrow);" />
+            <text x="300" y="825" font-family="Arial" font-size="20" text-anchor="middle">600 cm</text>
+
+            <!-- Lodret pil -->
+            <line x1="-20" y1="0" x2="-20" y2="780" style="stroke:#000000; marker-start:url(#arrow); marker-end:url(#arrow);" />
+            <text x="-65" y="390" font-family="Arial" font-size="20" text-anchor="middle" >780 cm</text>
+        </svg>
+
+    </body>
+</html>

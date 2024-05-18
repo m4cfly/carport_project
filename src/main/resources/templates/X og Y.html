@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG Koordinatsystem med Pile</title>
+</head>
+<body>
+
+<h1>Koordinatsystem med Pile</h1>
+
+<svg width="855" height="690" viewBox="0 0 855 690" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMinYMin">
+
+    <!-- Pile markering -->
+    <defs>
+        <marker id="beginArrow" markerWidth="12" markerHeight="12" refX="0" refY="6" orient="auto">
+            <path d="M0,6 L12,0 L12,12 L0,6" style="fill: #000000;" />
+        </marker>
+        <marker id="endArrow" markerWidth="12" markerHeight="12" refX="12" refY="6" orient="auto">
+            <path d="M0,0 L12,6 L0,12 L0,0" style="fill: #000000;" />
+        </marker>
+    </defs>
+
+    <!-- Y-Akse -->
+    <line x1="50" y1="600" x2="50" y2="50" style="stroke:#000000; marker-end:url(#endArrow);" />
+
+    <!-- X-Akse -->
+    <line x1="50" y1="600" x2="800" y2="600" style="stroke:#000000; marker-end:url(#endArrow);" />
+
+    <!-- Vandrette Grid Linjer -->
+    <line x1="50" y1="500" x2="800" y2="500" style="stroke:#cccccc; stroke-dasharray: 5,5;" />
+    <line x1="50" y1="400" x2="800" y2="400" style="stroke:#cccccc; stroke-dasharray: 5,5;" />
+    <line x1="50" y1="300" x2="800" y2="300" style="stroke:#cccccc; stroke-dasharray: 5,5;" />
+    <line x1="50" y1="200" x2="800" y2="200" style="stroke:#cccccc; stroke-dasharray: 5,5;" />
+    <line x1="50" y1="100" x2="800" y2="100" style="stroke:#cccccc; stroke-dasharray: 5,5;" />
+
+    <!-- Lodrette Grid Linjer -->
+    <line x1="150" y1="50" x2="150" y2="600" style="stroke:#cccccc; stroke-dasharray: 5,5;" />
+    <line x1="250" y1="50" x2="250" y2="600" style="stroke:#cccccc; stroke-dasharray: 5,5;" />
+    <line x1="350" y1="50" x2="350" y2="600" style="stroke:#cccccc; stroke-dasharray: 5,5;" />
+    <line x1="450" y1="50" x2="450" y2="600" style="stroke:#cccccc; stroke-dasharray: 5,5;" />
+    <line x1="550" y1="50" x2="550" y2="600" style="stroke:#cccccc; stroke-dasharray: 5,5;" />
+    <line x1="650" y1="50" x2="650" y2="600" style="stroke:#cccccc; stroke-dasharray: 5,5;" />
+    <line x1="750" y1="50" x2="750" y2="600" style="stroke:#cccccc; stroke-dasharray: 5,5;" />
+
+    <!-- Etiketter -->
+    <text x="820" y="600" font-family="Arial" font-size="20" text-anchor="middle">X</text>
+    <text x="50" y="30" font-family="Arial" font-size="20" text-anchor="middle">Y</text>
+
+    <!-- X-akse etiketter -->
+    <text x="150" y="620" font-family="Arial" font-size="15" text-anchor="middle">100</text>
+    <text x="250" y="620" font-family="Arial" font-size="15" text-anchor="middle">200</text>
+    <text x="350" y="620" font-family="Arial" font-size="15" text-anchor="middle">300</text>
+    <text x="450" y="620" font-family="Arial" font-size="15" text-anchor="middle">400</text>
+    <text x="550" y="620" font-family="Arial" font-size="15" text-anchor="middle">500</text>
+    <text x="650" y="620" font-family="Arial" font-size="15" text-anchor="middle">600</text>
+    <text x="750" y="620" font-family="Arial" font-size="15" text-anchor="middle">700</text>
+
+    <!-- Y-akse etiketter -->
+    <text x="30" y="500" font-family="Arial" font-size="15" text-anchor="middle">100</text>
+    <text x="30" y="400" font-family="Arial" font-size="15" text-anchor="middle">200</text>
+    <text x="30" y="300" font-family="Arial" font-size="15" text-anchor="middle">300</text>
+    <text x="30" y="200" font-family="Arial" font-size="15" text-anchor="middle">400</text>
+    <text x="30" y="100" font-family="Arial" font-size="15" text-anchor="middle">500</text>
+
+</svg>
+
+</body>
+</html>
