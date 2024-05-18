@@ -1,5 +1,6 @@
 package app.persistence;
 
+import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 
@@ -69,6 +70,35 @@ public class UserMapper
             throw new DatabaseException(message, e.getMessage());
         }
     }
+
+    public static void inputMoney(int depositedMoney, int userId, ConnectionPool connectionPool) throws DatabaseException
+    {
+        String sql = "UPDATE public.users \n" +
+                "SET user_balance = user_balance + ? " +
+                "WHERE public.users.user_id=?;";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        )
+        {
+            ps.setInt(1, depositedMoney);
+            ps.setInt(2, userId);
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1)
+            {
+                throw new DatabaseException("The transaction did not go through");
+            }
+
+        }
+        catch (SQLException e)
+        {
+            throw new DatabaseException("Error while performing transaction");
+        }
+    }
+
+
    /* public static Map< String, User> getAllUsers(ConnectionPool connectionPool ) throws DatabaseException
     {
         String sql = "SELECT * FROM users WHERE role = 'admin';";
