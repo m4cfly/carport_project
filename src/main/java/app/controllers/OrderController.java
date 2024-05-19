@@ -8,6 +8,7 @@ import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import app.services.Calculator;
+import app.services.Svg;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -35,44 +36,10 @@ public class OrderController {
     {
         // TODO: Create a SVG Drawing and inject into the showOrder.html template as a string
 
-        String svgText = "<svg width=\"600\" height=\"850\" viewBox=\"-50 -50 700 900\">\n" +
-                "            <!-- Rammen -->\n" +
-                "            <rect x=\"0\" y=\"0\" width=\"600\" height=\"780\" style=\"stroke:#000000; fill: none\" />\n" +
-                "\n" +
-                "            <!-- Spære -->\n" +
-                "            <rect x=\"0\" y=\"0\" width=\"600\" height=\"10\" style=\"stroke:#000000; fill: #ffffff\" />\n" +
-                "            <rect x=\"0\" y=\"770\" width=\"600\" height=\"10\" style=\"stroke:#000000; fill: #ffffff\" />\n" +
-                "\n" +
-                "            <!-- Rem -->\n" +
-                "            <rect x=\"0\" y=\"150\" width=\"600\" height=\"10\" style=\"stroke:#000000; fill: #ffffff\" />\n" +
-                "            <rect x=\"0\" y=\"620\" width=\"600\" height=\"10\" style=\"stroke:#000000; fill: #ffffff\" />\n" +
-                "\n" +
-                "            <!-- Krydset i midten af tegningen -->\n" +
-                "            <line x1=\"0\" y1=\"150\" x2=\"600\" y2=\"620\" style=\"stroke:#000000; stroke-dasharray: 10 10;\" />\n" +
-                "            <line x1=\"0\" y1=\"620\" x2=\"600\" y2=\"150\" style=\"stroke:#000000; stroke-dasharray: 10 10;\" />\n" +
-                "\n" +
-                "            <!-- Stolper -->\n" +
-                "            <rect x=\"50\" y=\"140\" width=\"10\" height=\"10\" style=\"stroke:#000000; fill: #ffffff\" />\n" +
-                "            <rect x=\"540\" y=\"140\" width=\"10\" height=\"10\" style=\"stroke:#000000; fill: #ffffff\" />\n" +
-                "            <rect x=\"50\" y=\"610\" width=\"10\" height=\"10\" style=\"stroke:#000000; fill: #ffffff\" />\n" +
-                "            <rect x=\"540\" y=\"610\" width=\"10\" height=\"10\" style=\"stroke:#000000; fill: #ffffff\" />\n" +
-                "\n" +
-                "            <!-- Pilen i koden.(Den der sidder på enden af X og Y linjerne til at indikere længden)  -->\n" +
-                "            <defs>\n" +
-                "                <marker id=\"arrow\" markerWidth=\"10\" markerHeight=\"10\" refX=\"0\" refY=\"3\" orient=\"auto\" markerUnits=\"strokeWidth\">\n" +
-                "                    <path d=\"M0,0 L0,6 L9,3 z\" fill=\"#000000\" />\n" +
-                "                </marker>\n" +
-                "            </defs>\n" +
-                "\n" +
-                "            <!-- Vandret pil -->\n" +
-                "            <line x1=\"0\" y1=\"800\" x2=\"600\" y2=\"800\" style=\"stroke:#000000; marker-start:url(#arrow); marker-end:url(#arrow);\" />\n" +
-                "            <text x=\"300\" y=\"825\" font-family=\"Arial\" font-size=\"20\" text-anchor=\"middle\">600 cm</text>\n" +
-                "\n" +
-                "            <!-- Lodret pil -->\n" +
-                "            <line x1=\"-20\" y1=\"0\" x2=\"-20\" y2=\"780\" style=\"stroke:#000000; marker-start:url(#arrow); marker-end:url(#arrow);\" />\n" +
-                "            <text x=\"-65\" y=\"390\" font-family=\"Arial\" font-size=\"20\" text-anchor=\"middle\" >780 cm</text>\n" +
-                "        </svg>";
-        ctx.attribute("svg", svgText);
+        Svg carportSvg = new Svg(0,0, "0 0 855 690", "100%", "auto");
+
+
+        ctx.attribute("svg", carportSvg.toString());
         ctx.render("showOrder.html");
     }
 
