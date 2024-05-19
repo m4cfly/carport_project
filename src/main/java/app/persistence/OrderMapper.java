@@ -112,7 +112,7 @@ import java.util.List;
             }
             catch (SQLException e)
             {
-                throw new DatabaseException("Could not create user in the database", e.getMessage());
+                throw new DatabaseException("Could not create the order in the database", e.getMessage());
             }
 
         }

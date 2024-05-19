@@ -18,6 +18,7 @@ public class OrderController {
     public static void addRoutes (Javalin app, ConnectionPool connectionPool) {
         app.post("/search", ctx -> addRoutes((Javalin) ctx, connectionPool));
         app.get("confirmation", ctx -> ctx.render("confirmation.html"));
+        app.post("/sendrequest", ctx -> ctx.render("sendrequest.html"));
         app.post("/confirmation", ctx -> calculateCarport(ctx, connectionPool));
         app.post("/showsketch", ctx -> showSketch(ctx, connectionPool));
         app.get("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
@@ -160,7 +161,7 @@ public class OrderController {
         int length = Integer.parseInt(ctx.formParam("length"));
         ctx.sessionAttribute("width", width);
         ctx.sessionAttribute("length", length);
-        ctx.render("showSketch.html");
+        ctx.render("showsketch.html");
     }
 
     private static void payForOrder (Context ctx, ConnectionPool connectionPool) {
