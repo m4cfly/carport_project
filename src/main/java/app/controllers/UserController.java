@@ -4,6 +4,7 @@ import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -21,6 +22,32 @@ public class UserController {
         app.get("/logout", ctx -> logout(ctx));
         app.get("/createuser", ctx -> ctx.render("createuser.html"));
         app.post("/createuser", ctx -> createUser(ctx, connectionPool));
+        app.post("/inputMoney", ctx -> inputMoney(ctx, connectionPool));
+    }
+
+    private static void inputMoney(Context ctx, ConnectionPool connectionPool) {
+        User user = ctx.sessionAttribute("currentUser");
+
+        int userId = user.getUserId();
+        int moneyInput = Integer.parseInt(ctx.formParam("inputMoney"));
+
+        try {
+            UserMapper.inputMoney(moneyInput, userId, connectionPool);
+
+            if (moneyInput > 0) {
+                ctx.attribute("message", "Du har lagt " + moneyInput + " kr. ind på din konto");
+                ctx.attribute("message", "Du har nu " + user.getUserBalance() + " kr. på din konto");
+                ctx.render("/betaling.html");
+            }
+            else {
+                ctx.attribute("message", "Du har ikke penge nok på din konto");
+                ctx.render("/cart.html");
+            }
+
+        } catch (DatabaseException e) {
+            ctx.attribute("message", "Noget gik galt mens betalingen blev udført, pengene er ikke blevet trukket");
+            ctx.render("/cart.html");
+        }
     }
 
     private static void createUser(Context ctx, ConnectionPool connectionPool)
