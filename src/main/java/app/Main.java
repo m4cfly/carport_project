@@ -34,5 +34,6 @@ public class Main {
         //CarportController.addRoutes(app, connectionPool);
         OrderController.addRoutes(app, connectionPool);
         UserController.addRoutes(app, connectionPool);
+        app.get("/showOrder", ctx -> OrderController.showOrder(ctx));
     }
 }
