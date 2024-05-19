@@ -8,6 +8,7 @@ import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
 import app.services.Calculator;
 import app.services.CarportSvg;
+import app.services.Svg;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
