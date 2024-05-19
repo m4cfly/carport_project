@@ -3,13 +3,13 @@ package app.services;
 
 public class CarportSvg {
     private int width;
-    private int height;
+    private int length;
     private Svg carportSvg;
 
 
     public CarportSvg(int width, int height) {
         this.width = width;
-        this.height = height;
+        this.length = height;
         carportSvg = new Svg(0,0,"0 0 855 690", "50");
         carportSvg.addRectangle(0,0,600,780, "stroke-width:1px; stroke:#000000; fill: #ffffff");
         addBeams();
