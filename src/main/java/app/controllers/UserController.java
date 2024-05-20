@@ -23,6 +23,18 @@ public class UserController {
         app.get("/createuser", ctx -> ctx.render("createuser.html"));
         app.post("/createuser", ctx -> createUser(ctx, connectionPool));
         app.post("/inputMoney", ctx -> inputMoney(ctx, connectionPool));
+        app.post("/saveuserinfo", ctx -> customerInfo(ctx, connectionPool));
+    }
+
+    private static void customerInfo(Context ctx, ConnectionPool connectionPool) {
+        String fullname = ctx.formParam("fullname");
+        String address = ctx.formParam("address");
+        String postalCode = ctx.formParam("postalcode");
+        String city = ctx.formParam("city");
+        String phoneNumber = ctx.formParam("phonenumber");
+        String email = ctx.formParam("email");
+
+        ctx.render("/payfororder.html");
     }
 
     private static void inputMoney(Context ctx, ConnectionPool connectionPool) {
@@ -37,16 +49,16 @@ public class UserController {
             if (moneyInput > 0) {
                 ctx.attribute("message", "Du har lagt " + moneyInput + " kr. ind på din konto");
                 ctx.attribute("message", "Du har nu " + user.getUserBalance() + " kr. på din konto");
-                ctx.render("/betaling.html");
+                ctx.render("/payfororder.html");
             }
             else {
                 ctx.attribute("message", "Du har ikke penge nok på din konto");
-                ctx.render("/cart.html");
+                ctx.render("/insertmoney.html");
             }
 
         } catch (DatabaseException e) {
             ctx.attribute("message", "Noget gik galt mens betalingen blev udført, pengene er ikke blevet trukket");
-            ctx.render("/cart.html");
+            ctx.render("/payfororder.html");
         }
     }
 

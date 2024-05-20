@@ -119,7 +119,7 @@ import java.util.List;
 
         public static void insertMaterialItems(List<Material_Item> materialItems, ConnectionPool connectionPool) throws DatabaseException
         {
-            String sql = "INSERT INTO material_item (orders_id, mv_id, quantity, description) " +
+            String sql = "INSERT INTO material_item (orders_id, mv_id, quantity, describable) " +
                     "VALUES (?, ?, ?, ?)";
             //TODO: Lav en materialVariant foreignKey (mv_id) i Material_Item tabellen i databasen - m_id skal også forblive ikke fjernes!
             // tror ikke vi har materialVariant foreign key i vores MaterialItem tabel i databasen (men m_id istedet for?)?
@@ -133,6 +133,7 @@ import java.util.List;
                         ps.setInt(2, materialItem.getMaterialVariant().getMaterialVariantID());
                         ps.setInt(3, materialItem.getQuantity());
                         ps.setString(4, materialItem.getDescription());
+//                        ps.setInt(5, materialItem.getMaterialVariant().getMaterial().getMaterialID());
                         ps.executeUpdate();
                     }
                 }
