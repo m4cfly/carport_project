@@ -36,11 +36,11 @@ public class OrderController {
     }
     public static void showOrder(Context ctx)
     {
-        // TODO: Create a SVG Drawing and inject into the showOrder.html template as a string
+        // TODO: Create a SVG Drawing and inject into the showorder.html template as a string
         Locale.setDefault(new Locale("US"));
         CarportSvg svg = new CarportSvg(600, 780);
         ctx.attribute("svg", svg.toString());
-        ctx.render("showOrder.html");
+        ctx.render("showorder.html");
     }
 
     private static void showOrders(Context ctx, ConnectionPool connectionPool)
@@ -50,7 +50,7 @@ public class OrderController {
         {
             List<Order> orders = OrderMapper.getAllOrders(connectionPool);
             ctx.attribute("orders", orders);
-            ctx.render("orders/showorders.html");
+            ctx.render("/showorders.html");
         }
         catch (DatabaseException e)
         {
@@ -90,8 +90,8 @@ public class OrderController {
     private static void sendRequest(Context ctx, ConnectionPool connectionPool)
     {
         // Get order details from front-end
-        int width = ctx.sessionAttribute("width");
-        int length = ctx.sessionAttribute("length");
+        int width = Integer.parseInt(ctx.formParam("width"));
+        int length = Integer.parseInt(ctx.formParam("length"));
         int status = 1; // hardcoded for now
         int totalPrice = 0; // hardcoded for now
         User user = new User(1, "", "", 20000, "customer"); // hardcoded for now
@@ -102,6 +102,7 @@ public class OrderController {
         try
         {
             order = OrderMapper.insertOrder(order, connectionPool);
+            ctx.sessionAttribute("order", order);
 
             // TODO: Calculate order items (stykliste)
             Calculator calculator = new Calculator(width, length, connectionPool);
@@ -110,9 +111,8 @@ public class OrderController {
             // TODO: Save order items in database (stykliste)
             OrderMapper.insertMaterialItems(calculator.getMaterialItems(), connectionPool);
 
-            // TODO: Create message to customer and render order / request confirmation
-
-            ctx.render("requestconfirmation.html");
+            ctx.attribute("message", "Du har nu indsendt din forespørgsel.");
+            ctx.render("confirmation.html");
         }
         catch (DatabaseException e)
         {

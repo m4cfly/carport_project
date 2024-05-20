@@ -31,6 +31,16 @@
             <h1>Tak for din forespørgsel vi beregne en pris for dig! hurtigst muligt</h1>
 
             <h2>Skræddersyet carport</h2>
+            <h3>Pay for order</h3>
+            <div th:if="${session.currentUser != null}">
+                <form class="generic-form" method="post">
+                    <input type="text" name="username" placeholder="Enter your username"/>
+                    <input type="password" name="password" placeholder="Enter your password"/>
+                    <button class="btn btn-ok" type="submit" formaction="login">Login</button>
+                    <div><p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p></div>
+                </form>
+                <a href="/createuser.html" th:href="@{/createuser}">Create User</a>
+            </div>
 
             <div th:if="${session.currentUser == null}">
                 <form class="generic-form" method="post">
