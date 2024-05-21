@@ -11,7 +11,7 @@
 
 <div id="page">
     <header>
-        <a href="index.html" th:href="@{/}">
+        <a href="../index.html" th:href="@{/public}">
             <img src="/images/logo.png" width="20%"/>
         </a>
         <div width="80%">
@@ -21,8 +21,8 @@
                     <span th:text="${session.currentUser.username}"> </span>
                 </b>
                 <a href="/logout" th:href="@{/logout}">Logout</a>
-                <a href="/" th:href="@{/}">
-                    <img src="../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
+                <a href="/public" th:href="@{/public}">
+                    <img src="../../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
                 </a>
             </div>
         </div>
@@ -37,9 +37,9 @@
                     <p>Indtast beløb der skal sættes ind i din konto:</p>
                     <input type="number" name="inputMoney" placeholder="Skriv et positivt pengebeløb">
 
-                    <button type="submit" formaction="/inputMoney">Gå videre til betaling</button>
+                    <button type="submit" formaction="/inputmoney">Gå videre til betaling</button>
                 </form>
-                <a href="/index.html" th:href="@{/}">Gå tilbage</a>
+                <a href="/index.html" th:href="@{/public}">Gå tilbage</a>
 
             </div>
             <p class="errormessage" th:text="${#ctx.message}"></p>

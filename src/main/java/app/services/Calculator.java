@@ -209,14 +209,9 @@ public class Calculator {
 
 
                 }
-
-
-
             }
 
         }
-
-
     }
 
     public double calcRaftQuantity() {
