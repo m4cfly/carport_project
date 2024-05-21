@@ -32,7 +32,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr th:each="item: ${material_Items}">
+  <tr th:each="item: ${material_item}">
     <td th:text="${item.materialVariant.material.name}"></td>
     <td th:text="${item.materialVariant.length}"></td>
     <td th:text="${item.quantity}"></td>

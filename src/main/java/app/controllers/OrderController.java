@@ -91,16 +91,19 @@ public class OrderController {
 
             if (materialItems.size() == 0)
             {
-                ctx.render("order/bom.html");
+                ctx.render("/sendrequest.html");
                 return;
             }
 
-            Material_Item materialItem = materialItems.get(0);
 
-            ctx.attribute("width", materialItem.getOrder().getWidth());
-            ctx.attribute("length", materialItem.getOrder().getLength());
-            ctx.attribute("materialItems", materialItems);
-            ctx.render("order/bom.html");
+            for (int i = 0; i < materialItems.indexOf(materialItems); i++) {
+                Material_Item materialItem = materialItems.get(i);
+                ctx.attribute("width", materialItem.getOrder().getWidth());
+                ctx.attribute("length", materialItem.getOrder().getLength());
+                ctx.attribute("materialItems", materialItems);
+            }
+                ctx.render("order/bom.html");
+
         }
         catch (DatabaseException e)
         {
