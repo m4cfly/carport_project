@@ -31,7 +31,7 @@ public class OrderController {
 
     private static void calculateCarport(Context ctx, ConnectionPool connectionPool)
     {
-        ctx.render("order/requestconfirm.html");
+        ctx.render("/index.html");
     }
     public static void showOrder(Context ctx)
     {
@@ -86,18 +86,19 @@ public class OrderController {
         }
     }
 
-    private static void sendRequest(Context ctx, ConnectionPool connectionPool)
+    private static void sendRequest(Context ctx, ConnectionPool connectionPool) throws DatabaseException
     {
         // Get order details from front-end
+        User user = ctx.sessionAttribute("currentUser");
         int width = ctx.sessionAttribute("width");
         int length = ctx.sessionAttribute("length");
         ctx.sessionAttribute("width", width);
         ctx.sessionAttribute("length", length);
         int status = 1; // hardcoded for now
         int totalPrice = 0; // hardcoded for now
-        User user = new User(1, "qwe", "qwe", 20000, "customer"); // hardcoded for now
+        int userId = user.getUserId();
 
-        Order order = new Order(0, status, width, length, totalPrice, user);
+        Order order = new Order(0, length, width, totalPrice, status, user);
 
         // TODO: Insert order in database
         try
@@ -113,7 +114,7 @@ public class OrderController {
             OrderMapper.insertMaterialItems(calculator.getMaterialItems(), connectionPool);
 
             ctx.attribute("message", "Du har nu indsendt din forespørgsel.");
-            ctx.render("requestconfirm.html");
+            ctx.render("index.html");
         }
         catch (DatabaseException e)
         {
