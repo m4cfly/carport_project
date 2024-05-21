@@ -84,7 +84,7 @@ public class OrderController {
     private static void showBom(Context ctx, ConnectionPool connectionPool)
     {
 
-        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        int orderId = ctx.sessionAttribute("orderID");
         try
         {
             List<Material_Item> materialItems = OrderMapper.getMaterialItemsByOrderId(orderId, connectionPool);
@@ -115,19 +115,22 @@ public class OrderController {
         User user = ctx.sessionAttribute("currentUser");
         int width = ctx.sessionAttribute("width");
         int length = ctx.sessionAttribute("length");
-        ctx.sessionAttribute("width", width);
-        ctx.sessionAttribute("length", length);
+//        ctx.sessionAttribute("width", width);
+//        ctx.sessionAttribute("length", length);
         int status = 1; // hardcoded for now
         int totalPrice = 0; // hardcoded for now
         int userId = user.getUserId();
 
         Order order = new Order(0, length, width, totalPrice, status, user);
+        ctx.sessionAttribute("order", order);
+
 
         // TODO: Insert order in database
         try
         {
             order = OrderMapper.insertOrder(order, connectionPool);
             ctx.sessionAttribute("order", order);
+            ctx.sessionAttribute("orderID", order.getOrderID());
 
             // TODO: Calculate order items (stykliste)
             Calculator calculator = new Calculator(width, length, connectionPool);
