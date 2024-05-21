@@ -29,7 +29,6 @@
     <div id="content" class="transparent-grey">
         <div id="intro-text">
             <h1>Welcome! Order Carport</h1>
-            <h1>Fog carport</h1>
 
             <h2>Skræddersyet carport</h2>
 
@@ -49,7 +48,6 @@
                 </select>
                 <button type="submit" formaction="/showsketch">Vis skitse</button>
             </form>
-
             <div th:if="${session.currentUser == null}">
                 <form class="generic-form" method="post">
                     <input type="text" name="username" placeholder="Enter your username"/>

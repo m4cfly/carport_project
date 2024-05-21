@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Carport</title>
@@ -10,16 +10,16 @@
 
 <div id="page">
     <header>
-        <a href="index.html" th:href="@{/}">
+        <a href="../index.html" th:href="@{/public}">
             <img src="/images/background.png" width="100%"/>
         </a>
     </header>
     <nav>
         <div id="left-nav">
-            <a href="/index.html" th:href="@{/}">Front Page</a>
-            <a href="/index.html" th:href="@{/}">Account</a>
-            <a href="/index.html" th:href="@{/}">Cart</a>
-            <a href="/checkout.html" th:href="@{/}">Checkout</a>
+            <a href="/index.html" th:href="@{/public}">Front Page</a>
+            <a href="/index.html" th:href="@{/public}">Account</a>
+            <a href="/index.html" th:href="@{/public}">Cart</a>
+            <a href="/checkout.html" th:href="@{/public}">Checkout</a>
         </div>
         <div id="right-nav">
 
@@ -29,8 +29,8 @@
                      <span th:text="${session.currentUser.username}"> </span>
                 </b>
                 <a href="/logout" th:href="@{/logout}">Logout</a>
-                <a href="/" th:href="@{/}">
-                    <img src="../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
+                <a href="/public" th:href="@{/public}">
+                    <img src="../../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
                 </a>
             </div>
         </div>

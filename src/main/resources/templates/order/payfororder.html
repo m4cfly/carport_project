@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Carport</title>
@@ -12,7 +12,7 @@
 <div id="page">
     <header>
 
-        <a href="index.html" th:href="@{/}">
+        <a href="../index.html" th:href="@{/public}">
             <img src="/images/logo.png" width="20%"/>
         </a>
         <div width="80%">
@@ -22,8 +22,8 @@
                     <span th:text="${session.currentUser.username}"> </span>
                 </b>
                 <a href="/logout" th:href="@{/logout}">Logout</a>
-                <a href="/" th:href="@{/}">
-                    <img src="../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
+                <a href="/public" th:href="@{/public}">
+                    <img src="../../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
                 </a>
             </div>
         </div>
@@ -44,8 +44,8 @@
 
                     <button type="submit" formaction="/payForOrder">Betal for ordren</button>
                 </form>
-                <a href="/insertmoney.html" th:href="@{/}">Indsæt penge på kontoen</a>
-                <a href="/index.html" th:href="@{/}">Gå tilbage</a>
+                <a href="/insertmoney.html" th:href="@{/public}">Indsæt penge på kontoen</a>
+                <a href="/index.html" th:href="@{/public}">Gå tilbage</a>
 
             </div>
             <p class="errormessage" th:text="${#ctx.message}"></p>

@@ -28,6 +28,7 @@
     <div id="content" class="transparent-grey">
         <div id="intro-text">
             <div th:if="${session.currentUser == null}">
+                <h1>Welcome Guest!</h1>
                 <form class="generic-form" method="post">
                     <input type="text" name="username" placeholder="Enter your username"/>
                     <input type="password" name="password" placeholder="Enter your password"/>

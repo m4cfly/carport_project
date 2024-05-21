@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<title>Fog Carport</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+
+<body>
+
+<h1>Skræddersyet Carport</h1>
+
+<h2>Stykliste</h2>
+<p>Carport med målene:</p>
+<table>
+  <tr>
+    <td>Bredde:</td>
+    <td th:text="${width}"></td>
+  </tr>
+  <tr>
+    <td>Længde:</td>
+    <td th:text="${length}"></td>
+  </tr>
+</table>
+<p>stykliste herunder:</p>
+<table>
+  <thead>
+  <tr>
+    <td>Materiale</td>
+    <td>Længde</td>
+    <td>Antal</td>
+    <td>Enhed</td>
+    <td>Anvendelse</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="item: ${materialItems}">
+    <td th:text="${item.materialVariant.materials.name}"></td>
+    <td th:text="${item.materialVariant.length}"></td>
+    <td th:text="${item.quantity}"></td>
+    <td th:text="${item.productVariant.product.unit}"></td>
+    <td th:text="${item.describable}"></td>
+  </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

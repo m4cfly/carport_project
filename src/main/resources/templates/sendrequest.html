@@ -20,7 +20,7 @@
                     <span th:text="${session.currentUser.username}"> </span>
                 </b>
                 <a href="/logout" th:href="@{/logout}">Logout</a>
-                <a href="/cart.html" th:href="@{/cart.html}">
+                <a href="/cart.html" th:href="@{/templates/order/cart.html}">
                     <img src="../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
                 </a>
             </div>
@@ -31,6 +31,11 @@
             <h1>Tak for din forespørgsel vi beregne en pris for dig! hurtigst muligt</h1>
 
             <h2>Skræddersyet carport</h2>
+
+            <h2>Stykliste</h2>
+            <form method="get">
+                <button type="submit" formaction="/showorders">Vis ordrer</button>
+            </form>
 
             <div th:if="${session.currentUser == null}">
                 <form class="generic-form" method="post">

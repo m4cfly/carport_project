@@ -6,6 +6,7 @@ import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
+import app.persistence.UserMapper;
 import app.services.Calculator;
 import app.services.CarportSvg;
 import app.services.Svg;
@@ -18,13 +19,8 @@ import java.util.Locale;
 public class OrderController {
 
     public static void addRoutes (Javalin app, ConnectionPool connectionPool) {
-        app.post("/search", ctx -> addRoutes((Javalin) ctx, connectionPool));
-        app.get("confirmation", ctx -> ctx.render("confirmation.html"));
-        app.post("/sendrequest", ctx -> ctx.render("sendrequest.html"));
-        app.post("/confirmation", ctx -> calculateCarport(ctx, connectionPool));
         app.post("/showsketch", ctx -> showSketch(ctx, connectionPool));
         app.get("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
-//        app.post("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
         app.post("/showbom", ctx -> showBom(ctx, connectionPool));
         app.get("/showorders", ctx -> showOrders(ctx, connectionPool));
         app.post("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
@@ -34,15 +30,15 @@ public class OrderController {
 
     private static void calculateCarport(Context ctx, ConnectionPool connectionPool)
     {
-        ctx.render("confirmation.html");
+        ctx.render("order/requestconfirm.html");
     }
     public static void showOrder(Context ctx)
     {
-        // TODO: Create a SVG Drawing and inject into the showOrder.html template as a string
+        // TODO: Create a SVG Drawing and inject into the showorders.html template as a string
         Locale.setDefault(new Locale("US"));
         CarportSvg svg = new CarportSvg(600, 780);
         ctx.attribute("svg", svg.toString());
-        ctx.render("showOrder.html");
+        ctx.render("showorders.html");
     }
 
     private static void showOrders(Context ctx, ConnectionPool connectionPool)
@@ -71,7 +67,7 @@ public class OrderController {
 
             if (materialItems.size() == 0)
             {
-                ctx.render("orders/showbom.html");
+                ctx.render("orders/bom.html");
                 return;
             }
 
@@ -80,7 +76,7 @@ public class OrderController {
             ctx.attribute("width", materialItem.getOrder().getWidth());
             ctx.attribute("length", materialItem.getOrder().getLength());
             ctx.attribute("materialItems", materialItems);
-            ctx.render("orders/showbom.html");
+            ctx.render("orders/bom.html");
         }
         catch (DatabaseException e)
         {
@@ -92,13 +88,13 @@ public class OrderController {
     private static void sendRequest(Context ctx, ConnectionPool connectionPool)
     {
         // Get order details from front-end
-        int width = Integer.parseInt(ctx.formParam("width"));
-        int length = Integer.parseInt(ctx.formParam("length"));
+        int width = ctx.sessionAttribute("width");
+        int length = ctx.sessionAttribute("length");
         ctx.sessionAttribute("width", width);
         ctx.sessionAttribute("length", length);
         int status = 1; // hardcoded for now
         int totalPrice = 0; // hardcoded for now
-        User user = new User(1, "", "", 20000, "customer"); // hardcoded for now
+        User user = new User(1, "qwe", "qwe", 20000, "customer"); // hardcoded for now
 
         Order order = new Order(0, status, width, length, totalPrice, user);
 
@@ -116,7 +112,7 @@ public class OrderController {
             OrderMapper.insertMaterialItems(calculator.getMaterialItems(), connectionPool);
 
             ctx.attribute("message", "Du har nu indsendt din forespørgsel.");
-            ctx.render("confirmation.html");
+            ctx.render("requestconfirm.html");
         }
         catch (DatabaseException e)
         {
@@ -131,7 +127,7 @@ public class OrderController {
         int length = Integer.parseInt(ctx.formParam("length"));
         ctx.sessionAttribute("width", width);
         ctx.sessionAttribute("length", length);
-        ctx.render("showsketch.html");
+        ctx.render("draw/showsketch.html");
     }
 
     private static void payForOrder (Context ctx, ConnectionPool connectionPool) {
@@ -144,7 +140,7 @@ public class OrderController {
 
             if (user.getUserBalance() >= userOrder.getTotalPrice()) {
                 ctx.attribute("message", "Du har betalt for din bestilling. Tak for handlen, vi vender tilbage hurtigst muligt");
-                ctx.render("/confirmation.html");
+                ctx.render("/requestconfirm.html");
             }
             else {
                 ctx.attribute("message", "Du har ikke penge nok på din konto");

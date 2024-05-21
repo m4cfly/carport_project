@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Sketch</title>
@@ -10,7 +10,7 @@
 
 <div id="page">
     <header>
-        <a href="index.html" th:href="@{/}">
+        <a href="../index.html" th:href="@{/public}">
             <img src="/images/logo.png" width="20%"/>
         </a>
         <div width="80%">
@@ -20,8 +20,8 @@
                     <span th:text="${session.currentUser.username}"> </span>
                 </b>
                 <a href="/logout" th:href="@{/logout}">Logout</a>
-                <a href="/cart.html" th:href="@{/cart.html}">
-                    <img src="../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
+                <a href="/cart.html" th:href="@{/templates/order/cart.html}">
+                    <img src="../../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
                 </a>
             </div>
         </div>
@@ -75,7 +75,7 @@
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="75" y="10" width="800" height="600" viewBox="0 0 780 600" preserveAspectRatio="xMinYMin">
 
                     <!-- Ramme -->
-                    <rect x="0" y="0" height="th:value=${width}" width="th:value=${length}" style="stroke-width:15px; stroke:#000000; fill: #ffffff" />
+                    <rect x="0" y="0" height="600" width="800" style="stroke-width:15px; stroke:#000000; fill: #ffffff" />
                     <!-- Remme -->
                     <rect x="0" y="35" height="4.5" width="780" style="stroke:#000000; fill: #ffffff" />
                     <rect x="0" y="565" height="4.5" width="780" style="stroke:#000000; fill: #ffffff" />
@@ -101,12 +101,25 @@
             <h2>Indsend forespørgsel</h2>
             <p>Ønsker du at bestille denne carport?.</p>
 
-           <!-- <p>indtaste email så sender vi dig et tilbud og en fabelagtig pri$</p> -->
+           <p>indtast dine kontakt oplyninger, så sender vi dig et tilbud og en fabelagtig pri$</p>
+            <h1>Vælg leveringsadresse og kontaktoplysninger:</h1>
 
-            <form method="post">
+            <div class="centered-form">
+                <form method="get">
+                    <p>Navn:</p>
+                    <input type="text" name="fullname" placeholder="Skriv dit fulde navn">
+                    <p>Adresse (vej + husnummer):</p>
+                    <input type="text" name="address">
+                    <p>Postnummer:</p>
+                    <input type="text" name="postalcode">
+                    <p>By:</p>
+                    <input type="text" name="city">
+                    <p>Telefonnummer:</p>
+                    <input type="number" name="phonenumber">
+                    <p>Email-addresse:</p>
+                    <input type="text" name="email">
                 <button type="submit" formaction="/sendrequest">Indsend forespørgsel</button>
             </form>
-
             <div th:if="${session.currentUser == null}">
                 <form class="generic-form" method="post">
                     <input type="text" name="username" placeholder="Enter your username"/>

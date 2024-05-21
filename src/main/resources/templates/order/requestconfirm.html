@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Cart</title>
+    <title>Order Confirmation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
+
 <div id="page">
     <header>
-        <a href="index.html" th:href="@{/}">
+        <a href="../index.html" th:href="@{/public}">
             <img src="/images/logo.png" width="20%"/>
         </a>
         <div width="80%">
@@ -19,14 +20,25 @@
                     <span th:text="${session.currentUser.username}"> </span>
                 </b>
                 <a href="/logout" th:href="@{/logout}">Logout</a>
-                <a href="/cart.html" th:href="@{/cart.html}">
-                    <img src="../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
+                <a href="/cart.html" th:href="@{/templates/order/cart.html}">
+                    <img src="../../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
                 </a>
             </div>
         </div>
     </header>
     <div id="content" class="transparent-grey">
         <div id="intro-text">
+            <h1>Tak for din Forespørgsel!</h1>
+            <p>Du har valgt en Skræddersyet carport med målene:</p>
+            <table>
+                <tr><td>Bredde:</td><td th:text="${session.width}"></td></tr>
+                <tr><td>Længde:</td><td th:text="${session.length}"></td></tr>
+            </table>
+
+            <form method="get">
+                <button type="submit" formaction="/showorders">Vis ordrer</button>
+            </form>
+
             <div th:if="${session.currentUser == null}">
                 <form class="generic-form" method="post">
                     <input type="text" name="username" placeholder="Enter your username"/>

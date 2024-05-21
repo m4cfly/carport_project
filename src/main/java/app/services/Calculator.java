@@ -128,9 +128,7 @@ public class Calculator {
                         materialItems.add(materialItem);
                         found = true;
 
-
                     }
-
 
                 }
 
