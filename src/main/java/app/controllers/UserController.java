@@ -22,7 +22,8 @@ public class UserController {
         app.get("/logout", ctx -> logout(ctx));
         app.get("/createuser", ctx -> ctx.render("createuser.html"));
         app.post("/createuser", ctx -> createUser(ctx, connectionPool));
-        app.post("/inputmoney", ctx -> inputMoney(ctx, connectionPool));
+        app.get("/inputmoney", ctx -> inputMoney(ctx, connectionPool));
+        app.post("/inputmoney", ctx -> ctx.render("order/insertmoney.html"));
         app.post("/saveuserinfo", ctx -> customerInfo(ctx, connectionPool));
     }
 

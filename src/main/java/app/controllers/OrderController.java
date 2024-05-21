@@ -142,11 +142,11 @@ public class OrderController {
 
             if (user.getUserBalance() >= userOrder.getTotalPrice()) {
                 ctx.attribute("message", "Du har betalt for din bestilling. Tak for handlen, vi vender tilbage hurtigst muligt");
-                ctx.render("/requestconfirm.html");
+                ctx.render("/index.html");
             }
             else {
                 ctx.attribute("message", "Du har ikke penge nok på din konto");
-                ctx.render("/cart.html");
+                ctx.render("/index.html");
             }
 
         } catch (DatabaseException e) {
