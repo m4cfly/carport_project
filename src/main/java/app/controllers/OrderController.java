@@ -21,12 +21,35 @@ public class OrderController {
     public static void addRoutes (Javalin app, ConnectionPool connectionPool) {
         app.post("/showsketch", ctx -> showSketch(ctx, connectionPool));
         app.get("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
+        app.post("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
+        app.get("/showbom", ctx -> showBom(ctx, connectionPool));
         app.post("/showbom", ctx -> showBom(ctx, connectionPool));
         app.get("/showorders", ctx -> showOrders(ctx, connectionPool));
         app.post("/showorders", ctx -> showOrders(ctx, connectionPool));
+        app.get("/showordersbyid", ctx -> showOrdersByID(ctx, connectionPool));
+        app.post("/showordersbyid", ctx -> showOrdersByID(ctx, connectionPool));
         app.post("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
         app.get("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
 //        app.get("/showOrder", ctx -> showOrder(ctx));
+    }
+
+    private static void showOrdersByID(Context ctx, ConnectionPool connectionPool) {
+        // Get orders from DB
+        User user = ctx.sessionAttribute("currentUser");
+        int userId = user.getUserId();
+
+        try
+        {
+            List<Order> orders = OrderMapper.viewShoppingCart(userId,connectionPool);
+            ctx.attribute("orders", orders);
+            ctx.render("order/showorders.html");
+        }
+        catch (DatabaseException e)
+        {
+            // TODO: handle exception
+            throw new RuntimeException(e);
+        }
+
     }
 
     private static void calculateCarport(Context ctx, ConnectionPool connectionPool)
@@ -114,7 +137,7 @@ public class OrderController {
             OrderMapper.insertMaterialItems(calculator.getMaterialItems(), connectionPool);
 
             ctx.attribute("message", "Du har nu indsendt din forespørgsel.");
-            ctx.render("index.html");
+            ctx.render("/sendrequest.html");
         }
         catch (DatabaseException e)
         {
@@ -142,16 +165,16 @@ public class OrderController {
 
             if (user.getUserBalance() >= userOrder.getTotalPrice()) {
                 ctx.attribute("message", "Du har betalt for din bestilling. Tak for handlen, vi vender tilbage hurtigst muligt");
-                ctx.render("/requestconfirm.html");
+                ctx.render("order/requestconfirm.html");
             }
             else {
                 ctx.attribute("message", "Du har ikke penge nok på din konto");
-                ctx.render("/cart.html");
+                ctx.render("order/insertmoney.html");
             }
 
         } catch (DatabaseException e) {
             ctx.attribute("message", "Noget gik galt mens betalingen blev udført, pengene er ikke blevet trukket");
-            ctx.render("/cart.html");
+            ctx.render("order/payfororder.html");
         }
     }
 
