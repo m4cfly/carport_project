@@ -69,19 +69,19 @@
         marker-end: url(#endArrow);" />
 
                 <!-- Text: Mål -->
-                <text style="text-anchor: middle" transform="translate(30,300) rotate(-90)">600 cm</text>
-                <text style="text-anchor: middle" x="502" y="670">780 cm</text>
+                <text style="text-anchor: middle" transform="translate(30,300) rotate(-90)" th:text="${session.width}">600 cm</text>
+                <text style="text-anchor: middle" x="502" y="670" th:text="${session.length}">780 cm</text>
 
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="75" y="10" width="800" height="600" viewBox="0 0 780 600" preserveAspectRatio="xMinYMin">
 
                     <!-- Ramme -->
                     <rect x="0" y="0" height="600" width="800" style="stroke-width:15px; stroke:#000000; fill: #ffffff" />
                     <!-- Remme -->
-                    <rect x="0" y="35" height="4.5" width="780" style="stroke:#000000; fill: #ffffff" />
-                    <rect x="0" y="565" height="4.5" width="780" style="stroke:#000000; fill: #ffffff" />
+                    <rect x="0" y="35" height="4.5" width="780" style="stroke:#000000; fill: #ffffff" th:width="${session.width}"/>
+                    <rect x="0" y="565" height="4.5" width="780" style="stroke:#000000; fill: #ffffff" th:width="${session.width}"/>
                     <!-- Spær -->
-                    <rect x="0" y="0" height="600" width="4.5" style="stroke:#000000; fill: #ffffff" />
-                    <rect x="775.5" y="0" height="600" width="4.5" style="stroke:#000000; fill: #ffffff" />
+                    <rect x="0" y="0" height="600" width="4.5" style="stroke:#000000; fill: #ffffff" th:height="${session.lenght}"/>
+                    <rect x="775.5" y="0" height="600" width="4.5" style="stroke:#000000; fill: #ffffff" th:height="${session.lenght}"/>
 
                     <!-- Kryds -->
                     <line x1="55" y1="35" x2="600" y2="569.5" style="stroke:#000000; stroke-dasharray: 5 5;" />

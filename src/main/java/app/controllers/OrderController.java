@@ -23,6 +23,7 @@ public class OrderController {
         app.get("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
         app.post("/showbom", ctx -> showBom(ctx, connectionPool));
         app.get("/showorders", ctx -> showOrders(ctx, connectionPool));
+        app.post("/showorders", ctx -> showOrders(ctx, connectionPool));
         app.post("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
         app.get("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
 //        app.get("/showOrder", ctx -> showOrder(ctx));
@@ -48,7 +49,7 @@ public class OrderController {
         {
             List<Order> orders = OrderMapper.getAllOrders(connectionPool);
             ctx.attribute("orders", orders);
-            ctx.render("orders/showorders.html");
+            ctx.render("order/showorders.html");
         }
         catch (DatabaseException e)
         {
@@ -67,7 +68,7 @@ public class OrderController {
 
             if (materialItems.size() == 0)
             {
-                ctx.render("orders/bom.html");
+                ctx.render("order/bom.html");
                 return;
             }
 
@@ -76,7 +77,7 @@ public class OrderController {
             ctx.attribute("width", materialItem.getOrder().getWidth());
             ctx.attribute("length", materialItem.getOrder().getLength());
             ctx.attribute("materialItems", materialItems);
-            ctx.render("orders/bom.html");
+            ctx.render("order/bom.html");
         }
         catch (DatabaseException e)
         {

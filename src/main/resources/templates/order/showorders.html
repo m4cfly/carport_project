@@ -18,10 +18,10 @@
         <tr th:each="item: ${orders}">
             <td th:text="${item.orderId}">1</td>
             <td th:text="${item.status}">2</td>
-            <td th:text="${item.Width}">22</td>
-            <td th:text="${item.Length}">33</td>
-            <td th:text="${item.totalPrice}">334</td>
-            <td th:text="${item.user.userName}">Hej</td>
+            <td th:text="${item.Width}">3</td>
+            <td th:text="${item.Length}">4</td>
+            <td th:text="${item.totalPrice}">5</td>
+            <td th:text="${item.user.userName}">6</td>
             <td><button type="submit" name="orderId" th:value="${item.orderId}" formaction="/showbom">Se stykliste</button></td>
         </tr>
     </table>

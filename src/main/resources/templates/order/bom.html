@@ -8,18 +8,15 @@
 </head>
 
 <body>
-
-<h1>Skræddersyet Carport</h1>
-
 <h2>Stykliste</h2>
 <p>Carport med målene:</p>
 <table>
   <tr>
-    <td>Bredde:</td>
+    <td>Width:</td>
     <td th:text="${width}"></td>
   </tr>
   <tr>
-    <td>Længde:</td>
+    <td>Length:</td>
     <td th:text="${length}"></td>
   </tr>
 </table>
@@ -27,19 +24,19 @@
 <table>
   <thead>
   <tr>
-    <td>Materiale</td>
-    <td>Længde</td>
-    <td>Antal</td>
-    <td>Enhed</td>
+    <td>Materials</td>
+    <td>Length</td>
+    <td>Quantity</td>
+    <td>Unit</td>
     <td>Anvendelse</td>
   </tr>
   </thead>
   <tbody>
-  <tr th:each="item: ${materialItems}">
-    <td th:text="${item.materialVariant.materials.name}"></td>
+  <tr th:each="item: ${material_Items}">
+    <td th:text="${item.materialVariant.material.name}"></td>
     <td th:text="${item.materialVariant.length}"></td>
     <td th:text="${item.quantity}"></td>
-    <td th:text="${item.productVariant.product.unit}"></td>
+    <td th:text="${item.materialVariant.material.unit}"></td>
     <td th:text="${item.describable}"></td>
   </tr>
   </tbody>
