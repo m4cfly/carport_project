@@ -10,37 +10,62 @@
 <body>
 <h2>Bill of Materials</h2>
 <p>Carport :</p>
+
 <table>
-  <tr>
-    <td>Width:</td>
-    <td th:text="${width}"></td>
-  </tr>
-  <tr>
-    <td>Length:</td>
-    <td th:text="${length}"></td>
-  </tr>
+  <tr><td>Carport Width:</td><td th:text="${session.width}"></td></tr>
+  <tr><td>Carport Length:</td><td th:text="${session.length}"></td></tr>
 </table>
-<p>Bill of Material:</p>
-<table>
-  <thead>
-  <tr>
-    <td>Materials</td>
-    <td>Length</td>
-    <td>Quantity</td>
-    <td>Unit</td>
-    <td>Description</td>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="item: ${material_item}">
-    <td th:text="${item.materialVariant.material.name}"></td>
-    <td th:text="${item.materialVariant.length}"></td>
-    <td th:text="${item.quantity}"></td>
-    <td th:text="${item.materialVariant.material.unit}"></td>
-    <td th:text="${item.describable}"></td>
-  </tr>
-  </tbody>
-</table>
+
+<form method="get">
+  <p>Bill of Material:</p>
+  <table>
+    <thead>
+    <tr>
+      <th>Materials</th>
+      <th>Length</th>
+      <th>Quantity</th>
+      <th>Unit</th>
+      <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${materialItems}">
+      <td th:text="${item.materialVariant.material.name}"></td>
+      <td th:text="${item.materialVariant.length}"></td>
+      <td th:text="${item.quantity}"></td>
+      <td th:text="${item.materialVariant.material.unit}"></td>
+      <td th:text="${item.description}"></td>
+    </tr>
+    </tbody>
+  </table>
+</form>
+</body>
+
+
+<!--<form method="get">-->
+<!--  <table class="food-table">-->
+<!--    <thead>-->
+
+<!--    <tr>-->
+<!--      <th>List of food in season</th>-->
+
+<!--    </tr>-->
+
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="food: ${foodList}">-->
+<!--      <td th:text="${food.foodItem}"></td>-->
+<!--      &lt;!&ndash;                <td>&ndash;&gt;-->
+<!--      &lt;!&ndash;                    <button type="submit" name="taskId" th:value="${task.taskId}" formaction="undo">Undo</button>&ndash;&gt;-->
+<!--      &lt;!&ndash;                    <button type="submit">Edit</button>&ndash;&gt;-->
+<!--      &lt;!&ndash;                    <button type="submit" name="taskId" th:value="${task.taskId}" formaction="deletetask">Delete</button>&ndash;&gt;-->
+<!--      &lt;!&ndash;                    </td>&ndash;&gt;-->
+
+<!--    </tr>-->
+<!--    </tbody>-->
+
+<!--  </table>-->
+<!--</form>-->
 
 </body>
 </html>

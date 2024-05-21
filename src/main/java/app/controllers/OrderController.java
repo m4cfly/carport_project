@@ -13,6 +13,7 @@ import app.services.Svg;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -95,13 +96,10 @@ public class OrderController {
                 return;
             }
 
+            
 
-            for (int i = 0; i < materialItems.indexOf(materialItems); i++) {
-                Material_Item materialItem = materialItems.get(i);
-                ctx.attribute("width", materialItem.getOrder().getWidth());
-                ctx.attribute("length", materialItem.getOrder().getLength());
                 ctx.attribute("materialItems", materialItems);
-            }
+
                 ctx.render("order/bom.html");
 
         }
@@ -126,6 +124,8 @@ public class OrderController {
 
         Order order = new Order(0, length, width, totalPrice, status, user);
         ctx.sessionAttribute("order", order);
+
+        List<Material_Item> materialItems = new ArrayList<>();
 
 
         // TODO: Insert order in database

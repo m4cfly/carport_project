@@ -20,6 +20,9 @@ public class Material_Item {
         this.materialVariant = materialVariant;
     }
 
+    public Material_Item(int anInt, int quantity, String description, int orderID, int materialVariantID) {
+    }
+
     public int getMaterialItemId() {
         return materialItemId;
     }

@@ -46,10 +46,10 @@ import java.util.List;
         public static List<Material_Item> getMaterialItemsByOrderId(int orderId, ConnectionPool connectionPool) throws DatabaseException
         {
             List<Material_Item> materialItemList = new ArrayList<>();
-            String sql = "SELECT * FROM bill_of_materials_view where order_id = ?";
+            String sql = "SELECT * FROM bill_of_materials_view where orders_id = ?";
             try (
                     Connection connection = connectionPool.getConnection();
-                    PreparedStatement prepareStatement = connection.prepareStatement(sql);
+                    PreparedStatement prepareStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             )
             {
                 prepareStatement.setInt(1, orderId);
@@ -121,20 +121,24 @@ import java.util.List;
         {
             String sql = "INSERT INTO material_item (orders_id, mv_id, quantity, describable) " +
                     "VALUES (?, ?, ?, ?)";
-            //TODO: Lav en materialVariant foreignKey (mv_id) i Material_Item tabellen i databasen - m_id skal også forblive ikke fjernes!
-            // tror ikke vi har materialVariant foreign key i vores MaterialItem tabel i databasen (men m_id istedet for?)?
-            try (Connection connection = connectionPool.getConnection())
-            {
-                for (Material_Item materialItem : materialItems)
-                {
-                    try (PreparedStatement ps = connection.prepareStatement(sql))
-                    {
+
+            try (Connection connection = connectionPool.getConnection()) {
+
+                for (Material_Item materialItem : materialItems) {
+                    try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                         ps.setInt(1, materialItem.getOrder().getOrderID());
                         ps.setInt(2, materialItem.getMaterialVariant().getMaterialVariantID());
                         ps.setInt(3, materialItem.getQuantity());
                         ps.setString(4, materialItem.getDescription());
-//                        ps.setInt(5, materialItem.getMaterialVariant().getMaterial().getMaterialID());
+
                         ps.executeUpdate();
+                        ResultSet keySet = ps.getGeneratedKeys();
+                        if (keySet.next()) {
+                            Material_Item materialItem1 = new Material_Item(keySet.getInt(1), materialItem.getQuantity(), materialItem.getDescription(), materialItem.getOrder().getOrderID(), materialItem.getMaterialVariant().getMaterialVariantID());
+
+
+                        }
+
                     }
                 }
             }
