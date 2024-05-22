@@ -90,9 +90,9 @@ public class OrderController {
         {
             List<Material_Item> materialItems = OrderMapper.getMaterialItemsByOrderId(orderId, connectionPool);
 
-            if (materialItems.size() == 0)
+            if (materialItems.size() != 3)
             {
-                ctx.render("/sendrequest.html");
+                ctx.render("/showsketch.html");
                 return;
             }
 
@@ -125,7 +125,7 @@ public class OrderController {
         Order order = new Order(0, length, width, totalPrice, status, user);
         ctx.sessionAttribute("order", order);
 
-        List<Material_Item> materialItems = new ArrayList<>();
+//        List<Material_Item> materialItems = new ArrayList<>();
 
 
         // TODO: Insert order in database

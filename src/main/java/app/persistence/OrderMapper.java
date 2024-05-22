@@ -46,7 +46,7 @@ import java.util.List;
         public static List<Material_Item> getMaterialItemsByOrderId(int orderId, ConnectionPool connectionPool) throws DatabaseException
         {
             List<Material_Item> materialItemList = new ArrayList<>();
-            String sql = "SELECT * FROM bill_of_materials_view where orders_id = ?";
+            String sql = "SELECT * FROM bill_of_materials_view where order_id = ?";
             try (
                     Connection connection = connectionPool.getConnection();
                     PreparedStatement prepareStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -70,8 +70,8 @@ import java.util.List;
                     Material material = new Material(materialId, name, price, unit);
                     // Material variant
                     int materialVariantId = rs.getInt("mv_id");
-                    int length = rs.getInt("length");
-                    MaterialVariant materialVariant = new MaterialVariant(materialVariantId, material, length);
+                    int mvlength = rs.getInt("mvlength");
+                    MaterialVariant materialVariant = new MaterialVariant(materialVariantId, material, mvlength);
                     // MaterialItem
                     int materialItemId = rs.getInt("m_item_id");
                     int quantity = rs.getInt("quantity");
@@ -130,6 +130,7 @@ import java.util.List;
                         ps.setInt(2, materialItem.getMaterialVariant().getMaterialVariantID());
                         ps.setInt(3, materialItem.getQuantity());
                         ps.setString(4, materialItem.getDescription());
+
 
                         ps.executeUpdate();
                         ResultSet keySet = ps.getGeneratedKeys();

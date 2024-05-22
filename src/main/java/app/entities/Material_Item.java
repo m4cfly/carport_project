@@ -20,7 +20,7 @@ public class Material_Item {
         this.materialVariant = materialVariant;
     }
 
-    public Material_Item(int anInt, int quantity, String description, int orderID, int materialVariantID) {
+    public Material_Item(int m_item_id, int quantity, String description, int orderID, int materialVariantID) {
     }
 
     public int getMaterialItemId() {

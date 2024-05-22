@@ -72,7 +72,7 @@ public class Calculator {
 //            MaterialVariant materialVariant = materialVariants.get(materialVariants.indexOf(variant));
                 if (variant.getLength() % length == 0) {
                     int quantity = (length / variant.getLength()) * 2;
-                    Material_Item materialItem = new Material_Item(0, quantity, "Rem placeres ovenpå stolper", order, variant);
+                    Material_Item materialItem = new Material_Item(1, quantity, "Rem placeres ovenpå stolper", order, variant);
                     materialItems.add(materialItem);
                     found = true;
                     break;
@@ -84,14 +84,16 @@ public class Calculator {
                 }
             }
 
+            if (chosenVariant != null) {
                 if (chosenVariant.getLength() > length && foundInCurrentLoop) {
                     int quantity = (chosenVariant.getLength() / length) * 2;
-                    Material_Item materialItem = new Material_Item(0, quantity, "Rem placeres ovenpå stolper, og resten saves af", order, chosenVariant);
+                    Material_Item materialItem = new Material_Item(1, quantity, "Rem placeres ovenpå stolper, og resten saves af", order, chosenVariant);
                     materialItems.add(materialItem);
                     found = true;
                     break;
 
                 }
+            }
 
 
 
@@ -103,7 +105,7 @@ public class Calculator {
                     for (MaterialVariant allmaterialVariant : allMaterialVariants) {
                         if (length == allmaterialVariant.getLength()) {
                             int beamQuantity = (length / allmaterialVariant.getLength()) * 2;
-                            Material_Item materialItem = new Material_Item(0, beamQuantity, "Rem placeres ovenpå stolper", order, allmaterialVariant);
+                            Material_Item materialItem = new Material_Item(1, beamQuantity, "Rem placeres ovenpå stolper", order, allmaterialVariant);
                             materialItems.add(materialItem);
                             found = true;
                             break;
@@ -111,7 +113,7 @@ public class Calculator {
 
                         if (length % allmaterialVariant.getLength() == 0) {
                             int beamQuantity = (length / allmaterialVariant.getLength()) * 2;
-                            Material_Item materialItem = new Material_Item(0, beamQuantity, "Rem placeres ovenpå stolper", order, allmaterialVariant);
+                            Material_Item materialItem = new Material_Item(1, beamQuantity, "Rem placeres ovenpå stolper", order, allmaterialVariant);
                             materialItems.add(materialItem);
                             found = true;
                             break;
@@ -126,7 +128,7 @@ public class Calculator {
                     }
                     if (chosenVariant != null && variantSpareWood == chosenVariant.getLength()) {
                         int beamQuantity = (length / chosenVariant.getLength()) * 2;
-                        Material_Item materialItem = new Material_Item(0, beamQuantity, "Rem placeres ovenpå stolper", order, chosenVariant);
+                        Material_Item materialItem = new Material_Item(1, beamQuantity, "Rem placeres ovenpå stolper", order, chosenVariant);
                         materialItems.add(materialItem);
                         found = true;
 
@@ -161,13 +163,13 @@ public class Calculator {
             for (MaterialVariant variant : materialVariants) {
 //                MaterialVariant materialVariant = materialVariants.get(materialVariants.indexOf(variant));
                 if (width == variant.getLength()) {
-                    Material_Item materialItem = new Material_Item(0, quantity, "Spær placeres ovenpå rem", order, variant);
+                    Material_Item materialItem = new Material_Item(2, quantity, "Spær placeres ovenpå rem", order, variant);
                     materialItems.add(materialItem);
                     found = true;
                     break;
                 } else if (variant.getLength() > width) {
 //                    int finalQuantity = (variant.getLength() / width) * quantity;
-                    Material_Item materialItem = new Material_Item(0, quantity, "Spær placeres ovenpå rem, rest saves af", order, variant);
+                    Material_Item materialItem = new Material_Item(2, quantity, "Spær placeres ovenpå rem, rest saves af", order, variant);
                     materialItems.add(materialItem);
                     found = true;
                     break;
@@ -182,7 +184,7 @@ public class Calculator {
                 for (MaterialVariant allmaterialVariant : allMaterialVariants) {
                     if (width == allmaterialVariant.getLength()) {
                         int raftQuantity = (width / allmaterialVariant.getLength()) * quantity;
-                        Material_Item materialItem = new Material_Item(0, raftQuantity, "Spær placeres ovenpå rem", order, allmaterialVariant);
+                        Material_Item materialItem = new Material_Item(2, raftQuantity, "Spær placeres ovenpå rem", order, allmaterialVariant);
                         materialItems.add(materialItem);
                         found = true;
                         break;
@@ -190,7 +192,7 @@ public class Calculator {
 
                     if (width % allmaterialVariant.getLength() == 0) {
                         int raftQuantity = (width / allmaterialVariant.getLength()) * quantity;
-                        Material_Item materialItem = new Material_Item(0, raftQuantity, "Spær placeres ovenpå rem", order, allmaterialVariant);
+                        Material_Item materialItem = new Material_Item(2, raftQuantity, "Spær placeres ovenpå rem", order, allmaterialVariant);
                         materialItems.add(materialItem);
                         found = true;
                         break;
@@ -205,7 +207,7 @@ public class Calculator {
                 }
                 if (chosenVariant != null && variantSpareWood == chosenVariant.getLength()) {
                     int raftQuantity = (width / chosenVariant.getLength()) * quantity;
-                    Material_Item materialItem = new Material_Item(0, raftQuantity, "Spær placeres ovenpå rem", order, chosenVariant);
+                    Material_Item materialItem = new Material_Item(2, raftQuantity, "Spær placeres ovenpå rem", order, chosenVariant);
                     materialItems.add(materialItem);
                     found = true;
 
