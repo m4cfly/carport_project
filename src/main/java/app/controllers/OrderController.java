@@ -92,7 +92,7 @@ public class OrderController {
 
             if (materialItems.size() != 3)
             {
-                ctx.render("/showsketch.html");
+                ctx.render("/sendrequest.html");
                 return;
             }
 
