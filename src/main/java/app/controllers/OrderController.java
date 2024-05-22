@@ -21,6 +21,7 @@ public class OrderController {
 
     public static void addRoutes (Javalin app, ConnectionPool connectionPool) {
         app.post("/showsketch", ctx -> showSketch(ctx, connectionPool));
+        app.get("/sendrequestSite", ctx -> ctx.render("order/sendrequest"));
         app.get("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
         app.post("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
         app.get("/showbom", ctx -> showBom(ctx, connectionPool));
@@ -29,7 +30,8 @@ public class OrderController {
         app.post("/showorders", ctx -> showOrders(ctx, connectionPool));
         app.get("/showordersbyid", ctx -> showOrdersByID(ctx, connectionPool));
         app.post("/showordersbyid", ctx -> showOrdersByID(ctx, connectionPool));
-        app.get("/goToPayment", ctx -> ctx.render("payfororder.html"));
+        app.get("/goToPayment", ctx -> ctx.render("order/payfororder.html"));
+        app.post("/goToPayment", ctx -> ctx.render("order/payfororder.html"));
         app.post("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
         app.get("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
 //        app.get("/showOrder", ctx -> showOrder(ctx));
@@ -98,11 +100,11 @@ public class OrderController {
             }
 
                 int totalPrice = OrderMapper.calculatePrice(orderId, connectionPool);
-            
+
 
                 ctx.attribute("materialItems", materialItems);
 
-                ctx.attribute("totalPrice", totalPrice);
+                ctx.sessionAttribute("totalPrice", totalPrice);
 
 
 
@@ -172,7 +174,7 @@ public class OrderController {
 
     private static void payForOrder (Context ctx, ConnectionPool connectionPool) {
         User user = ctx.sessionAttribute("currentUser");
-        Order userOrder = ctx.sessionAttribute("userOrder");
+        Order userOrder = ctx.sessionAttribute("order");
         int userId = user.getUserId();
 
         try {

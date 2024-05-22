@@ -34,18 +34,21 @@
 
             <div class="centered-form">
 
-                <span>Du har nuværende </span>
-                <span th:="${session.currentUser.balance}"> kr. i din konto</span>
+                <table>
+                    <tr><td>Du har nuværende </td><td th:text="${session.currentUser.userBalance}"><td> kr. i din konto</td></td>
+                    </tr>
+                </table>
+
 
                 <form method="post">
-                    <span>Tryk "betal" for at betale </span>
-                    <span th:="${session.userOrder.totalprice}"></span>
-                    <span> kr.</span>
+                    <table>
+                    <tr><td>Tryk "betal" for at betale </td><td th:text="${session.totalPrice}"><td> kr.</td></td></tr>
+                </table>
 
                     <button type="submit" formaction="/payForOrder">Betal for ordren</button>
                 </form>
-                <a href="/insertmoney.html" th:href="@{/public}">Indsæt penge på kontoen</a>
-                <a href="/index.html" th:href="@{/public}">Gå tilbage</a>
+                <a href="order/insertmoney.html" th:href="@{/order/insertmoney.html}">Indsæt penge på kontoen</a>
+                <a href="order/bom.html" th:href="@{/order/bom.html}">Gå tilbage</a>
 
             </div>
             <p class="errormessage" th:text="${#ctx.message}"></p>
