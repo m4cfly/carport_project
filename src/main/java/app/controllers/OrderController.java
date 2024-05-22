@@ -142,6 +142,9 @@ public class OrderController {
             // TODO: Save order items in database (stykliste)
             OrderMapper.insertMaterialItems(calculator.getMaterialItems(), connectionPool);
 
+
+            order.getTotalPrice() = 
+
             ctx.attribute("message", "Du har nu indsendt din forespørgsel.");
             ctx.render("/sendrequest.html");
         }
