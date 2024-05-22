@@ -274,7 +274,40 @@ import java.util.List;
         }
 
 
+        public static int calculatePrice(int orderId, ConnectionPool connectionPool) throws DatabaseException {
 
+            String sql = "UPDATE public.orders SET total_price = ? WHERE order_id = ?;";
+
+
+            try (
+                    Connection connection = connectionPool.getConnection();
+                    PreparedStatement ps = connection.prepareStatement(sql)
+            )
+            {
+                List<Material_Item> materialItems = getMaterialItemsByOrderId(orderId, connectionPool);
+
+                int totalPrice = 0;
+
+                for (Material_Item materialItem : materialItems) {
+                   totalPrice = totalPrice + (materialItem.getMaterialVariant().getMaterial().getPrice() * materialItem.getQuantity());
+                }
+
+                ps.setInt(2, orderId);
+                ps.setInt(1, totalPrice);
+
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected != 1)
+                {
+                    throw new DatabaseException("The price calculation did not succeed");
+                }
+
+                return totalPrice;
+            }
+            catch (SQLException e)
+            {
+                throw new DatabaseException("Error while performing price calculation");
+            }
+        }
 
     }
 

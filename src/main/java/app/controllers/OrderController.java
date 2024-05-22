@@ -29,6 +29,7 @@ public class OrderController {
         app.post("/showorders", ctx -> showOrders(ctx, connectionPool));
         app.get("/showordersbyid", ctx -> showOrdersByID(ctx, connectionPool));
         app.post("/showordersbyid", ctx -> showOrdersByID(ctx, connectionPool));
+        app.get("/goToPayment", ctx -> ctx.render("payfororder.html"));
         app.post("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
         app.get("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
 //        app.get("/showOrder", ctx -> showOrder(ctx));
@@ -96,9 +97,14 @@ public class OrderController {
                 return;
             }
 
+                int totalPrice = OrderMapper.calculatePrice(orderId, connectionPool);
             
 
                 ctx.attribute("materialItems", materialItems);
+
+                ctx.attribute("totalPrice", totalPrice);
+
+
 
                 ctx.render("order/bom.html");
 
@@ -143,7 +149,7 @@ public class OrderController {
             OrderMapper.insertMaterialItems(calculator.getMaterialItems(), connectionPool);
 
 
-            order.getTotalPrice() = 
+
 
             ctx.attribute("message", "Du har nu indsendt din forespørgsel.");
             ctx.render("/sendrequest.html");

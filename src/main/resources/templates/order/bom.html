@@ -23,6 +23,7 @@
     <tr>
       <th>Materials</th>
       <th>Length</th>
+      <th>Pris pr. Unit (i kr.)</th>
       <th>Quantity</th>
       <th>Unit</th>
       <th>Description</th>
@@ -32,17 +33,29 @@
     <tr th:each="item : ${materialItems}">
       <td th:text="${item.materialVariant.material.name}"></td>
       <td th:text="${item.materialVariant.length}"></td>
+      <td th:text="${item.materialVariant.material.price}" ></td>
       <td th:text="${item.quantity}"></td>
       <td th:text="${item.materialVariant.material.unit}"></td>
       <td th:text="${item.description}"></td>
     </tr>
     </tbody>
   </table>
+
+  <table>
+    <tr><td>Samlet pris: </td><td th:text="${totalPrice}"><td> kr.</td></td></tr>
+  </table>
+
+
 </form>
 
 
 <form method="get">
   <button type="submit" formaction="/sendrequest">Gå tilbage</button>
+</form>
+
+
+<form method="get">
+  <button type="submit" formaction="/goToPayment">Gå til betaling</button>
 </form>
 </body>
 
