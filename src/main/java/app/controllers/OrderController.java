@@ -34,6 +34,8 @@ public class OrderController {
         app.post("/goToPayment", ctx -> ctx.render("order/payfororder.html"));
         app.post("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
         app.get("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
+        app.get("/payForOrderUpdate", ctx -> ctx.render("order/payfororderupdate.html"));
+        app.post("/payForOrderUpdate", ctx -> ctx.render("order/payfororderupdate.html"));
 //        app.get("/showOrder", ctx -> showOrder(ctx));
     }
 
@@ -178,7 +180,8 @@ public class OrderController {
         int userId = user.getUserId();
 
         try {
-            OrderMapper.payForOrder(userOrder, userId, connectionPool);
+            int totalPrice = OrderMapper.calculatePrice(userOrder.getOrderID(),connectionPool);
+            OrderMapper.payForOrder(userOrder, totalPrice, userId, connectionPool);
 
             if (user.getUserBalance() >= userOrder.getTotalPrice()) {
                 ctx.attribute("message", "Du har betalt for din bestilling. Tak for handlen, vi vender tilbage hurtigst muligt");

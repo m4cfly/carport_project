@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Carport</title>
@@ -11,6 +11,7 @@
 
 <div id="page">
     <header>
+
         <a href="../index.html" th:href="@{/public}">
             <img src="/images/logo.png" width="20%"/>
         </a>
@@ -29,19 +30,26 @@
     </header>
     <div id="content" class="transparent-grey">
         <div id="intro-text">
-            <h1>Vælg hvor mange penge du vil indsætte:</h1>
+            <h1>Betal for din ordre:</h1>
 
             <div class="centered-form">
 
-                <form method="post">
-                    <p>Indtast beløb der skal sættes ind i din konto:</p>
-                    <input type="number" name="inputMoney" placeholder="Skriv et positivt beløb">
+                <table>
+                    <tr><td>Du har nuværende </td><td th:text="${session.currentUser.userBalance}"><td> kr. i din konto</td></td>
+                    </tr>
+                </table>
 
-                    <button type="submit" formaction="/inputmoney">Indsæt beløbet på din konto</button>
-                </form>
+
                 <form method="post">
-                    <button type="submit" formaction="/payForOrder">Gå tilbage til betaling</button>
+                    <table>
+                        <tr><td>Tryk "betal" for at betale </td><td th:text="${session.totalPrice}"><td> kr.</td></td></tr>
+                    </table>
+
+                    <button type="submit" formaction="/payForOrder">Betal for ordren</button>
                 </form>
+                <a href="/insertmoney" th:href="@{/insertmoney}">Indsæt penge på kontoen</a>
+                <a href="/showbom" th:href="@{/showbom}">Gå tilbage</a>
+
             </div>
             <p class="errormessage" th:text="${#ctx.message}"></p>
             <div th:if="${session.currentUser != null}">

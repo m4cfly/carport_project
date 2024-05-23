@@ -22,6 +22,7 @@ public class UserController {
         app.get("/logout", ctx -> logout(ctx));
         app.get("/createuser", ctx -> ctx.render("createuser.html"));
         app.post("/createuser", ctx -> createUser(ctx, connectionPool));
+        app.get("/insertmoney", ctx -> ctx.render("order/insertmoney.html"));
         app.post("/inputmoney", ctx -> inputMoney(ctx, connectionPool));
         app.post("/saveuserinfo", ctx -> customerInfo(ctx, connectionPool));
     }
@@ -41,7 +42,10 @@ public class UserController {
         User user = ctx.sessionAttribute("currentUser");
 
         int userId = user.getUserId();
-        int moneyInput = Integer.parseInt(ctx.formParam("inputMoney"));
+        if(!ctx.formParam("inputMoney").isEmpty()) {
+            ctx.attribute("message", "Husk at skrive et beløb");
+        }
+            int moneyInput = Integer.parseInt(ctx.formParam("inputMoney"));
 
         try {
             UserMapper.inputMoney(moneyInput, userId, connectionPool);
@@ -52,8 +56,8 @@ public class UserController {
                 ctx.render("order/payfororder.html");
             }
             else {
-                ctx.attribute("message", "Du har ikke penge nok på din konto");
-                ctx.render("/insertmoney.html");
+                ctx.attribute("message", "Noget gik galt");
+                ctx.render("order/insertmoney.html");
             }
 
         } catch (DatabaseException e) {
