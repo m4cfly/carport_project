@@ -181,9 +181,18 @@ public class OrderController {
 
         try {
             int totalPrice = OrderMapper.calculatePrice(userOrder.getOrderID(),connectionPool);
-            OrderMapper.payForOrder(userOrder, totalPrice, userId, connectionPool);
+
 
             if (user.getUserBalance() >= userOrder.getTotalPrice()) {
+
+            OrderMapper.payForOrder(userOrder, totalPrice, userId, connectionPool);
+
+            int userBalance = user.getUserBalance() - totalPrice;
+
+            User updatedUser = new User(userId, user.getUserName(), user.getPassword(), userBalance, user.getUserRole());
+
+            updatedUser = ctx.sessionAttribute("currentUser");
+
                 ctx.attribute("message", "Du har betalt for din bestilling. Tak for handlen, vi vender tilbage hurtigst muligt");
                 ctx.render("order/requestconfirm.html");
             }

@@ -51,9 +51,15 @@ public class UserController {
             UserMapper.inputMoney(moneyInput, userId, connectionPool);
 
             if (moneyInput > 0) {
+                int userBalance = user.getUserBalance() + moneyInput;
+                User updatedUser = new User(userId, user.getUserName(), user.getPassword(), userBalance, user.getUserRole());
+                updatedUser = ctx.sessionAttribute("currentUser");
                 ctx.attribute("message", "Du har lagt " + moneyInput + " kr. ind på din konto");
-                ctx.attribute("message", "Du har nu " + user.getUserBalance() + " kr. på din konto");
-                ctx.render("order/payfororder.html");
+                ctx.attribute("message", "Du har nu " + updatedUser.getUserBalance() + " kr. på din konto");
+
+
+                ctx.render("order/insertmoney.html");
+
             }
             else {
                 ctx.attribute("message", "Noget gik galt");
