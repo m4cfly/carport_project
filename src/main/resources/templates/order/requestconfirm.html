@@ -35,9 +35,9 @@
                 <tr><td>Længde:</td><td th:text="${session.length}"></td></tr>
             </table>
 
-            <form method="get">
-                <button type="submit" formaction="/showorders">Vis ordrer</button>
-            </form>
+<!--            <form method="get">-->
+<!--                <button type="submit" formaction="/showorders">Vis ordrer</button>-->
+<!--            </form>-->
 
             <div th:if="${session.currentUser == null}">
                 <form class="generic-form" method="post">

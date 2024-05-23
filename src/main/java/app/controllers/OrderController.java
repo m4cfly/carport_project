@@ -21,6 +21,7 @@ public class OrderController {
 
     public static void addRoutes (Javalin app, ConnectionPool connectionPool) {
         app.post("/showsketch", ctx -> showSketch(ctx, connectionPool));
+        app.get("/sendrequestSite", ctx -> ctx.render("order/sendrequest"));
         app.get("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
         app.post("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
         app.get("/showbom", ctx -> showBom(ctx, connectionPool));
@@ -29,8 +30,12 @@ public class OrderController {
         app.post("/showorders", ctx -> showOrders(ctx, connectionPool));
         app.get("/showordersbyid", ctx -> showOrdersByID(ctx, connectionPool));
         app.post("/showordersbyid", ctx -> showOrdersByID(ctx, connectionPool));
+        app.get("/goToPayment", ctx -> ctx.render("order/payfororder.html"));
+        app.post("/goToPayment", ctx -> ctx.render("order/payfororder.html"));
         app.post("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
         app.get("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
+        app.get("/payForOrderUpdate", ctx -> ctx.render("order/payfororderupdate.html"));
+        app.post("/payForOrderUpdate", ctx -> ctx.render("order/payfororderupdate.html"));
 //        app.get("/showOrder", ctx -> showOrder(ctx));
     }
 
@@ -96,9 +101,14 @@ public class OrderController {
                 return;
             }
 
-            
+                int totalPrice = OrderMapper.calculatePrice(orderId, connectionPool);
+
 
                 ctx.attribute("materialItems", materialItems);
+
+                ctx.sessionAttribute("totalPrice", totalPrice);
+
+
 
                 ctx.render("order/bom.html");
 
@@ -143,7 +153,7 @@ public class OrderController {
             OrderMapper.insertMaterialItems(calculator.getMaterialItems(), connectionPool);
 
 
-            //order.getTotalPrice() =
+
 
             ctx.attribute("message", "Du har nu indsendt din forespørgsel.");
             ctx.render("/sendrequest.html");
@@ -166,13 +176,23 @@ public class OrderController {
 
     private static void payForOrder (Context ctx, ConnectionPool connectionPool) {
         User user = ctx.sessionAttribute("currentUser");
-        Order userOrder = ctx.sessionAttribute("userOrder");
+        Order userOrder = ctx.sessionAttribute("order");
         int userId = user.getUserId();
 
         try {
-            OrderMapper.payForOrder(userOrder, userId, connectionPool);
+            int totalPrice = OrderMapper.calculatePrice(userOrder.getOrderID(),connectionPool);
+
 
             if (user.getUserBalance() >= userOrder.getTotalPrice()) {
+
+            OrderMapper.payForOrder(userOrder, totalPrice, userId, connectionPool);
+
+            int userBalance = user.getUserBalance() - totalPrice;
+
+            User updatedUser = new User(userId, user.getUserName(), user.getPassword(), userBalance, user.getUserRole());
+
+            updatedUser = ctx.sessionAttribute("currentUser");
+
                 ctx.attribute("message", "Du har betalt for din bestilling. Tak for handlen, vi vender tilbage hurtigst muligt");
                 ctx.render("order/requestconfirm.html");
             }
