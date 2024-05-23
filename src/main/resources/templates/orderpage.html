@@ -33,13 +33,13 @@
             <h2>Skræddersyet carport</h2>
 
             <form method="post">
-                <select name="width">
+                <select class="simpleShapeInp" name="width">
                     <option value="480">480 cm</option>
                     <option value="540">540 cm</option>
                     <option value="600">600 cm</option>
                 </select>
 
-                <select name="length">
+                <select class="simpleShapeInp" name="length">
                     <option value="520">520 cm</option>
                     <option value="600">600 cm</option>
                     <option value="660">660 cm</option>
@@ -50,9 +50,9 @@
             </form>
             <div th:if="${session.currentUser == null}">
                 <form class="generic-form" method="post">
-                    <input type="text" name="username" placeholder="Enter your username"/>
-                    <input type="password" name="password" placeholder="Enter your password"/>
-                    <button class="btn btn-ok" type="submit" formaction="confirmation">Login</button>
+                    <input type="text" class="simpleShapeInp" name="username" placeholder="Enter your username"/>
+                    <input type="password" class="simpleShapeInp" name="password" placeholder="Enter your password"/>
+                    <button class="simpleShapeBtn" type="submit" formaction="confirmation">Login</button>
                     <div><p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p></div>
                 </form>
                 <a href="/createuser.html" th:href="@{/createuser}">Create User</a>
