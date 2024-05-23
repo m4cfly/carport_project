@@ -11,7 +11,7 @@
 <div id="page">
     <header>
         <a href="../index.html" th:href="@{/public}">
-            <img src="/images/logo.png" width="20%"/>
+            <img src="/images/logo.png" width="40%"/>
         </a>
         <div width="80%">
             <div th:if="${session.currentUser != null}">
@@ -44,7 +44,7 @@
                  xmlns="http://www.w3.org/2000/svg"
                  xmlns:xlink="http://www.w3.org/1999/xlink"
                  x="0" y="0"
-                 width="40%" viewBox="0 0 855 690"
+                 width="80%" viewBox="0 0 855 690"
                  preserveAspectRatio="xMinYMin">
 
                 <defs>
@@ -72,13 +72,13 @@
                 <text style="text-anchor: middle" transform="translate(30,300) rotate(-90)" th:text="${session.width}">600 cm</text>
                 <text style="text-anchor: middle" x="502" y="670" th:text="${session.length}">780 cm</text>
 
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="75" y="10" width="800" height="600" viewBox="0 0 780 600" preserveAspectRatio="xMinYMin">
+                <svg  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" th:if="${session.length < 600}" x="75" y="10" width="800" height="600" viewBox="0 0 780 600" preserveAspectRatio="xMinYMin">
 
                     <!-- Ramme -->
                     <rect x="0" y="0" height="600" width="800" style="stroke-width:15px; stroke:#000000; fill: #ffffff" />
                     <!-- Remme -->
-                    <rect x="0" y="35" height="4.5" width="780" style="stroke:#000000; fill: #ffffff" th:width="${session.width}"/>
-                    <rect x="0" y="565" height="4.5" width="780" style="stroke:#000000; fill: #ffffff" th:width="${session.width}"/>
+                    <rect x="0" y="35" height="4.5" width="780" style="stroke:#000000; fill: #ffffff"/>
+                    <rect x="0" y="565" height="4.5" width="780" style="stroke:#000000; fill: #ffffff"/>
                     <!-- Spær -->
                     <rect x="0" y="0" height="600" width="4.5" style="stroke:#000000; fill: #ffffff" th:height="${session.lenght}"/>
                     <rect x="775.5" y="0" height="600" width="4.5" style="stroke:#000000; fill: #ffffff" th:height="${session.lenght}"/>
@@ -87,13 +87,39 @@
                     <line x1="55" y1="35" x2="600" y2="569.5" style="stroke:#000000; stroke-dasharray: 5 5;" />
                     <line x1="55" y1="569.5" x2="600" y2="35" style="stroke:#000000; stroke-dasharray: 5 5;" />
 
-                    <!-- Stolper -->
+                    <!-- Antal Stolper for længden af REM under 600cm  -->
+                        <rect x="110" y="32" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+                        <rect x="420" y="32" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+                        <rect x="730" y="32" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+                        <rect x="110" y="562" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+                        <rect x="420" y="562" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+                        <rect x="730" y="562" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+
+                </svg>
+                <svg  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" th:if="${session.length > 600}" x="75" y="10" width="800" height="600" viewBox="0 0 780 600" preserveAspectRatio="xMinYMin">
+
+                    <!-- Ramme -->
+                    <rect x="0" y="0" height="600" width="800" style="stroke-width:15px; stroke:#000000; fill: #ffffff" />
+                    <!-- Remme -->
+                    <rect x="0" y="35" height="4.5" width="780" style="stroke:#000000; fill: #ffffff"/>
+                    <rect x="0" y="565" height="4.5" width="780" style="stroke:#000000; fill: #ffffff"/>
+                    <!-- Spær -->
+                    <rect x="0" y="0" height="600" width="4.5" style="stroke:#000000; fill: #ffffff" th:height="${session.lenght}"/>
+                    <rect x="775.5" y="0" height="600" width="4.5" style="stroke:#000000; fill: #ffffff" th:height="${session.lenght}"/>
+
+                    <!-- Kryds -->
+                    <line x1="55" y1="35" x2="600" y2="569.5" style="stroke:#000000; stroke-dasharray: 5 5;" />
+                    <line x1="55" y1="569.5" x2="600" y2="35" style="stroke:#000000; stroke-dasharray: 5 5;" />
+
+                    <!-- Antal Stolper for længden af REM OVER 600cm -->
                     <rect x="110" y="32" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
-                    <rect x="420" y="32" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
-                    <rect x="730" y="32" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+                    <rect x="270" y="32" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+                    <rect x="434" y="32" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+                    <rect x="596" y="32" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
                     <rect x="110" y="562" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
-                    <rect x="420" y="562" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
-                    <rect x="730" y="562" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+                    <rect x="270" y="562" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+                    <rect x="434" y="562" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+                    <rect x="596" y="562" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
                 </svg>
 
             </svg>
@@ -106,22 +132,24 @@
 
             <div class="centered-form">
                 <form method="get">
-                    <p>Navn:</p>
-                    <input type="text" name="fullname" placeholder="Skriv dit fulde navn">
-                    <p>Adresse (vej + husnummer):</p>
-                    <input type="text" name="address">
-                    <p>Postnummer:</p>
-                    <input type="text" name="postalcode">
-                    <p>By:</p>
-                    <input type="text" name="city">
-                    <p>Telefonnummer:</p>
-                    <input type="text" name="phonenumber">
-                    <p>Email-addresse:</p>
-                    <input type="text" name="email">
-                <button type="submit" formaction="/sendrequest">Indsend forespørgsel</button>
+
+                    <input class="simpleShapeInp" type="text" name="fullname" placeholder="Skriv dit fulde navn">
+                    <br>
+                    <input class="simpleShapeInp" type="text" name="address" placeholder="Adresse (vej + husnummer):">
+                    <br>
+                    <input class="simpleShapeInp" type="text" name="postalcode" placeholder="Postnummer:">
+                    <br>
+                    <input class="simpleShapeInp" type="text" name="city" placeholder="By:">
+                    <br>
+                    <input class="simpleShapeInp" type="text" name="phonenumber" placeholder="Telefonnummer:">
+                    <br>
+                    <input class="simpleShapeInp" type="text" name="email" placeholder="Email-addresse:">
+                    <br>
+                    <button class="simpleShapeBtn" type="submit" formaction="/sendrequest">Indsend forespørgsel</button>
             </form>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

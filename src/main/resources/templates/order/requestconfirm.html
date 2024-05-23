@@ -11,7 +11,7 @@
 <div id="page">
     <header>
         <a href="../index.html" th:href="@{/public}">
-            <img src="/images/logo.png" width="20%"/>
+            <img src="/images/logo.png" width="40%"/>
         </a>
         <div width="80%">
             <div th:if="${session.currentUser != null}">
@@ -28,16 +28,17 @@
     </header>
     <div id="content" class="transparent-grey">
         <div id="intro-text">
-            <h1>Tak for din Forespørgsel!</h1>
-            <p>Du har valgt en Skræddersyet carport med målene:</p>
+            <h1>Tak for din Bestilling</h1>
+            <p>Du vil modtage en email, med din faktura og instruktions bog samt, og et par søm, så snart ordren er gået igennem!</p>
+            <p>Carport med målene:</p>
             <table>
                 <tr><td>Bredde:</td><td th:text="${session.width}"></td></tr>
                 <tr><td>Længde:</td><td th:text="${session.length}"></td></tr>
             </table>
 
-            <form method="get">
-                <button type="submit" formaction="/showorders">Vis ordrer</button>
-            </form>
+<!--            <form method="get">-->
+<!--                <button type="submit" formaction="/showorders">Vis ordrer</button>-->
+<!--            </form>-->
 
             <div th:if="${session.currentUser == null}">
                 <form class="generic-form" method="post">

@@ -12,7 +12,7 @@
 <div id="page">
     <header>
         <a href="../index.html" th:href="@{/public}">
-            <img src="/images/logo.png" width="20%"/>
+            <img src="/images/logo.png" width="40%"/>
         </a>
         <div width="80%">
             <div th:if="${session.currentUser != null}">
@@ -35,12 +35,13 @@
 
                 <form method="post">
                     <p>Indtast beløb der skal sættes ind i din konto:</p>
-                    <input type="number" name="inputMoney" placeholder="Skriv et positivt pengebeløb">
+                    <input type="number" name="inputMoney" placeholder="Skriv et positivt beløb">
 
-                    <button type="submit" formaction="/inputmoney">Gå videre til betaling</button>
+                    <button type="submit" formaction="/inputmoney">Indsæt beløbet på din konto</button>
                 </form>
-                <a href="/index.html" th:href="@{/public}">Gå tilbage</a>
-
+                <form method="post">
+                    <button type="submit" formaction="/goToPayment">Gå tilbage til betaling</button>
+                </form>
             </div>
             <p class="errormessage" th:text="${#ctx.message}"></p>
             <div th:if="${session.currentUser != null}">

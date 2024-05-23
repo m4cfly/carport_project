@@ -23,6 +23,7 @@ public class UserController {
         app.get("/logout", ctx -> logout(ctx));
         app.get("/createuser", ctx -> ctx.render("createuser.html"));
         app.post("/createuser", ctx -> createUser(ctx, connectionPool));
+        app.get("/insertmoney", ctx -> ctx.render("order/insertmoney.html"));
         app.post("/inputmoney", ctx -> inputMoney(ctx, connectionPool));
         app.post("/saveuserinfo", ctx -> customerInfo(ctx, connectionPool));
     }
@@ -44,19 +45,30 @@ public class UserController {
         User user = ctx.sessionAttribute("currentUser");
 
         int userId = user.getUserId();
-        int moneyInput = Integer.parseInt(ctx.formParam("inputMoney"));
+        if(ctx.formParam("inputMoney").isEmpty()) {
+            ctx.attribute("message", "Husk at skrive et beløb");
+            ctx.render("order/insertmoney.html");
+            return;
+        }
+            int moneyInput = Integer.parseInt(ctx.formParam("inputMoney"));
 
         try {
             UserMapper.inputMoney(moneyInput, userId, connectionPool);
 
             if (moneyInput > 0) {
+                int userBalance = user.getUserBalance() + moneyInput;
+                User updatedUser = new User(userId, user.getUserName(), user.getPassword(), userBalance, user.getUserRole());
+                ctx.sessionAttribute("currentUser", updatedUser);
                 ctx.attribute("message", "Du har lagt " + moneyInput + " kr. ind på din konto");
-                ctx.attribute("message", "Du har nu " + user.getUserBalance() + " kr. på din konto");
-                ctx.render("order/payfororder.html");
+                ctx.attribute("message", "Du har nu " + updatedUser.getUserBalance() + " kr. på din konto");
+
+
+                ctx.render("order/insertmoney.html");
+
             }
             else {
-                ctx.attribute("message", "Du har ikke penge nok på din konto");
-                ctx.render("/insertmoney.html");
+                ctx.attribute("message", "Noget gik galt");
+                ctx.render("order/insertmoney.html");
             }
 
         } catch (DatabaseException e) {

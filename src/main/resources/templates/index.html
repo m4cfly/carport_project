@@ -7,10 +7,11 @@
     <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
+
 <div id="page">
     <header>
         <a href="index.html" th:href="@{/}">
-            <img src="/images/logo.png" width="20%"/>
+            <img src="/images/logo.png" width="40%"/>
         </a>
         <div width="80%">
             <div th:if="${session.currentUser != null}">
@@ -45,7 +46,7 @@
             <h2>Skræddersyet carport</h2>
 
             <form method="post">
-                <select name="width">
+                <select class="simpleShapeInp" name="width">
                     <option disabled selected>Vælg bredde</option>
                     <option value="240">240 cm</option>
                     <option value="270">270 cm</option>
@@ -62,7 +63,7 @@
                     <option value="600">600 cm</option>
                 </select>
 
-                <select name="length">
+                <select class="simpleShapeInp" name="length">
                     <option disabled selected>Vælg længde</option>
                     <option value="240">240 cm</option>
                     <option value="270">270 cm</option>
@@ -84,7 +85,7 @@
                     <option value="750">750 cm</option>
                     <option value="780">780 cm</option>
                 </select>
-                <button type="submit" formaction="/showsketch">Vis skitse</button>
+                <button class="simpleShapeBtn" type="submit" formaction="/showsketch">Vis skitse</button>
             </form>
             </div>
             <div th:if="${session.currentUser != null && session.currentUser.userrole == 'admin'}">

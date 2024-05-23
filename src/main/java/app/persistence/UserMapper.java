@@ -73,9 +73,8 @@ public class UserMapper
 
     public static void inputMoney(int depositedMoney, int userId, ConnectionPool connectionPool) throws DatabaseException
     {
-        String sql = "UPDATE public.users \n" +
-                "SET user_balance = user_balance + ? " +
-                "WHERE public.users.user_id=?;";
+        String sql = "UPDATE public.users SET user_balance = user_balance + ? WHERE public.users.user_id=?;";
+
 
         try (
                 Connection connection = connectionPool.getConnection();

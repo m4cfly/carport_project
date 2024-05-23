@@ -21,6 +21,7 @@ public class OrderController {
 
     public static void addRoutes (Javalin app, ConnectionPool connectionPool) {
         app.post("/showsketch", ctx -> showSketch(ctx, connectionPool));
+        app.get("/sendrequestSite", ctx -> ctx.render("order/sendrequest"));
         app.get("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
         app.post("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
         app.get("/showbom", ctx -> showBom(ctx, connectionPool));
@@ -29,8 +30,12 @@ public class OrderController {
         app.post("/showorders", ctx -> showOrders(ctx, connectionPool));
         app.get("/showordersbyid", ctx -> showOrdersByID(ctx, connectionPool));
         app.post("/showordersbyid", ctx -> showOrdersByID(ctx, connectionPool));
+        app.get("/goToPayment", ctx -> ctx.render("order/payfororder.html"));
+        app.post("/goToPayment", ctx -> ctx.render("order/payfororder.html"));
         app.post("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
         app.get("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
+        app.get("/payForOrderUpdate", ctx -> ctx.render("order/payfororderupdate.html"));
+        app.post("/payForOrderUpdate", ctx -> ctx.render("order/payfororderupdate.html"));
 //        app.get("/showOrder", ctx -> showOrder(ctx));
     }
 
@@ -96,9 +101,14 @@ public class OrderController {
                 return;
             }
 
-            
+                int totalPrice = OrderMapper.calculatePrice(orderId, connectionPool);
+
 
                 ctx.attribute("materialItems", materialItems);
+
+                ctx.sessionAttribute("totalPrice", totalPrice);
+
+
 
                 ctx.render("order/bom.html");
 
@@ -112,14 +122,21 @@ public class OrderController {
 
     private static void sendRequest(Context ctx, ConnectionPool connectionPool) throws DatabaseException
     {
-        // Get order details from front-end
+        // Get order details and customer details from front-end
+        String fullname = ctx.formParam("fullname");
+        String address = ctx.formParam("address");
+        String postalCode = ctx.formParam("postalcode");
+        String city = ctx.formParam("city");
+        String phoneNumber = ctx.formParam("phonenumber");
+        String email = ctx.formParam("email");
+
         User user = ctx.sessionAttribute("currentUser");
         int width = ctx.sessionAttribute("width");
         int length = ctx.sessionAttribute("length");
 //        ctx.sessionAttribute("width", width);
 //        ctx.sessionAttribute("length", length);
-        int status = 1; // hardcoded for now
-        int totalPrice = 0; // hardcoded for now
+        int status = 1; // 1 = aktiv
+        int totalPrice = 0; // hardcoded indtil videre, opdateres når ordren beregnes
         int userId = user.getUserId();
 
         Order order = new Order(0, length, width, totalPrice, status, user);
@@ -142,6 +159,9 @@ public class OrderController {
             // TODO: Save order items in database (stykliste)
             OrderMapper.insertMaterialItems(calculator.getMaterialItems(), connectionPool);
 
+
+
+
             ctx.attribute("message", "Du har nu indsendt din forespørgsel.");
             ctx.render("/sendrequest.html");
         }
@@ -163,13 +183,26 @@ public class OrderController {
 
     private static void payForOrder (Context ctx, ConnectionPool connectionPool) {
         User user = ctx.sessionAttribute("currentUser");
-        Order userOrder = ctx.sessionAttribute("userOrder");
+        Order userOrder = ctx.sessionAttribute("order");
         int userId = user.getUserId();
 
         try {
-            OrderMapper.payForOrder(userOrder, userId, connectionPool);
+            int totalPrice = OrderMapper.calculatePrice(userOrder.getOrderID(),connectionPool);
 
-            if (user.getUserBalance() >= userOrder.getTotalPrice()) {
+            Order updatedOrder = new Order(userOrder.getOrderID(), userOrder.getLength(), userOrder.getWidth(), totalPrice, userOrder.getStatusID(), userOrder.getUser());
+            ctx.sessionAttribute("order", updatedOrder);
+
+
+            if (user.getUserBalance() >= updatedOrder.getTotalPrice()) {
+
+            OrderMapper.payForOrder(updatedOrder, totalPrice, userId, connectionPool);
+
+            int userBalance = user.getUserBalance() - totalPrice;
+
+            User updatedUser = new User(userId, user.getUserName(), user.getPassword(), userBalance, user.getUserRole());
+
+            ctx.sessionAttribute("currentUser", updatedUser);
+
                 ctx.attribute("message", "Du har betalt for din bestilling. Tak for handlen, vi vender tilbage hurtigst muligt");
                 ctx.render("order/requestconfirm.html");
             }
