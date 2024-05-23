@@ -191,7 +191,7 @@ public class OrderController {
 
             User updatedUser = new User(userId, user.getUserName(), user.getPassword(), userBalance, user.getUserRole());
 
-            updatedUser = ctx.sessionAttribute("currentUser");
+            ctx.sessionAttribute("currentUser", updatedUser);
 
                 ctx.attribute("message", "Du har betalt for din bestilling. Tak for handlen, vi vender tilbage hurtigst muligt");
                 ctx.render("order/requestconfirm.html");

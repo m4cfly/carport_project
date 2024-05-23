@@ -42,8 +42,10 @@ public class UserController {
         User user = ctx.sessionAttribute("currentUser");
 
         int userId = user.getUserId();
-        if(!ctx.formParam("inputMoney").isEmpty()) {
+        if(ctx.formParam("inputMoney").isEmpty()) {
             ctx.attribute("message", "Husk at skrive et beløb");
+            ctx.render("order/insertmoney.html");
+            return;
         }
             int moneyInput = Integer.parseInt(ctx.formParam("inputMoney"));
 
@@ -53,7 +55,7 @@ public class UserController {
             if (moneyInput > 0) {
                 int userBalance = user.getUserBalance() + moneyInput;
                 User updatedUser = new User(userId, user.getUserName(), user.getPassword(), userBalance, user.getUserRole());
-                updatedUser = ctx.sessionAttribute("currentUser");
+                ctx.sessionAttribute("currentUser", updatedUser);
                 ctx.attribute("message", "Du har lagt " + moneyInput + " kr. ind på din konto");
                 ctx.attribute("message", "Du har nu " + updatedUser.getUserBalance() + " kr. på din konto");
 
