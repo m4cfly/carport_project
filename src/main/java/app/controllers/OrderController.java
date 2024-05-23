@@ -122,7 +122,14 @@ public class OrderController {
 
     private static void sendRequest(Context ctx, ConnectionPool connectionPool) throws DatabaseException
     {
-        // Get order details from front-end
+        // Get order details and customer details from front-end
+        String fullname = ctx.formParam("fullname");
+        String address = ctx.formParam("address");
+        String postalCode = ctx.formParam("postalcode");
+        String city = ctx.formParam("city");
+        String phoneNumber = ctx.formParam("phonenumber");
+        String email = ctx.formParam("email");
+
         User user = ctx.sessionAttribute("currentUser");
         int width = ctx.sessionAttribute("width");
         int length = ctx.sessionAttribute("length");
