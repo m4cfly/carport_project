@@ -143,7 +143,7 @@ public class OrderController {
             OrderMapper.insertMaterialItems(calculator.getMaterialItems(), connectionPool);
 
 
-            order.getTotalPrice() = 
+            //order.getTotalPrice() =
 
             ctx.attribute("message", "Du har nu indsendt din forespørgsel.");
             ctx.render("/sendrequest.html");

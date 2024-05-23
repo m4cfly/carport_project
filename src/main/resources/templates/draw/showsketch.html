@@ -11,7 +11,7 @@
 <div id="page">
     <header>
         <a href="../index.html" th:href="@{/public}">
-            <img src="/images/logo.png" width="20%"/>
+            <img src="/images/logo.png" width="40%"/>
         </a>
         <div width="80%">
             <div th:if="${session.currentUser != null}">
@@ -44,7 +44,7 @@
                  xmlns="http://www.w3.org/2000/svg"
                  xmlns:xlink="http://www.w3.org/1999/xlink"
                  x="0" y="0"
-                 width="40%" viewBox="0 0 855 690"
+                 width="80%" viewBox="0 0 855 690"
                  preserveAspectRatio="xMinYMin">
 
                 <defs>
@@ -118,7 +118,8 @@
                     <input type="text" name="phonenumber">
                     <p>Email-addresse:</p>
                     <input type="text" name="email">
-                <button type="submit" formaction="/sendrequest">Indsend forespørgsel</button>
+                    <br>
+                    <button type="submit" formaction="/sendrequest">Indsend forespørgsel</button>
             </form>
         </div>
     </div>
