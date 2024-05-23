@@ -189,10 +189,13 @@ public class OrderController {
         try {
             int totalPrice = OrderMapper.calculatePrice(userOrder.getOrderID(),connectionPool);
 
+            Order updatedOrder = new Order(userOrder.getOrderID(), userOrder.getLength(), userOrder.getWidth(), totalPrice, userOrder.getStatusID(), userOrder.getUser());
+            ctx.sessionAttribute("order", updatedOrder);
 
-            if (user.getUserBalance() >= userOrder.getTotalPrice()) {
 
-            OrderMapper.payForOrder(userOrder, totalPrice, userId, connectionPool);
+            if (user.getUserBalance() >= updatedOrder.getTotalPrice()) {
+
+            OrderMapper.payForOrder(updatedOrder, totalPrice, userId, connectionPool);
 
             int userBalance = user.getUserBalance() - totalPrice;
 
