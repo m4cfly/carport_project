@@ -1,62 +1,100 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
-<title>Fog Carport</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Carport</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/css/style.css" rel="stylesheet"/>
 </head>
-
 <body>
-<h2>Bill of Materials</h2>
-<p>Carport :</p>
+<div id="page">
+  <header>
+    <a href="index.html" th:href="@{/}">
+      <img src="/images/logo.png" width="40%"/>
+    </a>
+    <div width="80%">
+      <div th:if="${session.currentUser != null}">
+        <span> Welcome User: </span>
+        <b>
+          <span th:text="${session.currentUser.username}"> </span>
+        </b>
+        <a href="/logout" th:href="@{/logout}">Logout</a>
+        <a href="/index.html" th:href="@{/}">
+          <img src="../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
+        </a>
+      </div>
+    </div>
+  </header>
+  <div id="content" class="transparent-grey">
+    <div id="intro-text">
+      <div th:if="${session.currentUser == null}">
 
-<table>
-  <tr><td>Carport Width:</td><td th:text="${session.width}"></td></tr>
-  <tr><td>Carport Length:</td><td th:text="${session.length}"></td></tr>
-</table>
+        <form class="generic-form" method="post">
+          <input type="text" name="username" placeholder="Enter your username"/>
+          <input type="password" name="password" placeholder="Enter your password"/>
+          <button class="btn btn-ok" type="submit" formaction="login">Login</button>
+          <div><p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p></div>
+        </form>
+        <a href="/createuser.html" th:href="@{/createuser}">Create User</a>
+        <h1>Welcome Guest!</h1>
 
-<form method="get">
-  <p>Bill of Material:</p>
-  <table>
-    <thead>
-    <tr>
-      <th>Materials</th>
-      <th>Length</th>
-      <th>Pris pr. Unit (i kr.)</th>
-      <th>Quantity</th>
-      <th>Unit</th>
-      <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="item : ${materialItems}">
-      <td th:text="${item.materialVariant.material.name}"></td>
-      <td th:text="${item.materialVariant.length}"></td>
-      <td th:text="${item.materialVariant.material.price}" ></td>
-      <td th:text="${item.quantity}"></td>
-      <td th:text="${item.materialVariant.material.unit}"></td>
-      <td th:text="${item.description}"></td>
-    </tr>
-    </tbody>
-  </table>
+      </div>
+      <div th:if="${session.currentUser != null && session.currentUser.userrole == 'customer'}">
+            <h2>Bill of Materials</h2>
+            <p>Carport :</p>
 
-  <table>
-    <tr><td>Samlet pris: </td><td th:text="${session.totalPrice}"><td> kr.</td></td></tr>
-  </table>
+            <table>
+              <tr><td>Carport Width:</td><td th:text="${session.width}"></td></tr>
+              <tr><td>Carport Length:</td><td th:text="${session.length}"></td></tr>
+            </table>
+
+            <form method="get">
+              <p>Bill of Material:</p>
+              <table>
+                <thead>
+                <tr>
+                  <th>Materials</th>
+                  <th>Length</th>
+                  <th>Pris pr. Unit (i kr.)</th>
+                  <th>Quantity</th>
+                  <th>Unit</th>
+                  <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${materialItems}">
+                  <td th:text="${item.materialVariant.material.name}"></td>
+                  <td th:text="${item.materialVariant.length}"></td>
+                  <td th:text="${item.materialVariant.material.price}" ></td>
+                  <td th:text="${item.quantity}"></td>
+                  <td th:text="${item.materialVariant.material.unit}"></td>
+                  <td th:text="${item.description}"></td>
+                </tr>
+                </tbody>
+              </table>
+
+              <table>
+                <tr><td>Samlet pris: </td><td th:text="${session.totalPrice}"><td> kr.</td></td></tr>
+              </table>
 
 
-</form>
+            </form>
 
 
-<form method="get">
-  <button type="submit" formaction="/sendrequest">Gå tilbage</button>
-</form>
+            <form method="get">
+              <button type="submit" formaction="/sendrequest">Gå tilbage</button>
+            </form>
 
 
-<form method="get">
-  <button type="submit" formaction="/goToPayment">Gå til betaling</button>
-</form>
+            <form method="get">
+              <button type="submit" formaction="/goToPayment">Gå til betaling</button>
+            </form>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 
 
