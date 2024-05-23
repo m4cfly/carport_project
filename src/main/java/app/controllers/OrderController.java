@@ -135,8 +135,8 @@ public class OrderController {
         int length = ctx.sessionAttribute("length");
 //        ctx.sessionAttribute("width", width);
 //        ctx.sessionAttribute("length", length);
-        int status = 1; // hardcoded for now
-        int totalPrice = 0; // hardcoded for now
+        int status = 1; // 1 = aktiv
+        int totalPrice = 0; // hardcoded indtil videre, opdateres når ordren beregnes
         int userId = user.getUserId();
 
         Order order = new Order(0, length, width, totalPrice, status, user);
