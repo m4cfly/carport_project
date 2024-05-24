@@ -53,6 +53,7 @@
                 <a href="/createuser.html" th:href="@{/createuser}">Create User</a>
                 <h1>Welcome Guest!</h1>
 
+                <img src="/images/carportC.png" height="100%" width="100%"/>
             </div>
             <div th:if="${session.currentUser != null && session.currentUser.userrole == 'customer'}">
             <h1>Welcome Customer! Order Carport</h1>
@@ -61,7 +62,7 @@
 
             <form method="post">
                 <select class="simpleShapeInp" name="width">
-                    <option disabled selected>Vælg bredde</option>
+                    <option disabled>Vælg bredde</option>
                     <option value="240">240 cm</option>
                     <option value="270">270 cm</option>
                     <option value="300">300 cm</option>

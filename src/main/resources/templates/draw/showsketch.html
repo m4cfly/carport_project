@@ -69,7 +69,7 @@
                 <!-- Text: Mål -->
                 <text style="text-anchor: middle" transform="translate(30,300) rotate(-90)" th:text="${session.width}">600 cm</text>
                 <text style="text-anchor: middle" x="502" y="670" th:text="${session.length}">780 cm</text>
-
+                <!-- 6 stolper -->
                 <svg  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" th:if="${session.length < 600}" x="75" y="10" width="800" height="600" viewBox="0 0 780 600" preserveAspectRatio="xMinYMin">
 
                     <!-- Ramme -->
@@ -94,6 +94,7 @@
                         <rect x="730" y="562" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
 
                 </svg>
+                <!-- 8 stolper -->
                 <svg  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" th:if="${session.length > 600}" x="75" y="10" width="800" height="600" viewBox="0 0 780 600" preserveAspectRatio="xMinYMin">
 
                     <!-- Ramme -->
