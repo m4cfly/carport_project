@@ -8,6 +8,36 @@ body {
     justify-content: center;
     background-image: url("../images/background.png");
     background-size: cover;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+
+}
+nav {
+    position: absolute;
+    width: 100vw;
+}
+
+nav ul {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    list-style-type: none;
+    align-self: center;
+    flex-shrink: 0;
+}
+
+nav a {
+    display: block;
+}
+
+.brand a {
+    text-decoration: none;
+    background: none;
 }
 
 #page {
@@ -47,7 +77,12 @@ header {
     border-radius: 5px;
 }
 .transparent-grey {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 10px 0px 44px 7px rgba(0,0,0,0.32);
+    -webkit-box-shadow: 10px 0px 44px 7px rgba(0,0,0,0.32);
+    -moz-box-shadow: 10px 0px 44px 7px rgba(0,0,0,0.32);
 }
 .simpleShapeInp{
     margin-top: 15px;
@@ -61,8 +96,32 @@ header {
     background-color: blue;
     color: white;
     cursor: pointer;
+
+}
+@media (max-width: 81em) {
+    nav ul {
+        flex-direction: column;
+    }
+    nav a {
+        padding: 0.4em 0;
+    }
 }
 
+@media (min-width: 81em) {
+    nav ul {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+    .brand {
+        margin-right: auto;
+    }
+    nav a {
+        padding: 0.6rem;
+    }
+    nav ul li:not(:first-child):not(:last-child) {
+        margin-right: 2.5rem;
+    }
+}
 
 @media screen and (max-width: 600px){
 
@@ -116,12 +175,8 @@ tr:nth-child(odd) {
     background-color: #e9e5e5;
 }
 
-
-/*** Generiske styles ***/
-
 button {
     border-radius: 5px;
-
 }
 
 
