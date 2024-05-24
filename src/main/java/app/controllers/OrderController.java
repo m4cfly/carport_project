@@ -17,22 +17,28 @@ import java.util.Locale;
 public class OrderController {
 
     public static void addRoutes (Javalin app, ConnectionPool connectionPool) {
+        //for customer
         app.post("/showsketch", ctx -> showSketch(ctx, connectionPool));
         app.get("/sendrequestSite", ctx -> ctx.render("order/sendrequest"));
         app.get("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
         app.post("/sendrequest", ctx -> sendRequest(ctx, connectionPool));
         app.get("/showbom", ctx -> showBom(ctx, connectionPool));
         app.post("/showbom", ctx -> showBom(ctx, connectionPool));
-        app.get("/showorders", ctx -> showOrders(ctx, connectionPool));
-        app.post("/showorders", ctx -> showOrders(ctx, connectionPool));
-        app.get("/showordersbyid", ctx -> showOrdersByID(ctx, connectionPool));
-        app.post("/showordersbyid", ctx -> showOrdersByID(ctx, connectionPool));
         app.get("/goToPayment", ctx -> ctx.render("order/payfororder.html"));
         app.post("/goToPayment", ctx -> ctx.render("order/payfororder.html"));
         app.post("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
         app.get("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
         app.get("/payForOrderUpdate", ctx -> ctx.render("order/payfororderupdate.html"));
         app.post("/payForOrderUpdate", ctx -> ctx.render("order/payfororderupdate.html"));
+
+        //for admin
+        app.get("/showordersbyid", ctx -> showOrdersByID(ctx, connectionPool));
+        app.post("/showordersbyid", ctx -> showOrdersByID(ctx, connectionPool));
+        app.get("/showorders", ctx -> showOrders(ctx, connectionPool));
+        app.post("/showorders", ctx -> showOrders(ctx, connectionPool));
+
+
+
 //        app.get("/showOrder", ctx -> showOrder(ctx));
     }
 
@@ -45,7 +51,7 @@ public class OrderController {
         {
             List<Order> orders = OrderMapper.viewShoppingCart(userId,connectionPool);
             ctx.attribute("orders", orders);
-            ctx.render("order/showorders.html");
+            ctx.render("order/cart.html");
         }
         catch (DatabaseException e)
         {

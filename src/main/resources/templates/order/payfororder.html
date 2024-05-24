@@ -43,10 +43,10 @@
                     <tr><td>Tryk "betal" for at betale </td><td th:text="${session.totalPrice}"><td> kr.</td></td></tr>
                 </table>
 
-                    <button type="submit" formaction="/payForOrder">Betal for ordren</button>
+                    <button class="simpleShapeBtn" type="submit" formaction="/payForOrder">Betal for ordren</button>
                 </form>
                 <a href="/insertmoney" th:href="@{/insertmoney}">Indsæt penge på kontoen</a>
-                <a href="/showbom" th:href="@{/showbom}">Gå tilbage</a>
+                <a href="/showbom" class="simpleShapeInp" th:href="@{/showbom}">Gå tilbage</a>
 
             </div>
             <p class="errormessage" th:text="${#ctx.message}"></p>

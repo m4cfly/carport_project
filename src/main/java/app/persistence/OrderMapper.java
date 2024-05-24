@@ -82,7 +82,7 @@ import java.util.List;
             }
             catch (SQLException e)
             {
-                throw new DatabaseException("Could not get users from the database", e.getMessage());
+                throw new DatabaseException("Could not get All data of BOM from the database", e.getMessage());
             }
             return materialItemList;
         }
