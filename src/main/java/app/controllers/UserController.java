@@ -1,16 +1,11 @@
 package app.controllers;
 
-import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
-import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
-import app.services.EmailService;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-
-import java.util.List;
 
 
 public class UserController {
@@ -29,9 +24,6 @@ public class UserController {
     }
 
     private static void customerInfo(Context ctx, ConnectionPool connectionPool) {
-        String email = ctx.formParam("email");
-        EmailService.SendEmail(email, "<DoNotReply@5ad5fab0-6a37-413f-8bf0-ea00f8379112.azurecomm.net>");
-
         ctx.render("order/payfororder.html");
     }
 

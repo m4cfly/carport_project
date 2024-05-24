@@ -6,15 +6,11 @@ import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
-import app.persistence.UserMapper;
 import app.services.Calculator;
 import app.services.CarportSvg;
-import app.services.EmailService;
-import app.services.Svg;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
