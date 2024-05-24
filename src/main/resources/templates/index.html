@@ -26,22 +26,22 @@
             </div>
         </div>
     </header>
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">&#9776;</label>
+    <nav>
+        <ul>
+            <li class="brand">
+                <a href="#">
+                    <h1>NAME</h1>
+                </a>
+            </li>
+            <li><a href="#">ITEM 1</a></li>
+            <li><a href="#">ITEM 2</a></li>
+            <li><a href="#">ITEM 3</a></li>
+            <li><a href="#">ITEM 4</a></li>
+        </ul>
+    </nav>
     <div id="content" class="transparent-grey">
-        <nav>
-            <ul>
-                <li class="brand">
-                    <a href="#">
-                        <h1>NAME</h1>
-                    </a>
-                </li>
-                <li><a href="#">ITEM 1</a></li>
-                <li><a href="#">ITEM 2</a></li>
-                <li><a href="#">ITEM 3</a></li>
-                <li><a href="#">ITEM 4</a></li>
-            </ul>
-        </nav>
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle" class="menu-icon">&#9776;</label>
         <div id="intro-text">
             <div th:if="${session.currentUser == null}">
 
@@ -115,5 +115,21 @@
         </div>
     </div>
 </div>
+<script>
+    // toggle for the amazing Burgermenu eleement
+    const menuToggle = document.getElementById('menu-toggle');
+
+    // Get the navigation menu element
+    const navMenu = document.querySelector('nav ul');
+
+    navMenu.addEventListener('click', () => {
+        menuToggle.checked = false;
+    });
+    document.addEventListener('click', (event) => {
+        if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+            menuToggle.checked = false;
+        }
+    });
+</script>
 </body>
 </html>

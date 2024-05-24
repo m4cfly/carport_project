@@ -103,14 +103,8 @@ public class OrderController {
             }
 
                 int totalPrice = OrderMapper.calculatePrice(orderId, connectionPool);
-
-
                 ctx.attribute("materialItems", materialItems);
-
                 ctx.sessionAttribute("totalPrice", totalPrice);
-
-
-
                 ctx.render("order/bom.html");
 
         }
@@ -195,8 +189,8 @@ public class OrderController {
             ctx.sessionAttribute("currentUser", updatedUser);
 
                 // Send email
-                String email = ctx.formParam("email");
-                EmailService.SendEmail(email, "<DoNotReply@5ad5fab0-6a37-413f-8bf0-ea00f8379112.azurecomm.net>");
+                //String email = ctx.formParam("email");
+                //EmailService.SendEmail(email, "<DoNotReply@5ad5fab0-6a37-413f-8bf0-ea00f8379112.azurecomm.net>");
 
                 ctx.attribute("message", "Du har betalt for din bestilling. Tak for handlen, vi vender tilbage hurtigst muligt");
                 ctx.render("order/requestconfirm.html");

@@ -12,7 +12,7 @@ import java.util.List;
         public static List<Order> getAllOrders(ConnectionPool connectionPool) throws DatabaseException
         {
             List<Order> orderList = new ArrayList<>();
-            String sql = "SELECT * FROM orders inner join users using(user_id)";
+            String sql = "SELECT * FROM orders inner join users using(user_id) ORDER BY order_id DESC";
             try (
                     Connection connection = connectionPool.getConnection();
                     var prepareStatement = connection.prepareStatement(sql);

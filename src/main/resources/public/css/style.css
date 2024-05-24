@@ -98,6 +98,20 @@ header {
     cursor: pointer;
 
 }
+.menu-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+#menu-toggle:checked ~ nav ul {
+    display: block;
+}
+
+
+@media (max-width: 81em) {
+    nav ul {
+        display: none;
+    }
+}
 @media (max-width: 81em) {
     nav ul {
         flex-direction: column;
