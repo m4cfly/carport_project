@@ -50,8 +50,25 @@
                             </tr>
                         </table>
                     </form>
-
-
+            </div>
+                <div th:if="${session.currentUser != null && session.currentUser.userrole == 'customer'}">
+                    <h1>Account Balance </h1>
+                    <form method="get">
+                        <table>
+                            <tr>
+                                <th>User ID</th>
+                                <th>User Name</th>
+                                <th>Total Balance</th>
+                            </tr>
+                            <tr>
+                                <td th:text="${session.currentUser.userId}"></td>
+                                <td th:text="${session.currentUser.userName}"></td>
+                                <td th:text="${session.currentUser.userBalance}"></td>
+                                <td><button type="submit" name="account-balance" formaction="/">Go Back</button></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
                 <div class="carport-svg-topview">
                     <div th:utext="${svg}"></div>
                 </div>

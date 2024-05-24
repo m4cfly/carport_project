@@ -22,10 +22,14 @@
                     <span th:text="${session.currentUser.username}"> </span>
                 </b>
                 <a href="/logout" th:href="@{/logout}">Logout</a>
-                <a href="/" th:href="@{/}">
-                    <img src="../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
-                </a>
+             <!--   <a href="/" th:href="@{/}">
+                        <img src="../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
+                    </a> -->
+                <form method="post">
+                    <button class="simpleShapeBtn" type="submit" formaction="/showorders">Cart</button>
+                </form>
             </div>
+
         </div>
     </header>
     <div id="content" class="transparent-grey">
