@@ -10,7 +10,7 @@ import com.azure.core.util.polling.SyncPoller;
 
 
 public class EmailService {
-    public static  void SendEmail(String to, String fromEmail) {
+    public static void SendEmail(String to, String fromEmail) {
 
 
         String connectionString = "endpoint=https://carport-acs.europe.communication.azure.com/;accesskey=1pCslwkVLQKgOiSbW8FHSVf3WNMXq1/T+rws8EtagEh3ccl2DJc+q94xs+XHHiTWhnr02ggLBcNdf6SlxMvvFg==>";
