@@ -29,14 +29,8 @@ public class UserController {
     }
 
     private static void customerInfo(Context ctx, ConnectionPool connectionPool) {
-        String fullname = ctx.formParam("fullname");
-        String address = ctx.formParam("address");
-        String postalCode = ctx.formParam("postalcode");
-        String city = ctx.formParam("city");
-        String phoneNumber = ctx.formParam("phonenumber");
         String email = ctx.formParam("email");
         EmailService.SendEmail(email, "<DoNotReply@5ad5fab0-6a37-413f-8bf0-ea00f8379112.azurecomm.net>");
-
 
         ctx.render("order/payfororder.html");
     }

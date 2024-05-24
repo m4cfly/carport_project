@@ -33,21 +33,23 @@
             <h1>Vælg leveringsadresse og kontaktoplysninger:</h1>
 
             <div class="centered-form">
-
                 <form method="post">
-                    <p>Navn:</p>
-                    <input type="text" name="fullname" placeholder="Skriv dit fulde navn">
-                    <p>Adresse (vej + husnummer):</p>
-                    <input type="text" name="address">
-                    <p>Postnummer:</p>
-                    <input type="text" name="postalcode">
-                    <p>By:</p>
-                    <input type="text" name="city">
-                    <p>Telefonnummer:</p>
-                    <input type="number" name="phonenumber">
-                    <p>Email-addresse:</p>
-                    <input type="text" name="email">
-                    <button type="submit" formaction="/saveuserinfo">Gå til betaling</button>
+
+                    <input class="simpleShapeInp" type="text" name="fullname" placeholder="Skriv dit fulde navn">
+                    <br>
+                    <input class="simpleShapeInp" type="text" name="address" placeholder="Adresse (vej + husnummer):">
+                    <br>
+                    <input class="simpleShapeInp" type="text" name="postalcode" placeholder="Postnummer:">
+                    <br>
+                    <input class="simpleShapeInp" type="text" name="city" placeholder="By:">
+                    <br>
+                    <input class="simpleShapeInp" type="text" name="phonenumber" placeholder="Telefonnummer:">
+                    <br>
+                    <input class="simpleShapeInp" type="text" name="emailaddress" placeholder="Email-addresse:">
+                    <br>
+                    <input class="simpleShapeInp" type="text" name="email" placeholder="WRITE">
+                    <br>
+                    <button class="simpleShapeBtn" type="submit" formaction="/showbom">Indsend forespørgsel</button>
                 </form>
                 <a href="/index.html" th:href="@{/}">Gå tilbage</a>
 

@@ -122,14 +122,7 @@ public class OrderController {
 
     private static void sendRequest(Context ctx, ConnectionPool connectionPool) throws DatabaseException
     {
-        // Get order details and customer details from front-end
-        String fullname = ctx.formParam("fullname");
-        String address = ctx.formParam("address");
-        String postalCode = ctx.formParam("postalcode");
-        String city = ctx.formParam("city");
-        String phoneNumber = ctx.formParam("phonenumber");
-        String email = ctx.formParam("email");
-
+        // Get order details from front-end
         User user = ctx.sessionAttribute("currentUser");
         int width = ctx.sessionAttribute("width");
         int length = ctx.sessionAttribute("length");
@@ -143,7 +136,6 @@ public class OrderController {
         ctx.sessionAttribute("order", order);
 
 //        List<Material_Item> materialItems = new ArrayList<>();
-
 
         // TODO: Insert order in database
         try
@@ -159,11 +151,8 @@ public class OrderController {
             // TODO: Save order items in database (stykliste)
             OrderMapper.insertMaterialItems(calculator.getMaterialItems(), connectionPool);
 
-
-
-
             ctx.attribute("message", "Du har nu indsendt din forespørgsel.");
-            ctx.render("/sendrequest.html");
+            ctx.render("/customerinfo.html");
         }
         catch (DatabaseException e)
         {
@@ -216,6 +205,4 @@ public class OrderController {
             ctx.render("order/payfororder.html");
         }
     }
-
-
 }
