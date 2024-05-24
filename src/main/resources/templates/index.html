@@ -20,7 +20,7 @@
                      <span th:text="${session.currentUser.username}"> </span>
                 </b>
                 <a href="/logout" th:href="@{/logout}">Logout</a>
-                <a href="/index.html" th:href="@{/}">
+                <a href="/index.html" th:href="@{/showordersbyid}">
                     <img src="../public/images/cart.png" th:src="@{/images/cart.png}" width="10%"/>
                 </a>
             </div>
@@ -28,7 +28,7 @@
     </header>
     <input type="checkbox" id="menu-toggle">
     <label for="menu-toggle" class="menu-icon">&#9776;</label>
-    <nav>
+ <!--   <nav>
         <ul>
             <li class="brand">
                 <a href="#">
@@ -41,6 +41,7 @@
             <li><a href="#">ITEM 4</a></li>
         </ul>
     </nav>
+    -->
     <div id="content" class="transparent-grey">
         <div id="intro-text">
             <div th:if="${session.currentUser == null}">
