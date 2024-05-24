@@ -9,6 +9,7 @@ import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import app.services.Calculator;
 import app.services.CarportSvg;
+import app.services.EmailService;
 import app.services.Svg;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -123,6 +124,7 @@ public class OrderController {
     private static void sendRequest(Context ctx, ConnectionPool connectionPool) throws DatabaseException
     {
         // Get order details from front-end
+
         User user = ctx.sessionAttribute("currentUser");
         int width = ctx.sessionAttribute("width");
         int length = ctx.sessionAttribute("length");
@@ -191,6 +193,10 @@ public class OrderController {
             User updatedUser = new User(userId, user.getUserName(), user.getPassword(), userBalance, user.getUserRole());
 
             ctx.sessionAttribute("currentUser", updatedUser);
+
+                // Send email
+                String email = ctx.formParam("email");
+                EmailService.SendEmail(email, "<DoNotReply@5ad5fab0-6a37-413f-8bf0-ea00f8379112.azurecomm.net>");
 
                 ctx.attribute("message", "Du har betalt for din bestilling. Tak for handlen, vi vender tilbage hurtigst muligt");
                 ctx.render("order/requestconfirm.html");
