@@ -1,11 +1,14 @@
 package app.controllers;
 
+import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
+import java.util.List;
 
 
 public class UserController {
@@ -99,7 +102,7 @@ public class UserController {
             User user = UserMapper.login(username,password,connectionPool);
             ctx.sessionAttribute("currentUser", user);
 
-          //  List<Order> orderList = OrderMapper.getAllOrdersPerUser(user.getUserId(), connectionPool);
+           // List<Order> orderList = OrderMapper.getAllOrdersPerUser(user.getUserId(), connectionPool);
             //ctx.attribute("orderList", orderList);
             ctx.render("index.html");
         }

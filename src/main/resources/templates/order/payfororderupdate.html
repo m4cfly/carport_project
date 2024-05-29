@@ -47,8 +47,8 @@
 
                     <button type="submit" formaction="/payForOrder">Betal for ordren</button>
                 </form>
-                <a href="/insertmoney" th:href="@{/insertmoney}">Indsæt penge på kontoen</a>
-                <a href="/showbom" th:href="@{/showbom}">Gå tilbage</a>
+                <a class="simpleShapeBtn" href="/insertmoney" th:href="@{/insertmoney}">Indsæt penge på kontoen</a>
+                <a class="simpleShapeBtn" href="/showbom" th:href="@{/showbom}">Gå tilbage</a>
 
             </div>
             <p class="errormessage" th:text="${#ctx.message}"></p>
