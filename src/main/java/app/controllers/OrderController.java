@@ -135,12 +135,26 @@ public class OrderController {
         }
     }
 
-    private static void showSketch(Context ctx, ConnectionPool connectionPool) {
-        int width = Integer.parseInt(ctx.formParam("width"));
-        int length = Integer.parseInt(ctx.formParam("length"));
-        ctx.sessionAttribute("width", width);
-        ctx.sessionAttribute("length", length);
-        ctx.render("draw/showsketch.html");
+    private static void showSketch(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
+        String widthString = ctx.formParam("width");
+        String lengthString = ctx.formParam("length");
+
+        if (!("0").equals(widthString) && !("0").equals(lengthString) ) {
+            int width = Integer.parseInt(ctx.formParam("width"));
+            int length = Integer.parseInt(ctx.formParam("length"));
+            ctx.sessionAttribute("width", width);
+            ctx.sessionAttribute("length", length);
+            ctx.render("draw/showsketch.html");
+        }
+        else {
+            ctx.attribute("errormessage", "Husk at vælge bredde og længde!");
+            ctx.render("index.html");
+
+        }
+
+
+
     }
 
     private static void payForOrder(Context ctx, ConnectionPool connectionPool) {
