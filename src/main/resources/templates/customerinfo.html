@@ -8,7 +8,6 @@
 </head>
 <body>
 
-
 <div id="page">
     <header>
 
@@ -56,7 +55,6 @@
                     <button class="simpleShapeBtn" type="submit" formaction="/showbom">Indsend forespørgsel</button>
                 </form>
                 <a href="/index.html" th:href="@{/}">Gå tilbage</a>
-
             </div>
             <p class="errormessage" th:text="${#ctx.message}"></p>
             <div th:if="${session.currentUser != null}">

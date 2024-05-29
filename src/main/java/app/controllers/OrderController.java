@@ -83,6 +83,7 @@ public class OrderController {
     }
 
     private static void showBom(Context ctx, ConnectionPool connectionPool) {
+
         int orderId = ctx.sessionAttribute("orderID");
         try {
             List<Material_Item> materialItems = OrderMapper.getMaterialItemsByOrderId(orderId, connectionPool);
