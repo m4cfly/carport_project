@@ -57,9 +57,7 @@
             </div>
             <div th:if="${session.currentUser != null && session.currentUser.userrole == 'customer'}">
             <h1>Welcome Customer! Order Carport</h1>
-
             <h2>Skræddersyet carport</h2>
-
             <form method="post">
                 <select class="simpleShapeInp" name="width">
                     <option value="0">Vælg bredde</option>
@@ -102,8 +100,8 @@
                 </select>
                 <button class="simpleShapeBtn" type="submit" formaction="/showsketch">Vis skitse</button>
             </form>
+            <div><p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p></div>
             </div>
-            <p class="errormessage" th:text="${#ctx.message}"></p>
             <div th:if="${session.currentUser != null && session.currentUser.userrole == 'admin'}">
                 <h1>Hello admin</h1>
                 <p>this is your control panel</p>

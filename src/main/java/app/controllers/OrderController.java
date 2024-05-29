@@ -149,7 +149,7 @@ public class OrderController {
             ctx.render("draw/showsketch.html");
         }
         else {
-            ctx.attribute("errormessage", "Husk at vælge bredde og længde!");
+            ctx.attribute("message", "Husk at vælge bredde og længde!");
             ctx.render("index.html");
 
         }
