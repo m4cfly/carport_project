@@ -62,7 +62,7 @@
 
             <form method="post">
                 <select class="simpleShapeInp" name="width">
-                    <option disabled>Vælg bredde</option>
+                    <option value="0">Vælg bredde</option>
                     <option value="240">240 cm</option>
                     <option value="270">270 cm</option>
                     <option value="300">300 cm</option>
@@ -79,7 +79,7 @@
                 </select>
 
                 <select class="simpleShapeInp" name="length">
-                    <option disabled>Vælg længde</option>
+                    <option value="0">Vælg længde</option>
                     <option value="240">240 cm</option>
                     <option value="270">270 cm</option>
                     <option value="300">300 cm</option>
@@ -103,6 +103,7 @@
                 <button class="simpleShapeBtn" type="submit" formaction="/showsketch">Vis skitse</button>
             </form>
             </div>
+            <p class="errormessage" th:text="${#ctx.message}"></p>
             <div th:if="${session.currentUser != null && session.currentUser.userrole == 'admin'}">
                 <h1>Hello admin</h1>
                 <p>this is your control panel</p>
