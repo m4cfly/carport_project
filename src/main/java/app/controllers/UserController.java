@@ -4,6 +4,7 @@ import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -112,6 +113,18 @@ public class UserController {
             ctx.render("index.html");
         }
     }
+    /*
+    private static void showAccount(Context ctx, ConnectionPool connectionPool) {
+        try {
+            List<User> userList = UserMapper.getAllUserInfo(connectionPool);
+            ctx.attribute("userlist", userList);
+            ctx.render("order/account.html");
+        } catch (DatabaseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+     */
+
     private static void index(Context ctx, ConnectionPool connectionPool) {
         ctx.render("index.html");
     }

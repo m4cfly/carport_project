@@ -4,42 +4,49 @@
     <meta charset="UTF-8">
     <title>Carport</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="/css/style.css" rel="stylesheet"/>
+    <script>
+        $(document).ready(function(){
+            $("#flip").click(function(){
+                $("#panel").slideToggle("slow");
+            });
+        });
+    </script>
 </head>
 <body>
 
 <div id="page">
     <header>
-        <a href="index.html" th:href="@{/}">
-            <img src="/images/logo.png" width="40%"/>
-        </a>
-        <div width="80%">
-            <div th:if="${session.currentUser != null}">
-                <span> Welcome User: </span>
-                <b>
-                     <span th:text="${session.currentUser.username}"> </span>
-                </b>
-                <a href="/logout" th:href="@{/logout}">Logout</a>
+            <a href="index.html" th:href="@{/}">
+                <img src="/images/logo.png" width="40%"/>
+            </a>
+            <div width="100%">
 
-            </div>
-        </div>
+
+                <input type="checkbox" id="menu-toggle" hidden="hidden">
+                <div id="flip" class="simpleShapeBtn">
+                    <label for="menu-toggle" class="menu-icon">&#9776;</label>
+                </div>
+                <div id="panel">
+                        <nav>
+                            <ul>
+                                <li><a href="/index.html" th:href="@{/}">Home</a></li>
+                                <li><a href="/index.html" th:href="@{/}">Order Carport</a></li>
+                                <li><a href="/cart.html" th:href="@{/showaccount}">Account</a></li>
+                                <div th:if="${session.currentUser != null}">
+                                    <a href="/logout" th:href="@{/logout}">Logout</a>
+                                    <span> Welcome User: </span>
+                                    <b>
+                                        <span th:text="${session.currentUser.username}"> </span>
+                                    </b>
+                                </div>
+                            </ul>
+                        </nav>
+                     </div>
+                </div>
+
     </header>
-    <!--   <input type="checkbox" id="menu-toggle">
-       <label for="menu-toggle" class="menu-icon">&#9776;</label>
-       <nav>
-           <ul>
-               <li class="brand">
-                   <a href="#">
-                       <h1>NAME</h1>
-                   </a>
-               </li>
-               <li><a href="#">ITEM 1</a></li>
-               <li><a href="#">ITEM 2</a></li>
-               <li><a href="#">ITEM 3</a></li>
-               <li><a href="#">ITEM 4</a></li>
-           </ul>
-       </nav>
-       -->
     <div id="content" class="transparent-grey">
         <div id="intro-text">
             <div th:if="${session.currentUser == null}">
@@ -98,9 +105,11 @@
                     <option value="750">750 cm</option>
                     <option value="780">780 cm</option>
                 </select>
-                <button class="simpleShapeBtn" type="submit" formaction="/showsketch">Vis skitse</button>
-            </form>
-            <div><p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p></div>
+                <button class="simpleShapeBtn"  type="submit" formaction="/showsketch">Vis skitse</button>
+                <p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p>
+                </form>
+
+
             </div>
             <div th:if="${session.currentUser != null && session.currentUser.userrole == 'admin'}">
                 <h1>Hello admin</h1>
@@ -113,10 +122,10 @@
         </div>
     </div>
     <footer>
-        <p>This web-page is created by Nicklas, Jenny, David</p>
+        <p>This web-page is created as a school project by Nicklas, Jenny, David</p>
     </footer>
 </div>
-<!-- <script>
+<script>
     // toggle for the amazing Burgermenu eleement
     const menuToggle = document.getElementById('menu-toggle');
 
@@ -131,6 +140,6 @@
             menuToggle.checked = false;
         }
     });
-</script> -->
+</script>
 </body>
 </html>

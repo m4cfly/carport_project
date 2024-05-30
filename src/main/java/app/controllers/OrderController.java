@@ -151,11 +151,7 @@ public class OrderController {
         else {
             ctx.attribute("message", "Husk at vælge bredde og længde!");
             ctx.render("index.html");
-
         }
-
-
-
     }
 
     private static void payForOrder(Context ctx, ConnectionPool connectionPool) {

@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserMapper
@@ -96,6 +97,38 @@ public class UserMapper
             throw new DatabaseException("Error while performing transaction");
         }
     }
+/*
+    public static List<User> getAllUserInfo(String userName,ConnectionPool connectionPool)throws DatabaseException {
+        {
+            String sql = "select * from users where user_name=?";
+
+            try (
+                    Connection connection = connectionPool.getConnection();
+                    PreparedStatement ps = connection.prepareStatement(sql)
+            )
+            {
+
+                ps.setString(1, userName);
+
+                ResultSet rs = ps.executeQuery();
+                if (rs.next())
+                {
+                    int id = rs.getInt("user_id");
+                    int balance = rs.getInt("user_balance");
+                    String role = rs.getString("user_role");
+                    return new User(id, userName, balance,role);
+                } else
+                {
+                    throw new DatabaseException("Fejl i login. Prøv igen");
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DatabaseException("DB fejl", e.getMessage());
+            }
+        }
+    }
+*/
 
 
    /* public static Map< String, User> getAllUsers(ConnectionPool connectionPool ) throws DatabaseException

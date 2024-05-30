@@ -1,4 +1,21 @@
-
+h1{
+    font-family: Consolas;
+}
+h2{
+    font-family: Consolas;
+}
+p{
+    font-family: Consolas;
+}
+a{
+    font-family: Consolas;
+}
+a:hover{
+    font-family: Consolas;
+}
+span{
+    font-family: Consolas;
+}
 div {
     /* border: 1px red solid;*/
 }
@@ -14,8 +31,8 @@ body {
 
 }
 nav {
-    position: absolute;
-    width: 100vw;
+    height: 20px;
+    position: sticky;
 }
 
 nav ul {
@@ -32,7 +49,14 @@ nav ul li {
 }
 
 nav a {
+    height: 25px;
+    width: auto;
+    background-color: blue;
+    color: white;
+    border-radius: 5px;
     display: block;
+    text-decoration: none;
+    border: solid 1px #c3c3c3;
 }
 
 .brand a {
@@ -51,9 +75,19 @@ header {
     color: white;
     background-color: blue;
 }
+#panel, #flip {
+    padding: 5px;
+    text-align: center;
+    background-color: rgba(0, 4, 255, 0.64);
+}
 
+#panel {
+    padding: 50px;
+    display: none;
+}
 
 #content {
+    position: sticky;
     display: flex;
 }
 
@@ -78,6 +112,7 @@ header {
     border-radius: 5px;
 }
 .transparent-grey {
+    padding-top: 20px;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     background-color: rgba(255, 255, 255, 0.8);
@@ -85,7 +120,11 @@ header {
     -webkit-box-shadow: 10px 0px 44px 7px rgba(0,0,0,0.32);
     -moz-box-shadow: 10px 0px 44px 7px rgba(0,0,0,0.32);
 }
+
 footer{
+    position: sticky;
+    /* margin-top: 20%; /* Adjust as needed */
+    width: 100%;
     color: white;
     text-align: center;
     height: 50px;
@@ -97,8 +136,19 @@ footer{
     -moz-box-shadow: 10px 0px 44px 7px rgba(0,0,0,0.32);
 }
 .simpleShapeInp{
+    font-size: 14px;
     margin-top: 15px;
     height: 20px;
+    width: 150px;
+    border-radius: 10px;
+    text-align: center;
+}
+.simpleShapeInp:hover{
+
+    font-size: 14px;
+    margin-top: 15px;
+    height: 22px;
+    width: 150px;
     border-radius: 10px;
     text-align: center;
 }
@@ -108,7 +158,13 @@ footer{
     background-color: blue;
     color: white;
     cursor: pointer;
-
+}
+.simpleShapeBtn:hover{
+    margin-top: 20px;
+    height: 30px;
+    background-color: white;
+    color: blue;
+    cursor: pointer;
 }
 .menu-icon {
     font-size: 1.5rem;
@@ -117,7 +173,6 @@ footer{
 #menu-toggle:checked ~ nav ul {
     display: block;
 }
-
 
 @media (max-width: 81em) {
     nav ul {
@@ -164,9 +219,6 @@ footer{
         flex-direction: column;
         align-items: center;
     }
-
-
-
 }
 .icon-container {
     display: flex;
@@ -201,8 +253,26 @@ tr:nth-child(odd) {
     background-color: #e9e5e5;
 }
 
+.error{
+    color: white;
+    background-color: rgba(255, 0, 0, 0.40);
+    border-radius: 25px;
+    box-shadow: 10px 0px 44px 7px rgba(0,0,0,0.32);
+    -webkit-box-shadow: 10px 0px 44px 7px rgba(0,0,0,0.32);
+    -moz-box-shadow: 10px 0px 44px 7px rgba(0,0,0,0.32);
+}
 button {
     border-radius: 5px;
+}
+
+button:hover {
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: white;
+    text-overline-color: black;
+    box-shadow: 10px 0px 44px 7px rgba(0,0,0,0.32);
+    -webkit-box-shadow: 10px 0px 44px 7px rgba(0,0,0,0.32);
+    -moz-box-shadow: 10px 0px 44px 7px rgba(0,0,0,0.32);
 }
 
 

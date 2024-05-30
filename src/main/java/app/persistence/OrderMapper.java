@@ -38,7 +38,7 @@ import java.util.List;
             }
             catch (SQLException e)
             {
-                throw new DatabaseException("Could not get users from the database", e.getMessage());
+                throw new DatabaseException("Could not get all the orders from the database", e.getMessage());
             }
             return orderList;
         }
@@ -112,7 +112,7 @@ import java.util.List;
             }
             catch (SQLException e)
             {
-                throw new DatabaseException("Could not create the order in the database", e.getMessage());
+                throw new DatabaseException("Could not insert the order in the database", e.getMessage());
             }
 
         }
