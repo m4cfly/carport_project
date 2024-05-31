@@ -305,6 +305,91 @@ import java.util.List;
             }
         }
 
+
+        // Laver ekstra metode getOrderByOrderID, mest for at kontrollere med vores integrationstest:
+
+        public static Order getOrderByOrderID (int orderID, ConnectionPool connectionPool) throws DatabaseException {
+            String sql = "SELECT * FROM orders inner join users WHERE order_id = ?";
+            Order order = null;
+            try (
+                    Connection connection = connectionPool.getConnection();
+                    var prepareStatement = connection.prepareStatement(sql);
+            )
+            {
+
+                prepareStatement.setInt(1, orderID);
+
+                var resultSet = prepareStatement.executeQuery();
+                while (resultSet.next())
+                {
+                    String userName = resultSet.getString("user_name");
+                    String password = resultSet.getString("user_password");
+                    int balance = resultSet.getInt("user_balance");
+                    String role = resultSet.getString("user_role");
+                    int userId = resultSet.getInt("user_id");
+                    int orderId = resultSet.getInt("order_id");
+                    int carportWidth = resultSet.getInt("width");
+                    int carportLength = resultSet.getInt("length");
+                    int status = resultSet.getInt("status");
+                    int totalPrice = resultSet.getInt("total_price");
+                    User user = new User(userId, userName, password, balance, role);
+                    order = new Order(orderId, status, carportWidth, carportLength, totalPrice, user);
+
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DatabaseException("Could not get users from the database", e.getMessage());
+            }
+
+            return order;
+
+        }
+
+
+        // Endnu en hjælpemetode, da det har vist sig at meget af vores løsning har været SQL baseret:
+
+        public static User getUpdatedUser (int userID, ConnectionPool connectionPool) throws DatabaseException {
+
+            String sql = "SELECT * FROM users WHERE user_id = ?";
+            User user = null;
+            try (
+                    Connection connection = connectionPool.getConnection();
+                    var prepareStatement = connection.prepareStatement(sql);
+            )
+            {
+
+                prepareStatement.setInt(1, userID);
+                var resultSet = prepareStatement.executeQuery();
+
+
+                while (resultSet.next())
+                {
+                    String userName = resultSet.getString("user_name");
+                    String password = resultSet.getString("user_password");
+                    int balance = resultSet.getInt("user_balance");
+                    String role = resultSet.getString("user_role");
+                    int userId = resultSet.getInt("user_id");
+
+                    user = new User(userId, userName, password, balance, role);
+
+
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DatabaseException("Could not get users from the database", e.getMessage());
+            }
+
+            return user;
+
+
+        }
+
+
+
+
+
     }
 
 

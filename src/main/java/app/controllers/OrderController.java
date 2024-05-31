@@ -220,7 +220,7 @@ public class OrderController {
         System.out.println("SENDGRID_API_KEY: " + API_KEY); // Debugging statement
 
         Personalization personalization = new Personalization();
-        personalization.addTo(new Email("Drassuil@gmail.com"));
+        personalization.addTo(new Email("Drassuil@gmail.com")); // ændr denne til at skifte hvor email ender
         personalization.addDynamicTemplateData("name", "David Vig");
         personalization.addDynamicTemplateData("email", "Drassuil@gmail.com");
         personalization.addDynamicTemplateData("zip", "2100");
