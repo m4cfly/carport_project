@@ -46,6 +46,10 @@ public class Calculator {
 
     public int calcPostQuantity() {
         return 2 * (2 + (length - 130) / 340);
+//        100 cm fra start til første stolpe, 30 cm fra sidste stolpe til slut
+//        Stolpe: 2 × ((L - 130) / 340), 340 er her mellemrummet vi vil have mellem hver stolpe
+//        Hvis vi vil have 2 endestolper på fra start:
+//        2 × (2+(L - 130) / 340)
     }
 
     // Remme
