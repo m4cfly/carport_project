@@ -114,9 +114,7 @@ import java.util.List;
             {
                 throw new DatabaseException("Could not insert the order in the database", e.getMessage());
             }
-
         }
-
         public static void insertMaterialItems(List<Material_Item> materialItems, ConnectionPool connectionPool) throws DatabaseException
         {
             String sql = "INSERT INTO material_item (orders_id, mv_id, quantity, describable) " +
