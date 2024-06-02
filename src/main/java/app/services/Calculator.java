@@ -110,7 +110,7 @@ public class Calculator {
             }
         }
 
-//              Hvis der ikke er nogen træbrædder der er større end carportens længde, finder vi en alternativ løsning:
+//              Hvis der ikke er nogen træbrædder der er større end carportens længde (carportens længde er større end 600), finder vi en alternativ løsning:
         while (!found) {
 
             // vi løber alle trælængder igennem - OGSÅ dem der ikke er større end længden, så vi kan finde bedst mulige kombination med mindst træspild
