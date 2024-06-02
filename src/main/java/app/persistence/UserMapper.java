@@ -10,6 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class UserMapper
 {
@@ -41,6 +44,45 @@ public class UserMapper
         catch (SQLException e)
         {
             throw new DatabaseException("DB fejl", e.getMessage());
+        }
+    }
+
+    public static User createuserExtended(String userName, String password, String role, int balance, ConnectionPool connectionPool) throws DatabaseException
+    {
+        String sql = "insert into users (user_name, user_password, user_role, user_balance) values (?,?,?,?)";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+        )
+        {
+            ps.setString(1, userName);
+            ps.setString(2, password);
+            ps.setString(3, role);
+            ps.setInt(4, balance);
+
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1)
+            {
+                throw new DatabaseException("Fejl ved oprettelse af ny bruger");
+            }
+            ResultSet keySet = ps.getGeneratedKeys();
+            if (keySet.next())
+            {
+                User newUser = new User(keySet.getInt(1), userName, password, balance, role);
+                return newUser;
+            } else
+                return null;
+        }
+
+
+        catch (SQLException e) {
+            String message = "An error occurred. Please try again.";
+            if (e.getMessage().contains("duplicate key value")) {
+                message = "An account with this username already exists. Please use a different username.";
+            }
+            throw new DatabaseException(message, e.getMessage());
         }
     }
 

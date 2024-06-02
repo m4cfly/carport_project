@@ -114,7 +114,9 @@ import java.util.List;
             {
                 throw new DatabaseException("Could not insert the order in the database", e.getMessage());
             }
+
         }
+
         public static void insertMaterialItems(List<Material_Item> materialItems, ConnectionPool connectionPool) throws DatabaseException
         {
             String sql = "INSERT INTO material_item (orders_id, mv_id, quantity, describable) " +
@@ -165,13 +167,13 @@ import java.util.List;
                     int carportWidth = rs.getInt("width");
                     int carportLength = rs.getInt("length");
                     int totalPrice = rs.getInt("total_price");
-                    //int userId = rs.getInt("user_id");
+                    int userID = rs.getInt("user_id");
                     String userName = rs.getString("user_name");
                     String userPassword = rs.getString("user_password");
                     String userRole = rs.getString("user_role");
                     int userBalance = rs.getInt("user_balance");
 
-                    orderList.add(new Order(orderId, carportLength, carportWidth, totalPrice, 1, new User(userId, userName, userPassword, userBalance, userRole)));
+                    orderList.add(new Order(orderId, carportLength, carportWidth, totalPrice, 1, new User(userID, userName, userPassword, userBalance, userRole)));
 
                 }
             }
@@ -243,7 +245,7 @@ import java.util.List;
 
         public static void payForOrder(Order newOrder, int totalPrice, int userId, ConnectionPool connectionPool) throws DatabaseException
         {
-            String sql = "UPDATE public.users SET user_balance = user_balance - ? WHERE user_id=?;";
+            String sql = "UPDATE users SET user_balance = user_balance - ? WHERE user_id=?;";
 
 
             try (
@@ -270,7 +272,7 @@ import java.util.List;
 
         public static int calculatePrice(int orderId, ConnectionPool connectionPool) throws DatabaseException {
 
-            String sql = "UPDATE public.orders SET total_price = ? WHERE order_id = ?;";
+            String sql = "UPDATE orders SET total_price = ? WHERE order_id = ?;";
 
 
             try (
@@ -303,11 +305,92 @@ import java.util.List;
             }
         }
 
-/*        public static List<Order> getAllOrdersPerUser(int userId, ConnectionPool connectionPool) {
+
+        // Laver ekstra metode getOrderByOrderID, mest for at kontrollere med vores integrationstest:
+
+        public static Order getOrderByOrderID (int orderID, int userID, ConnectionPool connectionPool) throws DatabaseException {
+            String sql = "SELECT * FROM orders inner join users WHERE order_id = ? AND user_id = ?";
+            Order order = null;
+            try (
+                    Connection connection = connectionPool.getConnection();
+                    PreparedStatement prepareStatement = connection.prepareStatement(sql);
+            )
+            {
+
+                prepareStatement.setInt(1, orderID);
+                prepareStatement.setInt(2, userID);
+
+                ResultSet resultSet = prepareStatement.executeQuery();
+                while (resultSet.next())
+                {
+                    String userName = resultSet.getString("user_name");
+                    String password = resultSet.getString("user_password");
+                    int balance = resultSet.getInt("user_balance");
+                    String role = resultSet.getString("user_role");
+                    int userId = resultSet.getInt("user_id");
+                    int orderId = resultSet.getInt("order_id");
+                    int carportWidth = resultSet.getInt("width");
+                    int carportLength = resultSet.getInt("length");
+                    int status = resultSet.getInt("status");
+                    int totalPrice = resultSet.getInt("total_price");
+                    User user = new User(userId, userName, password, balance, role);
+                    order = new Order(orderId, status, carportWidth, carportLength, totalPrice, user);
+
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DatabaseException("Could not get users from the database", e.getMessage());
+            }
+
+            return order;
 
         }
 
-*/
+
+        // Endnu en hjælpemetode, da det har vist sig at meget af vores løsning har været SQL baseret:
+
+        public static User getUpdatedUser (int userID, ConnectionPool connectionPool) throws DatabaseException {
+
+            String sql = "SELECT * FROM users WHERE user_id = ?";
+            User user = null;
+            try (
+                    Connection connection = connectionPool.getConnection();
+                    PreparedStatement prepareStatement = connection.prepareStatement(sql);
+            )
+            {
+
+                prepareStatement.setInt(1, userID);
+                ResultSet resultSet = prepareStatement.executeQuery();
+
+
+                while (resultSet.next())
+                {
+                    String userName = resultSet.getString("user_name");
+                    String password = resultSet.getString("user_password");
+                    int balance = resultSet.getInt("user_balance");
+                    String role = resultSet.getString("user_role");
+                    int userId = resultSet.getInt("user_id");
+
+                    user = new User(userId, userName, password, balance, role);
+
+
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DatabaseException("Could not get users from the database", e.getMessage());
+            }
+
+            return user;
+
+
+        }
+
+
+
+
+
     }
 
 
