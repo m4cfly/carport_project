@@ -22,8 +22,6 @@
                 <img src="/images/logo.png" width="40%"/>
             </a>
             <div width="100%">
-
-
                 <input type="checkbox" id="menu-toggle" hidden="hidden">
                 <div id="flip" class="simpleShapeBtn">
                     <label for="menu-toggle" class="menu-icon">&#9776;</label>
@@ -33,8 +31,14 @@
                             <ul>
                                 <li><a href="/index.html" th:href="@{/}">Home</a></li>
                                 <li><a href="/index.html" th:href="@{/}">Order Carport</a></li>
-                                <li><a href="/cart.html" th:href="@{/showaccount}">Account</a></li>
+                                <li th:if="${session.currentUser != null}">
+                                    <a href="/index.html" th:href="@{/showaccount}">Account</a>
+                                </li>
+                                <li th:if="${session.currentUser != null}">
+                                    <a href="/index.html" th:href="@{/cart}">Cart</a>
+                                </li>
                                 <div th:if="${session.currentUser != null}">
+
                                     <a href="/logout" th:href="@{/logout}">Logout</a>
                                     <span> Welcome User: </span>
                                     <b>

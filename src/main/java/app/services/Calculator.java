@@ -167,7 +167,6 @@ public class Calculator {
 
     public int calcBeamLength() {
         return length * 2;
-
     }
 
     // Spær

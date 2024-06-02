@@ -38,9 +38,11 @@ public class OrderController {
         app.get("/goToPayment", ctx -> ctx.render("order/payfororder.html"));
         app.post("/goToPayment", ctx -> ctx.render("order/payfororder.html"));
         app.post("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
+        app.get("/cart", ctx -> ctx.render("order/cart.html"));
         app.get("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
         app.get("/payForOrderUpdate", ctx -> ctx.render("order/payfororderupdate.html"));
         app.post("/payForOrderUpdate", ctx -> ctx.render("order/payfororderupdate.html"));
+
     }
 
     private static void showOrdersByID(Context ctx, ConnectionPool connectionPool) {
@@ -184,7 +186,7 @@ public class OrderController {
 
                 ctx.sessionAttribute("currentUser", updatedUser);
 
-                sendEmail(); // Send email after successful payment
+                sendEmail(ctx, connectionPool); // Send email after successful payment
 
                 ctx.attribute("message", "Du har betalt for din bestilling. Tak for handlen, vi vender tilbage hurtigst muligt");
                 ctx.render("order/requestconfirm.html");
@@ -199,7 +201,9 @@ public class OrderController {
         }
     }
 
-    private static void sendEmail() {
+    private static void sendEmail(Context ctx, ConnectionPool connectionPool) {
+        //String email = ctx.formParam("email");
+
         System.out.println("Preparing to send email");
         Email from = new Email("Drassuil@gmail.com");
         from.setName("Johannes Fog Byggemarked");
