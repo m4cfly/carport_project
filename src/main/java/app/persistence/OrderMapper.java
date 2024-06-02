@@ -245,7 +245,7 @@ import java.util.List;
 
         public static void payForOrder(Order newOrder, int totalPrice, int userId, ConnectionPool connectionPool) throws DatabaseException
         {
-            String sql = "UPDATE public.users SET user_balance = user_balance - ? WHERE user_id=?;";
+            String sql = "UPDATE users SET user_balance = user_balance - ? WHERE user_id=?;";
 
 
             try (
@@ -272,7 +272,7 @@ import java.util.List;
 
         public static int calculatePrice(int orderId, ConnectionPool connectionPool) throws DatabaseException {
 
-            String sql = "UPDATE public.orders SET total_price = ? WHERE order_id = ?;";
+            String sql = "UPDATE orders SET total_price = ? WHERE order_id = ?;";
 
 
             try (
@@ -308,18 +308,19 @@ import java.util.List;
 
         // Laver ekstra metode getOrderByOrderID, mest for at kontrollere med vores integrationstest:
 
-        public static Order getOrderByOrderID (int orderID, ConnectionPool connectionPool) throws DatabaseException {
-            String sql = "SELECT * FROM orders inner join users WHERE order_id = ?";
+        public static Order getOrderByOrderID (int orderID, int userID, ConnectionPool connectionPool) throws DatabaseException {
+            String sql = "SELECT * FROM orders inner join users WHERE order_id = ? AND user_id = ?";
             Order order = null;
             try (
                     Connection connection = connectionPool.getConnection();
-                    var prepareStatement = connection.prepareStatement(sql);
+                    PreparedStatement prepareStatement = connection.prepareStatement(sql);
             )
             {
 
                 prepareStatement.setInt(1, orderID);
+                prepareStatement.setInt(2, userID);
 
-                var resultSet = prepareStatement.executeQuery();
+                ResultSet resultSet = prepareStatement.executeQuery();
                 while (resultSet.next())
                 {
                     String userName = resultSet.getString("user_name");
@@ -355,12 +356,12 @@ import java.util.List;
             User user = null;
             try (
                     Connection connection = connectionPool.getConnection();
-                    var prepareStatement = connection.prepareStatement(sql);
+                    PreparedStatement prepareStatement = connection.prepareStatement(sql);
             )
             {
 
                 prepareStatement.setInt(1, userID);
-                var resultSet = prepareStatement.executeQuery();
+                ResultSet resultSet = prepareStatement.executeQuery();
 
 
                 while (resultSet.next())

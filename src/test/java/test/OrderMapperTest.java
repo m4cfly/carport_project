@@ -124,11 +124,13 @@ class OrderMapperTest {
     void testInsertOrder() {
         try
         {
-            User user = new User(1, "jon", "1234", 25000, "customer");
-            Order newOrder = new Order(2, 550, 750, 20000, 1, user);
-//            UserMapper.createuser(user.getUserName(), user.getPassword(), connectionPool);
+            User user = new User(1, "janni", "1234", 25000, "customer");
+            User updatedUser = UserMapper.createuserExtended(user.getUserName(), user.getPassword(), user.getUserRole(),user.getUserBalance(), connectionPool);
+            Order newOrder = new Order(2, 550, 750, 20000, 1, updatedUser);
             newOrder = OrderMapper.insertOrder(newOrder, connectionPool);
-            Order dbOrder = OrderMapper.getOrderByOrderID(newOrder.getOrderID(), connectionPool);
+            Order dbOrder = OrderMapper.getOrderByOrderID(newOrder.getOrderID(), newOrder.getUser().getUserId(), connectionPool);
+            assertEquals(newOrder.getOrderID(), dbOrder.getOrderID());
+            assertEquals(newOrder.getTotalPrice(), dbOrder.getTotalPrice());
             assertEquals(newOrder, dbOrder);
         }
         catch (DatabaseException e)
@@ -147,14 +149,14 @@ class OrderMapperTest {
 
         try
         {
-            User user = new User(1, "jon", "1234", 25000, "customer");
-            Order newOrder = new Order(2, 550, 750, 20000, 1, user);
-            UserMapper.createuser(user.getUserName(), user.getPassword(), connectionPool);
-            OrderMapper.insertOrder(newOrder, connectionPool);
+            User user = new User(1, "jesper", "1234", 25000, "customer");
+            User updatedUser = UserMapper.createuserExtended(user.getUserName(), user.getPassword(), user.getUserRole(),user.getUserBalance(), connectionPool);
+            Order newOrder = new Order(2, 550, 750, 20000, 1, updatedUser);
+            Order insertedOrder = OrderMapper.insertOrder(newOrder, connectionPool);
             int expectedBalance = 5000;
-            OrderMapper.payForOrder(newOrder, newOrder.getTotalPrice(), user.getUserId(), connectionPool);
-            User updatedUser = OrderMapper.getUpdatedUser(user.getUserId(), connectionPool);
-            assertEquals(expectedBalance, updatedUser.getUserBalance());
+            OrderMapper.payForOrder(insertedOrder, insertedOrder.getTotalPrice(), updatedUser.getUserId(), connectionPool);
+            User updatedUser2 = OrderMapper.getUpdatedUser(updatedUser.getUserId(), connectionPool);
+            assertEquals(expectedBalance, updatedUser2.getUserBalance());
         }
         catch (DatabaseException e)
         {
@@ -169,13 +171,13 @@ class OrderMapperTest {
 
         try
         {
-            User user = new User(1, "jon", "1234", 25000, "customer");
-            UserMapper.createuser(user.getUserName(), user.getPassword(), connectionPool);
-
+            User user = new User(1, "jenny", "1234", 25000, "customer");
+            User updatedUser = UserMapper.createuserExtended(user.getUserName(), user.getPassword(), user.getUserRole(),user.getUserBalance(), connectionPool);
+// for at få autogenereret rigtig nøgle med tilbage
             int expectedBalance = 65000;
-            UserMapper.inputMoney(40000, user.getUserId(), connectionPool);
-            User updatedUser = OrderMapper.getUpdatedUser(user.getUserId(), connectionPool);
-            assertEquals(expectedBalance, updatedUser.getUserBalance());
+            UserMapper.inputMoney(40000, updatedUser.getUserId(), connectionPool);
+            User updatedUser2 = OrderMapper.getUpdatedUser(updatedUser.getUserId(), connectionPool);
+            assertEquals(expectedBalance, updatedUser2.getUserBalance());
         }
         catch (DatabaseException e)
         {
