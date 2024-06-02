@@ -1,27 +1,55 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Sketch</title>
+    <title>Carport</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="/css/style.css" rel="stylesheet"/>
+    <script>
+        $(document).ready(function(){
+            $("#flip").click(function(){
+                $("#panel").slideToggle("slow");
+            });
+        });
+    </script>
 </head>
 <body>
 
 <div id="page">
     <header>
-        <a href="../index.html" th:href="@{/public}">
+        <a href="index.html" th:href="@{/}">
             <img src="/images/logo.png" width="40%"/>
         </a>
-        <div width="80%">
-            <div th:if="${session.currentUser != null}">
-                <span> Welcome User: </span>
-                <b>
-                    <span th:text="${session.currentUser.username}"> </span>
-                </b>
-                <a href="/logout" th:href="@{/logout}">Logout</a>
+        <div width="100%">
+            <input type="checkbox" id="menu-toggle" hidden="hidden">
+            <div id="flip" class="simpleShapeBtn">
+                <label for="menu-toggle" class="menu-icon">&#9776;</label>
+            </div>
+
+            <div id="panel">
+                <nav>
+                    <ul>
+                        <li><a href="/index.html" th:href="@{/}">Home</a></li>
+                        <li><a href="/index.html" th:href="@{/}">Order Carport</a></li>
+                        <li th:if="${session.currentUser != null}">
+                            <a href="/index.html" th:href="@{/showaccount}">Account</a>
+                            <a href="/index.html" th:href="@{/cart}">Cart</a>
+
+                        </li>
+                        <div th:if="${session.currentUser != null}">
+
+                            <a href="/logout" th:href="@{/logout}">Logout</a>
+                            <span> Welcome User: </span>
+                            <b>
+                                <span th:text="${session.currentUser.username}"> </span>
+                            </b>
+                        </div>
+                    </ul>
+                </nav>
             </div>
         </div>
+
     </header>
     <div id="content" class="transparent-grey">
         <div id="intro-text">
@@ -33,7 +61,6 @@
                 <a href="index.html" th:href="@{/login}" >Tilbage til Calculator</a>
                 <tr><td>Bredde:</td><td th:text="${session.width}"></td></tr>
                 <tr><td>Længde:</td><td th:text="${session.length}"></td></tr>
-
             </table>
 
             <h1>Tegning af Carport</h1>
@@ -55,6 +82,8 @@
                 </defs>
 
                 <!-- Ramme -->
+
+
                 <!-- Pile -->
                 <line x1="40" y1="10" x2="40" y2="610" th:y2="${session.width + 15}" style="stroke:#000000;
         marker-start: url(#beginArrow);
@@ -67,6 +96,7 @@
                 <!-- Text: Mål -->
                 <text style="text-anchor: middle" transform="translate(30,300) rotate(-90)" th:text="${session.width}">600 cm</text>
                 <text style="text-anchor: middle" x="502" y="670" th:y="${session.width + 70}" th:x="${session.length * 0.5}" th:text="${session.length}">780 cm</text>
+
                 <!-- 6 stolper -->
                 <svg  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" th:if="${session.length <= 599 && session.width <= 599}" x="75" y="10" width="800" height="600" viewBox="0 0 780 600" preserveAspectRatio="xMinYMin">
 

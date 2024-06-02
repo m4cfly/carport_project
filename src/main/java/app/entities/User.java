@@ -8,6 +8,9 @@ public class User {
     int userBalance;
     String userRole;
 
+    public User() {
+    }
+
     public User(int userId, String userName, String password, int userBalance, String userRole)
     {
         this.userId = userId;
@@ -16,6 +19,13 @@ public class User {
         this.userBalance = userBalance;
         this.userRole = userRole;
     }
+
+    public User(int userId, int userBalance, String userRole) {
+        this.userId = userId;
+        this.userBalance = userBalance;
+        this.userRole = userRole;
+    }
+
 
     public int getUserId() {
         return userId;

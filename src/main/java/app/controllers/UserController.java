@@ -4,8 +4,8 @@ import app.entities.Order;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
-import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
+import app.persistence.OrderMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -22,6 +22,8 @@ public class UserController {
         app.get("/logout", ctx -> logout(ctx));
         app.get("/createuser", ctx -> ctx.render("createuser.html"));
         app.post("/createuser", ctx -> createUser(ctx, connectionPool));
+        app.post("/showaccount", ctx -> showAccount(ctx, connectionPool));
+        app.get("/showaccount", ctx -> ctx.render("user/account.html"));
         app.get("/insertmoney", ctx -> ctx.render("order/insertmoney.html"));
         app.post("/inputmoney", ctx -> inputMoney(ctx, connectionPool));
         app.post("/saveuserinfo", ctx -> customerInfo(ctx, connectionPool));
@@ -103,8 +105,8 @@ public class UserController {
             User user = UserMapper.login(username,password,connectionPool);
             ctx.sessionAttribute("currentUser", user);
 
-           // List<Order> orderList = OrderMapper.getAllOrdersPerUser(user.getUserId(), connectionPool);
-            //ctx.attribute("orderList", orderList);
+          //  List<Order> orderList = OrderMapper.getAllOrdersPerUser(user.getUserId(), connectionPool);
+          //  ctx.attribute("orderList", orderList);
             ctx.render("index.html");
         }
         catch (DatabaseException e)
@@ -113,17 +115,17 @@ public class UserController {
             ctx.render("index.html");
         }
     }
-    /*
+
     private static void showAccount(Context ctx, ConnectionPool connectionPool) {
         try {
             List<User> userList = UserMapper.getAllUserInfo(connectionPool);
             ctx.attribute("userlist", userList);
-            ctx.render("order/account.html");
+            ctx.render("user/account.html");
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
     }
-     */
+
 
     private static void index(Context ctx, ConnectionPool connectionPool) {
         ctx.render("index.html");

@@ -165,13 +165,13 @@ import java.util.List;
                     int carportWidth = rs.getInt("width");
                     int carportLength = rs.getInt("length");
                     int totalPrice = rs.getInt("total_price");
-                    int userID = rs.getInt("user_id");
+                    //int userId = rs.getInt("user_id");
                     String userName = rs.getString("user_name");
                     String userPassword = rs.getString("user_password");
                     String userRole = rs.getString("user_role");
                     int userBalance = rs.getInt("user_balance");
 
-                    orderList.add(new Order(orderId, carportLength, carportWidth, totalPrice, 1, new User(userID, userName, userPassword, userBalance, userRole)));
+                    orderList.add(new Order(orderId, carportLength, carportWidth, totalPrice, 1, new User(userId, userName, userPassword, userBalance, userRole)));
 
                 }
             }
@@ -303,6 +303,11 @@ import java.util.List;
             }
         }
 
+/*        public static List<Order> getAllOrdersPerUser(int userId, ConnectionPool connectionPool) {
+
+        }
+
+*/
     }
 
 

@@ -52,35 +52,23 @@
     </header>
     <div id="content" class="transparent-grey">
         <div id="intro-text">
-            <h1>Betal for din ordre:</h1>
-
-            <div class="centered-form">
-
-                <table>
-                    <tr><td>Du har nuværende </td><td th:text="${session.currentUser.userBalance}"><td> kr. i din konto</td></td>
-                    </tr>
-                </table>
-
-
-                <form method="post">
-                    <table>
-                        <tr><td>Tryk "betal" for at betale </td><td th:text="${session.totalPrice}"><td> kr.</td></td></tr>
-                    </table>
-
-                    <button type="submit" formaction="/payForOrder">Betal for ordren</button>
-                </form>
-                <a class="simpleShapeBtn" href="/insertmoney" th:href="@{/insertmoney}">Indsæt penge på kontoen</a>
-                <a class="simpleShapeBtn" href="/showbom" th:href="@{/showbom}">Gå tilbage</a>
-
+            <div th:if="${user != null}">
+                <p>User ID: <span th:text="${user.userId}"></span></p>
+                <p>Username: <span th:text="${user.userName}"></span></p>
+                <p>Total Amount: <span th:text="${user.balance}"></span></p>
+                <!-- Add more fields as necessary -->
             </div>
-            <p class="errormessage" th:text="${#ctx.message}"></p>
-            <div th:if="${session.currentUser != null}">
-                <span th:text="${session.currentUser.username}"> </span> |
-                <a href="/logout" th:href="@{/logout}">Logout</a>
+            <div th:if="${session.currentUser == null}">
+                <form class="generic-form" method="post">
+                    <input type="text" name="username" placeholder="Enter your username"/>
+                    <input type="password" name="password" placeholder="Enter your password"/>
+                    <button class="btn btn-ok" type="submit" formaction="login">Login</button>
+                    <div><p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p></div>
+                </form>
+                <a href="/createuser.html" th:href="@{/createuser}">Create User</a>
             </div>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>

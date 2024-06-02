@@ -8,9 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class UserMapper
 {
@@ -97,38 +96,40 @@ public class UserMapper
             throw new DatabaseException("Error while performing transaction");
         }
     }
-/*
-    public static List<User> getAllUserInfo(String userName,ConnectionPool connectionPool)throws DatabaseException {
+
+    public static List<User> getAllUserInfo(ConnectionPool connectionPool)throws DatabaseException {
+        List<User> userList = new ArrayList<>();
         {
-            String sql = "select * from users where user_name=?";
+            //String sql2 = "select * from customer_info inner join users using(user_id)";
+            String sql = "select * from users";
 
             try (
                     Connection connection = connectionPool.getConnection();
-                    PreparedStatement ps = connection.prepareStatement(sql)
+                    var prepareStatement = connection.prepareStatement(sql);
+                    var resultSet = prepareStatement.executeQuery()
             )
             {
-
-                ps.setString(1, userName);
-
-                ResultSet rs = ps.executeQuery();
-                if (rs.next())
+                while (resultSet.next())
                 {
-                    int id = rs.getInt("user_id");
-                    int balance = rs.getInt("user_balance");
-                    String role = rs.getString("user_role");
-                    return new User(id, userName, balance,role);
-                } else
-                {
-                    throw new DatabaseException("Fejl i login. Prøv igen");
+                    int userId = resultSet.getInt("user_id");
+                    String userName = resultSet.getString("user_name");
+                    String password = resultSet.getString("user_password");
+                    int balance = resultSet.getInt("user_balance");
+                    String role = resultSet.getString("user_role");
+
+                    User user = new User(userId, userName, password, balance, role);
+                    //Order order = new Order(orderId, status, carportWidth, carportLength, totalPrice, user);
+                    userList.add(user);
                 }
             }
             catch (SQLException e)
             {
-                throw new DatabaseException("DB fejl", e.getMessage());
+                throw new DatabaseException("Could not get all the orders from the database", e.getMessage());
+            }
+            return userList;
             }
         }
     }
-*/
 
 
    /* public static Map< String, User> getAllUsers(ConnectionPool connectionPool ) throws DatabaseException
@@ -165,4 +166,4 @@ public class UserMapper
     }
 
     */
-}
+
