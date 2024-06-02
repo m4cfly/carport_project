@@ -33,8 +33,9 @@
                         <li><a href="/index.html" th:href="@{/}">Order Carport</a></li>
                         <li th:if="${session.currentUser != null}">
                             <a href="/index.html" th:href="@{/showaccount}">Account</a>
+                        </li>
+                        <li th:if="${session.currentUser != null}">
                             <a href="/index.html" th:href="@{/cart}">Cart</a>
-
                         </li>
                         <div th:if="${session.currentUser != null}">
 

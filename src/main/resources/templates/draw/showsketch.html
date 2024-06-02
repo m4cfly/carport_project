@@ -26,7 +26,6 @@
             <div id="flip" class="simpleShapeBtn">
                 <label for="menu-toggle" class="menu-icon">&#9776;</label>
             </div>
-
             <div id="panel">
                 <nav>
                     <ul>
@@ -34,8 +33,9 @@
                         <li><a href="/index.html" th:href="@{/}">Order Carport</a></li>
                         <li th:if="${session.currentUser != null}">
                             <a href="/index.html" th:href="@{/showaccount}">Account</a>
+                        </li>
+                        <li th:if="${session.currentUser != null}">
                             <a href="/index.html" th:href="@{/cart}">Cart</a>
-
                         </li>
                         <div th:if="${session.currentUser != null}">
 
@@ -93,9 +93,6 @@
         marker-start: url(#beginArrow);
         marker-end: url(#endArrow);" />
 
-                <!-- Text: Mål -->
-                <text style="text-anchor: middle" transform="translate(30,300) rotate(-90)" th:text="${session.width}">600 cm</text>
-                <text style="text-anchor: middle" x="502" y="670" th:y="${session.width + 70}" th:x="${session.length * 0.5}" th:text="${session.length}">780 cm</text>
 
                 <!-- 6 stolper -->
                 <svg  version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" th:if="${session.length <= 599 && session.width <= 599}" x="75" y="10" width="800" height="600" viewBox="0 0 780 600" preserveAspectRatio="xMinYMin">
@@ -135,7 +132,7 @@
 
                     <!-- Kryds -->
                     <line x1="55" y1="35" x2="600" y2="569.5" style="stroke:#000000; stroke-dasharray: 5 5;" />
-                    <line x1="55" y1="569.5" x2="600" y2="35" style="stroke:#000000; stroke-dasharray: 5 5;" />
+                    <line x1="55" y1="569.5" x2="600" y2="35" style="stroke:#000000; istroke-dasharray: 5 5;" />
 
                     <!-- Antal Stolper for længden af REM OVER 600cm -->
                     <rect x="110" y="32" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
