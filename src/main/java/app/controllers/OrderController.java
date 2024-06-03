@@ -38,7 +38,7 @@ public class OrderController {
         app.get("/goToPayment", ctx -> ctx.render("order/payfororder.html"));
         app.post("/goToPayment", ctx -> ctx.render("order/payfororder.html"));
         app.post("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
-        app.get("/cart", ctx -> ctx.render("order/cart.html"));
+        app.post("/cart", ctx -> ctx.render("order/cart.html"));
         app.get("/payForOrder", ctx -> payForOrder(ctx, connectionPool));
         app.get("/payForOrderUpdate", ctx -> ctx.render("order/payfororderupdate.html"));
         app.post("/payForOrderUpdate", ctx -> ctx.render("order/payfororderupdate.html"));

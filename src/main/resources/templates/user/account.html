@@ -48,16 +48,27 @@
                 </nav>
             </div>
         </div>
-
     </header>
     <div id="content" class="transparent-grey">
+        <div th:if="${session.currentUser != null && session.currentUser.userrole == 'customer'}">
+            <h1>Account Balance </h1>
+            <form method="get">
+                <table>
+                    <tr>
+                        <th>User ID</th>
+                        <th>User Name</th>
+                        <th>Total Balance</th>
+                    </tr>
+                    <tr>
+                        <td th:text="${session.currentUser.userId}"></td>
+                        <td th:text="${session.currentUser.userName}"></td>
+                        <td th:text="${session.currentUser.userBalance}"></td>
+                        <td><button type="submit" name="account-balance" formaction="/">Go Back</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
         <div id="intro-text">
-            <div th:if="${user != null}">
-                <p>User ID: <span th:text="${user.userId}"></span></p>
-                <p>Username: <span th:text="${user.userName}"></span></p>
-                <p>Total Amount: <span th:text="${user.balance}"></span></p>
-                <!-- Add more fields as necessary -->
-            </div>
             <div th:if="${session.currentUser == null}">
                 <form class="generic-form" method="post">
                     <input type="text" name="username" placeholder="Enter your username"/>

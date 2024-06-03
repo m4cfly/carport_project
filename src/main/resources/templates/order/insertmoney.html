@@ -59,10 +59,10 @@
                                 <p>Indtast beløb der skal sættes ind i din konto:</p>
                                 <input type="number" name="inputMoney" placeholder="Skriv et positivt beløb">
 
-                                <button type="submit" formaction="/inputmoney">Indsæt beløbet på din konto</button>
+                                <button class="simpleShapeBtn" type="submit" formaction="/inputmoney">Indsæt beløbet på din konto</button>
                             </form>
                             <form method="post">
-                                <button type="submit" formaction="/goToPayment">Gå tilbage til betaling</button>
+                                <button class="simpleShapeBtn" type="submit" formaction="/goToPayment">Gå tilbage til betaling</button>
                             </form>
                         </div>
                         <p class="errormessage" th:text="${#ctx.message}"></p>
